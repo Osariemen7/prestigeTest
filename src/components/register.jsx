@@ -55,7 +55,7 @@ const RegisterPage =()=>{
              },
              body:JSON.stringify(item)
             });
-            
+            resut = await resut.json();
             if (resut.status !== 201) {
               setMessage(JSON.stringify(resut));;
             } else {
