@@ -57,7 +57,7 @@ const RegisterPage =()=>{
             });
             
             if (resut.status !== 201) {
-              setMessage('Invalid Information');
+              setMessage(JSON.stringify(resut));;
             } else {
               resut = await resut.json();
             localStorage.setItem('user-info', JSON.stringify(resut)) 
