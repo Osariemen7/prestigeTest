@@ -1,0 +1,651 @@
+main {
+  text-align: center;
+}
+.card {
+  background: aqua;
+  width:300px;
+  border: 1px solid aqua;
+  padding:2%;
+  border-radius:15px;
+  margin:20px;
+  display: inline-block;
+}
+nav {
+  background-color: black;
+  text-align: end;
+  padding: 2%;
+}
+.nav {
+  text-decoration: none;
+  background-color: black;
+  margin: 20px;
+  color:white;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+.nav:hover {
+  color:aqua;
+}
+.paginationBtns {
+  list-style: none;
+  display: flex;
+  width: 80%;
+  justify-content: center;
+}
+.paginationBtns a {
+  margin:20px 10px;
+  padding: 8px;
+  border: 1px solid aqua;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.paginationBtns a:hover {
+  background-color: aqua;
+} 
+.paginationActive a {
+  background-color: aqua; 
+}
+.prod {
+  text-decoration: none;
+  background-color: rgb(10, 68, 78);
+  color:beige;
+  margin: 10px;
+  padding: 4px;
+  font-size: 25px;
+}.App {
+  text-align: center;
+}
+.back {
+  text-align: center;
+  background-color: blue;
+  padding: 200px 0;
+  max-height:100%;
+  height: 800PX;
+}
+.h4{
+  text-align: left;
+  margin: 4% 12%;
+}
+.re{
+  display: flex;
+  gap: 300px;
+  padding: 25px;
+  padding-bottom: 0;
+}
+.h1{
+  color: #fff;
+  margin: 0 auto;
+  }
+.ul{
+  display: flex;
+  gap: 100px;
+}
+.rev{
+  border: 1px solid rgb(233, 230, 230);
+  border-left: none;
+  border-right: none;
+  padding: 2% 6%;
+  display: flex;
+  gap: 120px;
+  text-align: center;
+}
+.revd{
+  padding: 2% 7%;
+  display: flex;
+  gap: 100px
+}
+.rp{
+  font-size: 12px;
+  margin: 0;
+}
+.revp{
+  text-align: right;
+  margin-left: 25px;
+}
+hr{
+  border: 1px solid rgb(231, 228, 228);
+}
+.ulbut{
+  background-color: #fff;
+  color: blue;
+  border: 1px dotted blue;
+  width:290px;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.dash1{
+  padding: 8% 2%;
+  background-color: rgb(23, 23, 116);
+  margin:0 5%;
+  width: 85%;
+  border-radius: 10px;
+  height: 90px;
+}
+.opend{
+  margin-top: 95px;
+}
+.plus{
+  margin-top: 290px;
+  margin-left: 210px;
+  height: 80px;
+}
+.bac{
+  position: relative;
+  right: 40%;
+  margin: 3%;
+  font-size: 20px;
+}
+.pflex{
+  display: flex;
+  gap: 20px;
+  margin:2% 5%;
+  width: 85%;
+  text-align: left;
+}
+.ph{
+  margin-bottom: 0;
+}
+.x{
+  text-decoration: none;
+  color: blue;
+  font-weight: 800;
+}
+.head{
+  text-align: left;
+  margin:15px 15px;
+}
+.dh3{
+  margin: 0;
+}
+.dash{
+  background-color: rgb(23, 23, 116);
+  margin:2% 5%;
+  width: 90%;
+  border-radius: 10px;
+}
+/* transact */
+.tl{
+  display: flex;
+  gap: 70%;
+  padding: 0 3%;
+  margin: 0;
+  height: 20px;
+}
+.tg{
+  font-size: 10px;
+  display: flex;
+  height: 33px;
+  gap: 50%;
+  padding: 0 3%;
+  margin: 0;
+  color: grey;
+}
+.td{
+  font-size: 12px;
+  padding: 5%;
+  border-bottom: 1px solid gainsboro;
+}
+.tm{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.dbut{
+  width: 80%;
+  margin: 15px 10px;
+  border-radius: 6px;
+  border:none;
+  color:#fff;
+  height: 40px;
+  background-color: blue;
+}
+
+.l{
+  text-align: left;
+  color: grey;
+  margin-left: 20px;
+  font-size: 12px;
+}
+.dp{
+  margin: 0;
+  color: #fff;
+  padding-top: 2%;
+}
+.h1{
+  color: #fff;
+}
+.mon{
+  border: 1px solid lightcyan;
+  border-radius: 30px;
+  width: 120px;
+  background-color: lightcyan;
+}
+.freq{
+  display: flex;
+  gap:10px;
+  padding: 5%;
+}
+.link{
+  text-decoration: none;
+  color: black;
+}
+.dtp{
+  margin-left: 16%;
+  margin-top: 10%;
+  }
+  /* Accounts */
+  .abut{
+    width: 80px;
+    height: 30px;
+    background-color: rgb(23, 23, 116);
+    border: 1px solid blue;
+    color: #fff;
+  }
+  .acct{
+    display: flex;
+    gap: 15px;
+    padding: 3% 8%;
+  }
+  .ad{
+    margin:60% 0;
+  }
+.li{
+  height: 40px;
+  width: 275px;
+  padding:0 2%;
+  margin-left: 1%;
+  margin-bottom: 15px;
+}
+/* project */
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background-color: blue;
+  margin-top: 10%;
+  margin-left: 5%;
+  margin-bottom: 2%;
+}
+
+.progress-bar:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color:gray;
+  transition: width 0.3s ease-in-out;
+}
+.pd{
+  border: 1px solid gainsboro;
+  margin:2% 9%;
+  border-radius: 5%;
+  padding:2% 5%;
+}
+.pp{
+  display: flex;
+  gap: 42%;
+  padding: 0;
+  height: 20px;
+  font-size: 13px;
+}
+.pn{
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 0;
+}
+.prog{
+  color: green;
+  font-size: 11px;
+  font-weight: 700;
+}
+.plus1{
+  margin: 0;
+  margin-left: 210px;
+  height: 80px;
+}
+.ah3{
+  text-align: left;
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+.topb{
+  width: 40%;
+  background-color: blue;
+  color: #fff;
+  height: 30px;
+  border: blue;
+  text-decoration: none;
+  padding-top:2% ;
+  font-size: 13px;
+}
+.trb{
+  width: 43%;
+  background-color: skyblue;
+  color: blue;
+  height: 30px;
+  border: skyblue;
+  text-decoration: none;
+  padding-top:2% ;
+  font-size: 13px;
+}
+.aflex{
+  display: flex;
+  gap:5%;
+  padding: 0 2%;
+  margin-left: 6%;
+}
+.adf{
+  padding: 0 5%;
+  border: 1px solid gainsboro;
+  border-radius: 15px;
+}
+.asav{
+  display: flex;
+  font-size: 12px;
+  gap: 80px;
+  height: 20px;
+  color: grey;
+}
+.asa2{
+  display: flex;
+  font-size: 12px;
+  gap:60px;
+  height:25px;
+  color: grey;
+}
+.kd{
+  padding: 0 8%;
+  margin-bottom: 8%;
+}
+.asa{
+  display: flex;
+  font-size: 12px;
+  gap:80px;
+  height:25px;
+  border-bottom: 1px solid gainsboro;
+  padding: 4% 10%;
+}
+.asav1{
+  display: flex;
+  font-size: 13px;
+  gap: 130px;
+  font-weight: 700;
+}
+.asagr{
+  display: flex;
+  font-size: 13px;
+  gap: 130px;
+  font-weight: 700;
+  color:green;
+  padding: 2% 10%;
+  border-bottom: 1px solid gainsboro;
+}
+.prit{
+  text-align: left;
+  padding: 2% 4%;
+  margin-bottom: 0;
+}
+.prip{
+  color: grey;
+  font-size: 12px;
+  margin: 0 auto;
+}
+.tha{
+  padding-top: 130px;
+  background-color: blue;
+  max-height: 100%;
+  height: 800px;
+}
+.tp{
+  color: #fff;
+  margin-top: 0;
+}
+.tbut{
+  color:blue;
+  background-color: #fff;
+  width:290px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: 699;
+  border-color: blue;
+  margin-top: 50px;
+}
+.dflex{
+  display: flex;
+  padding: 3%;
+  gap:15px;
+  text-align: left;
+  background-color: lightblue;
+  width: 85%;
+  margin: 5%;
+  border-radius: 10px;
+}
+.dflex1{
+  display: flex;
+  padding: 3%;
+  gap:60px;
+  text-align: left;
+  margin: 5%;
+  border:1px solid rgb(216, 213, 213);
+  border-radius: 5px;
+}
+.dflex2{
+   display: flex;
+   gap:40px;
+   margin: 0 10%;
+   margin-top: 5%;
+   padding: 5%;
+   }
+.dfp2{
+  font-size: 13px;
+  padding: 0 3%;
+}
+.fflex{
+  display: flex;
+  gap:50px;
+  padding:2% 5%;
+  border-bottom: 1px solid rgb(216, 214, 214);
+}
+.fdiv{
+  text-align: left;
+}
+
+.mine{
+  padding:0 2%;
+  width: 240px;
+  height: 35px;
+  margin-left:18px ;
+  margin-bottom: 20px;
+}
+.mp{
+  text-align: left;
+  margin-left: 75px;
+  margin-bottom: 0;
+}
+.modal{
+  text-align: center;
+  margin-top: 30px;
+  width:90%;
+  background-color: #fff;
+  height: 500px;
+  
+}
+.see{
+  font-size: 15px;
+  color:#fff;
+  position: relative;
+  left: 60px;
+  bottom:20px;
+}
+.mx{
+  position: relative;
+  left:120px;
+  top:20px;
+}
+.rh{
+  color:blue;
+  margin: 0;
+}
+.rad{
+  margin-left:30px;
+}
+.listp{
+  color: grey;
+}
+.home1{
+  color: blue;
+  font-size: 25px;
+}
+.home{
+  color: rgb(66, 63, 63);
+  font-size: 25px; 
+}
+.home:hover, .lsf{
+  color:blue;
+}
+.dfp{
+  font-size: 12px;
+  margin: 0;
+}
+.frame{
+  animation: alternate-reverse;
+}
+.openu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.message{
+  color: red;
+}
+@media screen and (max-width: 700px) {
+  .slide-container{
+    margin:20px;
+    height: 200px;
+  }
+  .each-slide-effect {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    margin:5% 0;
+  }
+  .indicator.active {
+    color: #fff;
+    background:blue;
+  }
+.put{
+  margin:10px;
+  margin-left: 25px;
+  width: 260px;
+  height: 40px;
+  background-color: blue;
+  color:#fff;
+  border: none;
+} 
+.logb{
+  width:275px;
+    height:32px;
+    padding:0 2%;
+    background-color: blue;
+    border: none;
+    margin-top: 20px;
+    color: #fff;
+} 
+.pog{
+  height: 32px;
+  color:#fff;
+  background-color: blue;
+  width: 254px;
+  margin: 10% 5%;
+  border: 1px solid blue;
+}
+  .but1{
+    margin: 10px;
+    width: 90%;
+    height: 50px;
+    background-color: blue;
+    border: none;
+    color: #fff;
+  }
+  .but2{
+    width: 90%;
+    height: 50px;
+    background-color: skyblue;
+    border: none;
+    color:blue;
+    margin-bottom: 10px;
+  }  
+  .slide img{
+    width: 100%;
+    height:300px;
+  }
+  form{
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .lh{
+    color:blue;
+    text-align: left;
+    margin: 4% 12%;
+    margin-top: 12%;
+  }
+  .lp{
+    color:grey;
+    text-align: left;
+    margin: 3% 12%;
+  }
+  .lin{
+    width:275px;
+    height:30px;
+    padding: 0 2%;
+    margin-bottom: 0;
+    }
+  .line{
+    padding:0 2%;
+    width: 265px;
+    height: 30px;
+    margin-left:18px ;
+  }
+  .fot{
+    margin-top: 50px;
+  }
+  .ll{
+    text-align: left;
+    margin: 0 16%;
+    color: blue;
+  }
+  .ic {
+    position: relative;
+    right: 18%;
+    color: blue;
+    top:48%;
+  }
+  .lop {
+    color: blue;
+    margin:0;
+    font-size: 12px;
+  }
+  .sp{
+    text-align: left;
+    margin-left: 12%;
+    font-size: 15px;
+  }
+  .otp {
+    font-size: 40px;
+    margin: 0 3%;
+    border: 3px solid skyblue;
+    box-shadow: 10%;
+  }
+  .but{
+    width: 85%;
+    height: 50px;
+    background-color: blue;
+    border: none;
+    color: #fff;
+    margin: 30px;
+    margin-right: 10px;
+    
+  }
+}
