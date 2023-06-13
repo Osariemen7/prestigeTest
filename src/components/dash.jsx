@@ -20,6 +20,7 @@ const Dashboard =()=>{
   const project = () => {
     navigate(0)
   }
+ 
   
   
     const fetchData = async () => {
@@ -77,11 +78,11 @@ const toggleHidden =()=>{
         }
         setHidden("******")
       }
-    
+          
         
     return(
         <div>
-        <div className='red'>
+        <div className='re'>
             <Link to='/'><i class="fa-solid fa-chevron-left bac"></i></Link>
             <i onClick={project} class="fa-sharp fa-solid fa-rotate-right"></i>
         </div> 

@@ -172,7 +172,11 @@ const Select =()=> {
       });
       if (result.status !== 200) {
         setMessage("Invalid Information");
-      } else {
+      }
+      else if(result.status === 400){
+        setMessage('Please Click the button again!')
+      }
+       else {
         result = await result.json();
    
       navigate('/components/pro', {state:{name}})

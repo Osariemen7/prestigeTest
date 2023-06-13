@@ -8,8 +8,12 @@ const LoginPage = () => {
     const [passwordType, setPasswordType] = useState("password");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState('');
+    const [button, setButton] = useState('')
     const navigate = useNavigate()
-   
+
+    const reg = () => {
+    navigate('/components/personal')
+  }
     const handleUsernameChange =(evnt) => {
 
         setUsername((evnt.target.value).replace('0', '234'));
@@ -45,14 +49,18 @@ const LoginPage = () => {
       });
       if (result.status !== 200) {
         setMessage("Invalid Username/Password");
-      } else {
+      }
+      else if(result.anchor_user_created === false){
+         setButton('Please Complete Registration')
+      }
+       else {
         result = await result.json();
       localStorage.setItem('user-info', JSON.stringify(result)) 
       navigate('/components/dash')
       }
       
    }
-
+   
     return(
         <div>
         <Helmet>
@@ -72,6 +80,7 @@ const LoginPage = () => {
                 <button className="logb" onClick={login} type="submit">Log in</button>
                 <div className="message">{message ? <p>{message}</p> : null}</div>
                 <p className="lop">Forgot Password?</p>
+                <div className="">{button ? <button onClick={reg} className="but">{button}</button> : null}</div>
             </form>
             <footer className="fot">Dont have an account? <Link to='/components/signup'><span className="lsf">Sign Up</span></Link></footer>
         </div>

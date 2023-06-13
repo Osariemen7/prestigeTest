@@ -53,7 +53,8 @@ nav {
   margin: 10px;
   padding: 4px;
   font-size: 25px;
-}.App {
+}
+.App {
   text-align: center;
 }
 .back {
@@ -66,6 +67,13 @@ nav {
 .h4{
   text-align: left;
   margin: 4% 12%;
+}
+.pof {
+  color:#fff;
+  background-color: blue;
+  border: 1px solid blue;
+  width: 40%;
+  height: 37px;
 }
 .re{
   display: flex;

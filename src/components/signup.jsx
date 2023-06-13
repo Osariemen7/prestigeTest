@@ -28,9 +28,10 @@ const Signup = () => {
         if (item.phone_number.length !== 13) {
           setMessage("Invalid Phone number!");
         } else{
+          setMessag('loading')
           res = await res.json();
           localStorage.setItem('user-info', JSON.stringify(res))
-          setMessag('loading')
+          
           navigate('/components/verify', {state:{item}});   
 
         }
