@@ -170,21 +170,18 @@ const Select =()=> {
        },
        body:JSON.stringify(project)
       });
-      if (result.status !== 200) {
+      if (result.status === 400) {
         setMessage("Invalid Information");
-      }
-      else {
-       if (result.status === 400){
-        setMessage('Please Click the button again!')
-      }
-       else {
+      } else if (result.status === 500) { 
+        setMessage('Click again!');
+      } else {
         result = await result.json();
-   
-      navigate('/components/pro', {state:{name}})
+        navigate('/components/pro', { state: { name } });
       }
-      }
+      
     }
-    console.log(Error)
+    console.log(funding_date)
+    console.log(name)
     console.log(tota)
    console.log(pane)
  
@@ -192,7 +189,7 @@ const Select =()=> {
   return(
         <div>
            <Link to='/components/createp'><i class="fa-solid fa-chevron-left bac"></i></Link>
-            <h4>{name}</h4>
+            <h4 className='shi'>{name}</h4>
             <p className='rp'>Estimated Project amount</p>
             <h1 className='rh'>₦{total}</h1>
             <div className='rev'>
@@ -203,7 +200,7 @@ const Select =()=> {
                 <p>Recuring Savings</p>
                 <p>₦{payment_amount}/{payment_frequency}</p>
             </div>
-            <div className='rev'>
+            <div className='revd'>
                 <p>Amount to be loan</p>
                 <p>₦{seventy}</p>
             </div>

@@ -46,7 +46,7 @@ const CreatePage =()=>{
         <Link to='/components/pop'><i class="fa-solid fa-chevron-left bac"></i></Link>
             
            <h3 className="head">Create Project</h3>
-           <p>A descriptive name makes your project memorable</p>
+           <p className='ptt'>A descriptive name makes your project memorable</p>
            <form>
               <p className="sp">Project Name</p>
               <input className="line" onChange={handleName} type="text" placeholder="Enter name of Project" /><br/>

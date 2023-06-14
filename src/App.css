@@ -94,6 +94,12 @@ nav {
   text-align: left;
   margin: 0% 12%;
 }
+.shi{
+  margin: 0;
+}
+.ptt{
+  padding: 2%;
+}
 .rev{
   border: 1px solid rgb(233, 230, 230);
   border-left: none;
@@ -479,7 +485,7 @@ hr{
 .modal{
   text-align: center;
   margin-top: 30px;
-  width:90%;
+  width:95%;
   background-color: #fff;
   height: 500px;
   

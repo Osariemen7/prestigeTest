@@ -77,7 +77,7 @@ const ListPage=()=>{
         <div>
             <Link to='/components/createp'><i class="fa-solid fa-chevron-left bac" onClick={openModal}></i></Link>
             <h3>What do you intend to purchase<br/> or lease as part of this project?</h3>
-            <p>Add a list of resource you will need for this project<br/>eg land for farming, Equipment</p>
+            <p className='ptt'>Add a list of resource you will need for this project<br/>eg land for farming, Equipment</p>
             <h1 >₦{total}</h1>
             <p className="listp">Estimated amount needed for your business</p>
             <button onClick={openModal} className="ulbut">Add Item</button>
