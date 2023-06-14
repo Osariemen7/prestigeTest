@@ -71,6 +71,9 @@ const ProjectPage =()=>{
          },
          body:JSON.stringify(item)
         });
+        if (item === null){
+          navigate(0)
+        }else{
         rep = await rep.json();
         let bab = rep.access_token
       let response = await fetch("https://sandbox.prestigedelta.com/projectlist/",{
@@ -85,7 +88,7 @@ const ProjectPage =()=>{
       response = await response.json();}
     
       setInfo(response)
-    }
+        }}
   
     useEffect(() => {
       fetchDa()

@@ -9,10 +9,14 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState('');
     const [button, setButton] = useState('')
+    const [buttons, setButtons] = useState('');
     const navigate = useNavigate()
 
     const reg = () => {
     navigate('/components/personal')
+  }
+  const tanku = () => {
+    navigate('/components/thanks')
   }
     const handleUsernameChange =(evnt) => {
 
@@ -35,31 +39,38 @@ const LoginPage = () => {
     //            navigate.push('/component/signup')
     //     }
     // }, [])
-   async function login(e) {
-    e.preventDefault();
-      console.warn(username, password)
-      let item = {username, password};
-      let result = await fetch ('https://sandbox.prestigedelta.com/dj-rest-auth/login/',{
+  
+    async function login(e) {
+      e.preventDefault();
+      console.warn(username, password);
+      let item = { username, password };
+      let response = await fetch(
+        'https://sandbox.prestigedelta.com/dj-rest-auth/login/',
+        {
           method: 'POST',
-          headers:{
+          headers: {
             'Content-Type': 'application/json',
-            'accept' : 'application/json'
-       },
-       body:JSON.stringify(item)
-      });
-      if (result.status !== 200) {
-        setMessage("Invalid Username/Password");
+            accept: 'application/json',
+          },
+          body: JSON.stringify(item),
+        }
+      );
+    
+      if (response.status !== 200) {
+        setMessage('Invalid Username/Password');
+      } else {
+        let result = await response.json();
+        if (result.user.anchor_user_created !== true) {
+          setButton('Please Click to Complete Registration');
+        } else if (result.user.nuban_set !== true) {
+          setButtons('Click to complete Registration');
+        } else {
+          localStorage.setItem('user-info', JSON.stringify(result));
+          navigate('/components/dash');
+        }
       }
-      else if(result.anchor_user_created === false){
-         setButton('Please Complete Registration')
-      }
-       else {
-        result = await result.json();
-      localStorage.setItem('user-info', JSON.stringify(result)) 
-      navigate('/components/dash')
-      }
-      
-   }
+    }
+    
    
     return(
         <div>
@@ -81,6 +92,7 @@ const LoginPage = () => {
                 <div className="message">{message ? <p>{message}</p> : null}</div>
                 <p className="lop">Forgot Password?</p>
                 <div className="">{button ? <button onClick={reg} className="but">{button}</button> : null}</div>
+                <div className="">{buttons ? <button onClick={tanku} className="but">{buttons}</button> : null}</div>
             </form>
             <footer className="fot">Dont have an account? <Link to='/components/signup'><span className="lsf">Sign Up</span></Link></footer>
         </div>

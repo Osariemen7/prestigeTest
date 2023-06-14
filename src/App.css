@@ -80,6 +80,7 @@ nav {
   gap: 300px;
   padding: 25px;
   padding-bottom: 0;
+  margin-bottom: 0;
 }
 .h1{
   color: #fff;
@@ -88,6 +89,10 @@ nav {
 .ul{
   display: flex;
   gap: 100px;
+}
+.dah3{
+  text-align: left;
+  margin: 0% 12%;
 }
 .rev{
   border: 1px solid rgb(233, 230, 230);

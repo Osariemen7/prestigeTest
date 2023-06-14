@@ -16,11 +16,22 @@ const Dashboard =()=>{
   let tok= JSON.parse(localStorage.getItem("user-info"));
   let refresh = tok.refresh_token
   let name = tok.user
+  
  
   const project = () => {
     navigate(0)
   }
- 
+  // useEffect(() => {
+  //   const reloadCount = sessionStorage.getItem('reloadCount');
+    
+  //   if (!reloadCount || reloadCount < 2) {
+  //     const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
+  //     sessionStorage.setItem('reloadCount', String(updatedReloadCount));
+  //     window.location.reload();
+  //   } else {
+  //     sessionStorage.removeItem('reloadCount');
+  //   }
+  // }, []);
   
   
     const fetchData = async () => {
@@ -41,12 +52,10 @@ const Dashboard =()=>{
       })
       response = await response.json()
       localStorage.setItem('user-info', JSON.stringify(tok))
-    //   if (data.code === 'token_not_valid'){
-    //     navigate('/components/token')
-    //   } else {
       
      setUsers(response)
-      
+
+       
      }
   
     useEffect(() => {
@@ -78,7 +87,19 @@ const toggleHidden =()=>{
         }
         setHidden("******")
       }
-          
+      useEffect(() => {
+        const reloadCount = sessionStorage.getItem('reloadCount');
+      
+        if (!reloadCount || parseInt(reloadCount) < 2) {
+          const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
+          sessionStorage.setItem('reloadCount', String(updatedReloadCount));
+          if (!reloadCount) {
+            window.location.reload();
+          }
+        } else {
+          sessionStorage.removeItem('reloadCount');
+        }
+      }, []);
         
     return(
         <div>
@@ -86,7 +107,7 @@ const toggleHidden =()=>{
             <Link to='/'><i class="fa-solid fa-chevron-left bac"></i></Link>
             <i onClick={project} class="fa-sharp fa-solid fa-rotate-right"></i>
         </div> 
-            <h3 className='h4'>Hi, {name.first_name} </h3>
+            <h3 className='dah3'>Hi, {name.first_name} </h3>
             <div className='dash'>
                 <p className='dp'>Total Balance</p>
                 
