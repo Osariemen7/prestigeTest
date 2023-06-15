@@ -54,8 +54,10 @@ const LoginPage = () => {
       } else {
         let result = await response.json();
         if (result.user.anchor_user_created !== true) {
+          localStorage.setItem('user-info', JSON.stringify(result))
           navigate('/components/personal', {state:{result}})
         } else if (result.user.nuban_set !== true) {
+          localStorage.setItem('user-info', JSON.stringify(result))
           navigate('/components/thanks', {state:{result}})
         } else {
           localStorage.setItem('user-info', JSON.stringify(result));

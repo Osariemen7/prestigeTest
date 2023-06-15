@@ -1,18 +1,30 @@
 import tick from './images/tick.svg';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 const ThankPage=()=>{
      const [monthly_revenue, setMonthly] = useState(100000)
      const [message, setMessage] = useState("");
      const navigate= useNavigate()
-     const location = useLocation()
-     
+    //  useEffect(() => {
+    //   const reloadCount = sessionStorage.getItem('reloadCount');
+    
+    //   if (!reloadCount || parseInt(reloadCount) < 1) {
+    //     const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
+    //     sessionStorage.setItem('reloadCount', String(updatedReloadCount));
+    //     if (!reloadCount) {
+    //       window.location.reload();
+    //     }
+    //   } else {
+    //     sessionStorage.removeItem('reloadCount');
+    //   }
+    // }, []);
+    
      let tok= JSON.parse(localStorage.getItem("user-info"));
      const term = (tok) => {
-      let tack = location.state.result
       let refval;  
       if (tok === null || typeof tok === 'undefined') {
-        refval = tack.refresh_token;
+        refval = 0;
       } else {
         refval = tok.refresh_token;
       }
@@ -20,10 +32,8 @@ const ThankPage=()=>{
       return refval;
     }
     let refresh = term(tok)
-    
      async function create(e) {
         e.preventDefault();
-
         let ite ={refresh}
     let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
         method: 'POST',
@@ -48,14 +58,14 @@ const ThankPage=()=>{
            body:JSON.stringify(item)
           });
           if (result.status !== 201) {
-            setMessage('some error occured');
+            setMessage(JSON.stringify(result.response));
           } else {
             result = await result.json();
           localStorage.setItem('user-info', JSON.stringify(result)) 
           navigate('/components/login')
           }
-          
-       }
+        }
+        console.log(tok)
     return(
         <div className='tha'>
            <div className=''>
