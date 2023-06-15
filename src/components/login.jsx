@@ -8,16 +8,9 @@ const LoginPage = () => {
     const [passwordType, setPasswordType] = useState("password");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState('');
-    const [button, setButton] = useState('')
-    const [buttons, setButtons] = useState('');
     const navigate = useNavigate()
 
-    const reg = () => {
-    navigate('/components/personal')
-  }
-  const tanku = () => {
-    navigate('/components/thanks')
-  }
+    
     const handleUsernameChange =(evnt) => {
 
         setUsername((evnt.target.value).replace('0', '234'));
@@ -61,9 +54,9 @@ const LoginPage = () => {
       } else {
         let result = await response.json();
         if (result.user.anchor_user_created !== true) {
-          setButton('Please Click to Complete Registration');
+          navigate('/components/personal', {state:{result}})
         } else if (result.user.nuban_set !== true) {
-          setButtons('Click to complete Registration');
+          navigate('/components/thanks', {state:{result}})
         } else {
           localStorage.setItem('user-info', JSON.stringify(result));
           navigate('/components/dash');
@@ -91,8 +84,6 @@ const LoginPage = () => {
                 <button className="logb" onClick={login} type="submit">Log in</button>
                 <div className="message">{message ? <p>{message}</p> : null}</div>
                 <p className="lop">Forgot Password?</p>
-                <div className="">{button ? <button onClick={reg} className="but">{button}</button> : null}</div>
-                <div className="">{buttons ? <button onClick={tanku} className="but">{buttons}</button> : null}</div>
             </form>
             <footer className="fot">Dont have an account? <Link to='/components/signup'><span className="lsf">Sign Up</span></Link></footer>
         </div>

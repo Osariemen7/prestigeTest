@@ -1,16 +1,18 @@
 import tick from './images/tick.svg';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 const ThankPage=()=>{
      const [monthly_revenue, setMonthly] = useState(100000)
      const [message, setMessage] = useState("");
      const navigate= useNavigate()
-    
+     const location = useLocation()
+     
      let tok= JSON.parse(localStorage.getItem("user-info"));
      const term = (tok) => {
+      let tack = location.state.result
       let refval;  
       if (tok === null || typeof tok === 'undefined') {
-        refval = 0;
+        refval = tack.refresh_token;
       } else {
         refval = tok.refresh_token;
       }
@@ -18,8 +20,10 @@ const ThankPage=()=>{
       return refval;
     }
     let refresh = term(tok)
+    
      async function create(e) {
         e.preventDefault();
+
         let ite ={refresh}
     let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
         method: 'POST',
@@ -44,7 +48,7 @@ const ThankPage=()=>{
            body:JSON.stringify(item)
           });
           if (result.status !== 201) {
-            setMessage("Some error occured");
+            setMessage('some error occured');
           } else {
             result = await result.json();
           localStorage.setItem('user-info', JSON.stringify(result)) 
