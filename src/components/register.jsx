@@ -55,15 +55,17 @@ const RegisterPage =()=>{
              },
              body:JSON.stringify(item)
             });
-            resut = await resut.json();
+        
             if (resut.status !== 201) {
-              setMessage(JSON.stringify(resut));;
+              resut = await resut.json();
+              setMessage(JSON.stringify(resut));
             } else {
               resut = await resut.json();
-            localStorage.setItem('user-info', JSON.stringify(resut)) 
+              localStorage.setItem('user-info', JSON.stringify(resut)) 
             navigate('/components/personal')
             }
           }
+          //
       return(
         <div>
       
