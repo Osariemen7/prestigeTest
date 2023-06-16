@@ -2,9 +2,17 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import plus from './images/plus.svg';
 
-let tok= JSON.parse(localStorage.getItem("user-info"));
-const terms = (tok) => {
-  let refreshval;
+  
+   
+
+const ProjectPage =()=>{
+    const [users, setUsers] = useState('');
+     const [hidden, setHidden] = useState("******");
+    const [info, setInfo] = useState('')
+    const navigate = useNavigate()
+    let tok= JSON.parse(localStorage.getItem("user-info"));
+    const terms = (tok) => {
+       let refreshval;
 
   if ( tok === null || typeof tok === "undefined" ) {
     refreshval = 0;
@@ -15,14 +23,7 @@ const terms = (tok) => {
   return refreshval;
 };
 let refresh = terms(tok)
-  
-   
 
-const ProjectPage =()=>{
-    const [users, setUsers] = useState('');
-  const [hidden, setHidden] = useState("******");
-    const [info, setInfo] = useState('')
-    const navigate = useNavigate()
     const fetchData = async () => {
         let item ={refresh}
         let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{

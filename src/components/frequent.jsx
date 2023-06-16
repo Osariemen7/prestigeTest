@@ -61,7 +61,7 @@ console.log(pin)
     return(
         <div>
            <div>
-           <Link to='/components/listp'><i class="fa-solid fa-chevron-left bac"></i></Link>
+           <Link to='/components/createp'><i class="fa-solid fa-chevron-left bac"></i></Link>
              <h3>How frequently would you like to save?</h3>
              <p className="sp">Enter how frequently you wish to save money</p>
            </div>

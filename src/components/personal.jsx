@@ -1,7 +1,20 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-let tok = JSON.parse(localStorage.getItem("user-info"));
+  
+const PersonalPage =() => {
+    const [message, setMessage] = useState("");
+    const [gender, setGender] = useState('');
+    const [dob1, setDob] = useState('');
+    const [bvn, setBvn] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [address, setAddress] = useState('');
+    const [business_name, setBusinessname] = useState('');
+    const [business_type, setBusinesstype] = useState('');
+    const [create_anchor_user, setCreateanchoruser] = useState(true);
+    const navigate = useNavigate();
+    let tok = JSON.parse(localStorage.getItem("user-info"));
 const terms = (tok) => {
     let refreshval;
   
@@ -26,19 +39,7 @@ const terms = (tok) => {
     return banes;
   };
   let bane = term(tok)
-  
-const PersonalPage =() => {
-    const [message, setMessage] = useState("");
-    const [gender, setGender] = useState('');
-    const [dob1, setDob] = useState('');
-    const [bvn, setBvn] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [address, setAddress] = useState('');
-    const [business_name, setBusinessname] = useState('');
-    const [business_type, setBusinesstype] = useState('');
-    const [create_anchor_user, setCreateanchoruser] = useState(true);
-    const navigate = useNavigate();
+
     const handleBusiness=(event) =>{
         setBusinessname(event.target.value)
     }

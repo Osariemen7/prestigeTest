@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 
 const Accounts =()=> {
   const [info, setInfo] = useState('')
-    const [users, setUsers] = useState('');
+  const [users, setUsers] = useState('');
   const [hidden, setHidden] = useState("******");
   const navigate= useNavigate()
     let tok= JSON.parse(localStorage.getItem("user-info"));

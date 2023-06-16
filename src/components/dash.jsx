@@ -19,7 +19,8 @@ const Dashboard =()=>{
   
  
   const project = () => {
-    navigate(0)
+    localStorage.setItem('user-info', JSON.stringify(tok))
+    navigate('/components/project')
   }
   // useEffect(() => {
   //   const reloadCount = sessionStorage.getItem('reloadCount');
@@ -87,26 +88,24 @@ const toggleHidden =()=>{
         }
         setHidden("******")
       }
-      useEffect(() => {
-        const reloadCount = sessionStorage.getItem('reloadCount');
+      // useEffect(() => {
+      //   const reloadCount = sessionStorage.getItem('reloadCount');
       
-        if (!reloadCount || parseInt(reloadCount) < 2) {
-          const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
-          sessionStorage.setItem('reloadCount', String(updatedReloadCount));
-          if (!reloadCount) {
-            window.location.reload();
-          }
-        } else {
-          sessionStorage.removeItem('reloadCount');
-        }
-      }, []);
+      //   if (!reloadCount || parseInt(reloadCount) < 2) {
+      //     const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
+      //     sessionStorage.setItem('reloadCount', String(updatedReloadCount));
+      //     if (!reloadCount) {
+      //       window.location.reload();
+      //     }
+      //   } else {
+      //     sessionStorage.removeItem('reloadCount');
+      //   }
+      // }, []);
         
     return(
         <div>
-        <div className='re'>
             <Link to='/'><i class="fa-solid fa-chevron-left bac"></i></Link>
-            <i onClick={project} class="fa-sharp fa-solid fa-rotate-right"></i>
-        </div> 
+
             <h3 className='dah3'>Hi, {name.first_name} </h3>
             <div className='dash'>
                 <p className='dp'>Total Balance</p>
