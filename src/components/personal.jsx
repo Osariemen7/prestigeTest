@@ -1,20 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-  
-const PersonalPage =() => {
-    const [message, setMessage] = useState("");
-    const [gender, setGender] = useState('');
-    const [dob1, setDob] = useState('');
-    const [bvn, setBvn] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [address, setAddress] = useState('');
-    const [business_name, setBusinessname] = useState('');
-    const [business_type, setBusinesstype] = useState('');
-    const [create_anchor_user, setCreateanchoruser] = useState(true);
-    const navigate = useNavigate();
-    let tok = JSON.parse(localStorage.getItem("user-info"));
+let tok = JSON.parse(localStorage.getItem("user-info"));
 const terms = (tok) => {
     let refreshval;
   
@@ -33,13 +20,25 @@ const terms = (tok) => {
     
      banes = "";
     } else {
-      banes = tok.last_name;
+      banes = tok.first_name;;
     }
   
     return banes;
   };
   let bane = term(tok)
-
+  
+const PersonalPage =() => {
+    const [message, setMessage] = useState("");
+    const [gender, setGender] = useState('');
+    const [dob1, setDob] = useState('');
+    const [bvn, setBvn] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [address, setAddress] = useState('');
+    const [business_name, setBusinessname] = useState('');
+    const [business_type, setBusinesstype] = useState('');
+    const [create_anchor_user, setCreateanchoruser] = useState(true);
+    const navigate = useNavigate();
     const handleBusiness=(event) =>{
         setBusinessname(event.target.value)
     }
@@ -97,8 +96,7 @@ async function bus(e) {
       });
     
       if (result.status !== 200) {
-        result = await result.json()
-        setMessage(JSON.stringify(result));
+        setMessage("Some error occured");
       } else {
         result = await result.json();
       localStorage.setItem('user-info', JSON.stringify(tok)) 

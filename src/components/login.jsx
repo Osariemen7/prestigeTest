@@ -9,8 +9,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState('');
     const navigate = useNavigate()
-
-    
+   
     const handleUsernameChange =(evnt) => {
 
         setUsername((evnt.target.value).replace('0', '234'));
@@ -32,41 +31,29 @@ const LoginPage = () => {
     //            navigate.push('/component/signup')
     //     }
     // }, [])
-  
-    async function login(e) {
-      e.preventDefault();
-      console.warn(username, password);
-      let item = { username, password };
-      let response = await fetch(
-        'https://sandbox.prestigedelta.com/dj-rest-auth/login/',
-        {
+   async function login(e) {
+    e.preventDefault();
+      console.warn(username, password)
+      let item = {username, password};
+      let result = await fetch ('https://sandbox.prestigedelta.com/dj-rest-auth/login/',{
           method: 'POST',
-          headers: {
+          headers:{
             'Content-Type': 'application/json',
-            accept: 'application/json',
-          },
-          body: JSON.stringify(item),
-        }
-      );
-    
-      if (response.status !== 200) {
-        setMessage('Invalid Username/Password');
+            'accept' : 'application/json'
+       },
+       body:JSON.stringify(item)
+      });
+      if (result.status !== 200) {
+        setMessage("Invalid Username/Password");
       } else {
-        let result = await response.json();
-        if (result.user.anchor_user_created !== true) {
-          localStorage.setItem('user-info', JSON.stringify(result))
-          navigate('/components/personal', {state:{result}})
-        } else if (result.user.nuban_set !== true) {
-          localStorage.setItem('user-info', JSON.stringify(result))
-          navigate('/components/thanks', {state:{result}})
-        } else {
-          localStorage.setItem('user-info', JSON.stringify(result));
-          navigate('/components/dash');
-        }
+        result = await result.json();
+      localStorage.setItem('user-info', JSON.stringify(result)) 
+      
+      navigate('/components/dash')
       }
-    }
-    
-   
+      
+   }
+
     return(
         <div>
         <Helmet>

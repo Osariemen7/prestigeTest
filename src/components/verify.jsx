@@ -1,14 +1,12 @@
 import {useState} from 'react'
 import OtpInput from 'react-otp-input';
-import { useNavigate, Link, useLocation} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Verify = () => {
     const [otp, setOtp] = useState('');
     const navigate = useNavigate()
     const [message, setMessage] = useState("");
-    const location = useLocation();
-  let num = location.state.item
-
+    
    async function vet(e){
         e.preventDefault()
         let res= JSON.parse(localStorage.getItem("user-info"));
@@ -28,15 +26,14 @@ const Verify = () => {
       if (sult.status !== 200) {
         setMessage("Incorrect Otp");
       } else {
-        sult = await sult.json(); 
-      navigate('/components/register', {state:{num}})
+        sult = await sult.json();
+      localStorage.setItem('user-info', JSON.stringify(sult)) 
+      navigate('/components/register')
       }
     }
-    console.log(num)
     return(
         <div>
-        <Link to='/components/signup'><i class="fa-solid fa-chevron-left bac"></i></Link>
-            
+            <i class="fa-solid fa-chevron-left bac"></i>
             <h2>Verify your phone number</h2>
             <p>Please enter the 4-digit verification code<br/> sent to your phone number in the boxes below</p>
            <div className='dtp'>

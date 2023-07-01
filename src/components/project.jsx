@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import plus from './images/plus.svg';
+
 
   
    
 
 const ProjectPage =()=>{
-    const [users, setUsers] = useState('');
      const [hidden, setHidden] = useState("******");
     const [info, setInfo] = useState('')
     const navigate = useNavigate()
@@ -24,44 +23,8 @@ const ProjectPage =()=>{
 };
 let refresh = terms(tok)
 
-    const fetchData = async () => {
-        let item ={refresh}
-        let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
-            method: 'POST',
-            headers:{
-              'Content-Type': 'application/json',
-              'accept' : 'application/json'
-         },
-         body:JSON.stringify(item)
-        });
-        rep = await rep.json();
-        let bab = rep.access_token
-      let response = await fetch("https://sandbox.prestigedelta.com/accounts/",{
-      method: "GET",
-      headers:{'Authorization': `Bearer ${bab}`},
-      })
-      response = await response.json()
-      localStorage.setItem('user-info', JSON.stringify(tok))
-    //   if (data.code === 'token_not_valid'){
-    //     navigate('/components/token')
-    //   } else {
-     setUsers(response)
-      }
     
-    useEffect(() => {
-      fetchData()
-    }, [])
-    let wark =users[0]
     
-    const toggleHidden =()=>{
-               if(hidden==="******")
-               {let gal =(wark.main_balances.available_balance).toLocaleString('en-US')
-                 
-                setHidden(`₦${gal}`)
-                return;
-               }
-               setHidden("******")
-             }
     const fetchDa = async () => {
         let item ={refresh}
         let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -72,9 +35,7 @@ let refresh = terms(tok)
          },
          body:JSON.stringify(item)
         });
-        if (item === null){
-          navigate(0)
-        }else{
+        
         rep = await rep.json();
         let bab = rep.access_token
       let response = await fetch("https://sandbox.prestigedelta.com/projectlist/",{
@@ -82,11 +43,11 @@ let refresh = terms(tok)
       headers:{'Authorization': `Bearer ${bab}`},
       })
       //localStorage.setItem('user-info', JSON.stringify(tok))
-      response = await response.json()
-      if (response.status !== 200) {
-        navigate(window.location.pathname, { replace: true });
+
+      if (response.status === 401) {
+        navigate('/components/login');
       } else {  
-      response = await response.json();}
+      response = await response.json();
     
       setInfo(response)
         }}
@@ -100,36 +61,44 @@ let refresh = terms(tok)
     
    // console.log(nam) 
    console.log(tok)
-   console.log()
-  const show=()=>{
-    
-     navigate('/components/Addlist')
-  } 
+   console.log(info)
    
+  const show=(index)=>{
+    const data = info[index]
+     navigate('/components/Addlist', {state:{data}})
+  } 
+  const toggleHidden =()=>{
+    if(hidden==="******")
+    {let gal =(info[0].balance).toLocaleString('en-US')
+      
+     setHidden(`₦${gal}`)
+     return;
+    }
+    setHidden("******")
+  }
+  console.log(info)
  if(info.length < 1){
     return(
         <div>
         <h2 className='head'>Project</h2>
         <div className="dash1">
            <p className='dp'>Total Balance</p>
-           <h1 className='tp'>₦000</h1>
+           <h1 className='tp'>₦0</h1>
         </div>
         <p className='l'>PROJECT PLANS</p>
         <div className='opend'>
             <p>You have no active project plan yet.<br /> Tap + icon to create an active project plan</p>
         </div>
          <Link to='/components/pop'>
-         <img className='plus' src={plus} alt='' /></Link>
+         <button className='logb'>Create First Project</button></Link>
         <footer className='dflex2'>
-      <Link to='/components/dash'><i class="fa-solid fa-house home"></i></Link>  
-        <i class="fa-solid fa-layer-group home1"></i>
-        <i class="fa-solid fa-people-group home"></i>
+        <Link to='/components/dash'><i class="fa-solid fa-house home"></i></Link>  
+          <i class="fa-solid fa-layer-group home1"></i>
+          <i class="fa-solid fa-people-group home"></i>
         <Link to='/components/accounts'><i class="fa-solid fa-wallet home"></i></Link>
           
         </footer>
-        
     </div>    
-    
     )} else{
         return(
             <div>
@@ -141,32 +110,37 @@ let refresh = terms(tok)
             </div>
             <p className='l'>PROJECT PLANS</p>
             {info.map((obj, index) =>
-            <div onClick={show} className='pd'>
+            <div onClick={() => show(index)} className='pd'>
+                 <p className='asav1'>Next Payment Date: {(new Date(obj.next_payment_day)).toDateString('en-GB')}</p>
+                <p className='asav1'>Amount To pay: ₦{(obj.payment_amount).toLocaleString('en-US')}</p>
                 <div className='pp'>
                 <p className='pn' key={index}>{obj.name}</p>
                     <p className='prog'>In Progress</p>
                 </div>
                 <div className='pp'>
                     <p key={index}>₦{(obj.target).toLocaleString('en-US')}</p>
-                    <p key={index}>{parseInt( obj.equity)/parseInt(obj.target) * 100}% </p>
+                    <p key={index}>{ Math.round(((parseInt( obj.equity)/parseInt(obj.target) * 100) + Number.EPSILON) * 100) / 100}% </p>
                 </div>
+                <div className="progress-b" style={{ width: `${100}%` }}>
                 <div className="progress-bar" style={{ width: `${parseInt( obj.equity)/parseInt(obj.target) * 100}%` }}>
-                   </div>
+                   </div> </div>
+                    
+                
             </div>)}
             <Link to='/components/pop'>
-         <img className='plus1' src={plus} alt='' /></Link>
+         <button className='logb'>New Project</button></Link>
          <footer className='dflex2'>
                 <div>
-                <Link to='/components/dash'><i class="fa-solid fa-house home"></i></Link>
+                <Link to='/components/dash'><i class="fa-solid fa-house home"></i>
                   
-                  <p className='dfp'>Home</p>
+                  <p className='dfp'>Home</p></Link>
                 </div>
                 <div>
                 <i class="fa-solid fa-layer-group home1"></i>
                   <p className='dfp'>Project</p>
                 </div>
                 <div>
-                  <i class="fa-solid fa-people-group home"></i>
+                <Link to='/components/club'><i class="fa-solid fa-people-group home"></i></Link>
                   <p className='dfp'>Club</p>
                 </div>
                 <div>

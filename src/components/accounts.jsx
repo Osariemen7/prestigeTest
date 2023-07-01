@@ -25,7 +25,7 @@ const Accounts =()=> {
 
   const fetchData = async () => {
     let item ={refresh}
-    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+    let rep = await fetch ('https://api.prestigedelta.com/refreshtoken/',{
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const Accounts =()=> {
     });
     rep = await rep.json();
     let bab = rep.access_token
-  let response = await fetch("https://sandbox.prestigedelta.com/accounts/",{
+  let response = await fetch("https://api.prestigedelta.com/accounts/",{
   method: "GET",
   headers:{'Authorization': `Bearer ${bab}`},
   })
@@ -64,7 +64,7 @@ const toggleHidden =()=>{
          
          const fetchInfo = async () => {
           let item ={refresh}
-          let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+          let rep = await fetch ('https://api.prestigedelta.com/refreshtoken/',{
               method: 'POST',
               headers:{
                 'Content-Type': 'application/json',
@@ -74,13 +74,13 @@ const toggleHidden =()=>{
           });
           rep = await rep.json();
           let bab = rep.access_token
-        let response = await fetch("https://sandbox.prestigedelta.com/transactionlist/?start_date=01/31/2023&end_date=07/31/2023",{
+        let response = await fetch("https://api.prestigedelta.com/transactionlist/?start_date=01/31/2023&end_date=07/31/2023",{
         method: "GET",
         headers:{'Authorization': `Bearer ${bab}`},
         })
-        response = await response.json()
-        if (response.status !== 200) {
-          navigate(window.location.pathname, { replace: true });
+        
+        if (response.status === 401) {
+          navigate('/components/login');
         } else {  
         response = await response.json();}
 
@@ -109,7 +109,7 @@ return(
             <div className="acct">
                <Link to='/components/fund'><button className='abut'>Add Fund</button></Link> 
                <div>
-                  <Link to='./transact'><button className='abut'>Transfer</button></Link>
+                  <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
                </div>
               
                 <button className='abut'>Overdraft</button>

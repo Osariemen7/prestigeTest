@@ -61,7 +61,7 @@ console.log(pin)
     return(
         <div>
            <div>
-           <Link to='/components/createp'><i class="fa-solid fa-chevron-left bac"></i></Link>
+           <Link to='/components/listp'><i class="fa-solid fa-chevron-left bac"></i></Link>
              <h3>How frequently would you like to save?</h3>
              <p className="sp">Enter how frequently you wish to save money</p>
            </div>
@@ -98,7 +98,7 @@ console.log(pin)
             </div>
             <div className="freq">
                <div onClick={() => handleClick3('₦100000')} style={{backgroundColor:backgroundColor3}} className="mon">₦100000</div>
-               <input onChange={valueChange} className="mon" type="number" placeholder="Different amount"/>
+               <input onChange={valueChange} className="mon1" type="number" placeholder="Different amount"/>
             </div>  
             <p>{clickedItem}</p>  
         </div>

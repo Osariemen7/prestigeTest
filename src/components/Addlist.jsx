@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Vector from './images/Vector.svg';
 import Modal from 'react-modal';
 let tok= JSON.parse(localStorage.getItem("user-info"));
@@ -23,7 +23,8 @@ const Addlist=()=>{
   const [isOpen, setIsOpen] = useState(false);
   const [amount, setAmount] = useState('')
   const [message, setMessage] = useState('')
-
+  const location = useLocation();
+  let index = location.state.data
   const openModal = () => {
     setIsOpen(true);
   };
@@ -72,103 +73,123 @@ async function fproj(e) {
     });
     rep = await rep.json();
     let bab = rep.access_token 
-    console.warn(info[0].name, amount)
-    let project_name = info[0].name
+    console.warn(index.name, amount)
+    let project_name = index.name
     let item = {project_name, amount};
-    let result = await fetch ('https://sandbox.prestigedelta.com/fundproject/',{
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-          'accept' : 'application/json',
-          'Authorization': `Bearer ${bab}`
-     },
-     body:JSON.stringify(item)
+  
+
+  try {
+    let result = await fetch('https://api.prestigedelta.com/fundproject/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': `Bearer ${bab}`
+      },
+      body: JSON.stringify(item)
     });
+
     if (result.status !== 200) {
-      result = await result.json()
-      setMessage(JSON.stringify(result));
+      const errorResult = await result.json();
+      setMessage(JSON.stringify(errorResult));
     } else {
-      result = await result.json();
-    localStorage.setItem('user-info', JSON.stringify(result)) 
-      closeModal()
+      const successResult = await result.json();
+      localStorage.setItem('user-info', JSON.stringify(successResult));
+      closeModal();
     }
-    
- }
-console.log(tok)
+  } catch (error) {
+    // Handle fetch error
+    console.error(error);
+  }
+;
+}
+
+console.log(index)
+console.log(info)
+
 if(loading) {
   return(
   <p>Loading</p>)
 }
-  return(
-    <div>
-        <Link to='/components/project'><i class="fa-solid fa-chevron-left bac"></i></Link>
-        <h4 className="dh3">{info[0].name}</h4>
+return (
+  <div>
+    <Link to='/components/project'>
+      <i className="fa-solid fa-chevron-left bac"></i>
+    </Link>
+    
+      <div >
+        <h4 className="dh3">{index.name}</h4>
         <div className="kd">
-        <div className="pp">
-           <p>Balance</p>
-           <p>In Progress</p>
+          <div className="pp">
+            <p>Balance</p>
+            <p>In Progress</p>
+          </div>
+          <h2 className="ah3">₦{(parseInt(index.target) - parseInt(index.equity)).toLocaleString('en-US')}</h2>
+          <p key={index}>{ Math.round(((parseInt( index.equity)/parseInt(index.target) * 100) + Number.EPSILON) * 100) / 100}% </p>
+          <div className="progress-b" style={{ width: `${100}%` }}>
+          <div className="progress-bar" style={{ width: `${parseInt(index.equity) / parseInt(index.target) * 100}%` }}>
+          </div> </div>
+          
         </div>
-        <h2 className="ah3">₦{(parseInt(info[0].target) - parseInt(info[0].equity)).toLocaleString('en-US')}</h2>
-        <p className="prip">{parseInt( info[0].equity)/parseInt(info[0].target) * 100}% achieved of ₦{(info[0].target).toLocaleString('en-US')} </p>
-        <div className="progress-bar" style={{ width: `${parseInt( info[0].equity)/parseInt(info[0].target) * 100}%` }}>
-         </div>
+        <div className="aflex">
+          <button className="pof" onClick={openModal}>Top up</button>
+          <Link className="trb" to='/components/transact'>View Transactions</Link>
         </div>
-         <div className="aflex">
-         <button className="pof" onClick={openModal}>Top up</button>
-         <Link className="trb" to='/components/transact'>View Transactions</Link>
-         
-         </div>
-         <div className='dflex'>
-            <img src={Vector} alt=''/>
-                <p className='dfp'>Maturity date may depend on your ability to make the payment on schedule</p>
-            </div>
-            <div className="adf">
-              <div className="asav">
-                 <p>Savings Target(30%)</p>
-                 <p>Maturity Date</p>
-              </div>
-              <div className="asav1">
-                <p>₦{(info[0].target_equity).toLocaleString('en-US')}</p>
-                <p>{(new Date(info[0].maturity_day)).toLocaleDateString('en-GB')}</p>
-              </div>
-            </div>
-            <div className="adf">
-               <div className="asa2">
-                  <p>Interest Value(2% p.a)</p>
-                  <p>Repayment Date</p>
-               </div>
-               <div className="asav1">
-                  <p>₦{(info[0].interest_value).toLocaleString('en-US')}</p>
-                  <p>{(new Date(info[0].repayment_day)).toLocaleDateString('en-GB')} </p>
-               </div>
-            </div>
-            <h4 className="prit">Project Resources</h4>
-            <p className="prip">List of project Resources you will need for this project</p>
-            <div className="">
-            {info[0].assets.map((obj, index) =>
-              <div className="asa">
-                <p key={index}>{obj.name}</p>
-                <p key={index}>₦{(obj.price).toLocaleString('en-US')}</p>
-              </div>)}
-               <div className="asagr">
-                <p>Total</p>
-                <p>₦{(info[0].target).toLocaleString('en-US')}</p>
-               </div>
-            </div>
-            <Modal
-            className='modal'
-            isOpen={isOpen}
-             onRequestClose={closeModal}
-               contentLabel="Example Popup">
-        <i class="fa-solid fa-x mx" onClick={closeModal}></i>
-           <h3 className='h4'>instantly Top up</h3>
-            <form >
-                <p className='mp'>Enter Amount</p>
-                <input type="text" className='mine'  onChange={handleInputChange} /><br/>
-                <p className='mp'>Payment Method</p>
-                <select className="line">
-                    <option></option>
-                    <option>Prestige Account</option>
+        <div className='dflex'>
+          <img src={Vector} alt='' />
+          <p className='dfp'>Maturity date may depend on your ability to make the payment on schedule</p>
+        </div>
+        <div className="adf">
+          <div className="asav">
+            <p>Savings Target (30%)</p>
+            <p>Maturity Date</p>
+          </div>
+          <div className="asav1">
+            <p>₦{(index.target_equity)}</p>
+            <p>{(new Date(index.maturity_day)).toLocaleDateString('en-GB')}</p>
+          </div>
+        </div>
+        <div className="adf">
+          <div className="asa2">
+            <p>Interest Value (6% p.a)</p>
+            <p>Repayment Date</p>
+          </div>
+          <div className="asav1">
+            <p>₦{(index.interest_value)}</p>
+            <p>{(new Date(index.repayment_day)).toLocaleDateString('en-GB')}</p>
+          </div>
+        </div>
+        <h4 className="prit">Project Resources</h4>
+        <p className="prip">List of project resources you will need for this project</p>
+        <div>
+        {index.assets.map((obj, index) =>
+          <div key={index} className="asa">
+            <p>{obj.name}</p>
+
+            <p>₦{(obj.price).toLocaleString('en-US')}</p>
+          </div>)}
+          <div className="asagr">
+            <p>Total</p>
+            <p>₦{(index.target).toLocaleString('en-US')}</p>
+          </div>
+        </div>
+      </div>
+  
+    <Modal
+      className='modal'
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+      contentLabel="Example Popup"
+    >
+      <i className="fa-solid fa-x mx" onClick={closeModal}></i>
+      <h3 className='h4'>Instantly Top up</h3>
+      <form>
+        <p className='mp'>Enter Amount</p>
+        <input type="text" className='mine' onChange={handleInputChange} /><br />
+        <p className='mp'>Payment Method</p>
+        <select className="line">
+                <option></option>
+                <option>Prestige Account</option>
                 </select>
                 {message ? <p>{message}</p> : null} 
                 <button className='logb' onClick={fproj}>Continue</button>

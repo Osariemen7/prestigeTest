@@ -12,14 +12,14 @@ const ListPage=()=>{
     const [asset_name1, setAssetname] = useState([]);
     const [inputVal, setInputVal] = useState("");
     const [inputValue, setInputValue] = useState("");
-    const [is_purchase, setIspurchase] = useState(true)
+    const [is_purcha, setIspurcha] = useState([])
     const [often, setOften] = useState('');
     const navigate = useNavigate()
     const location = useLocation();
   let tick = location.state.data
   const term = (tick) => {
     let nam;
-    if (typeof tick=== 'undefined' || tick === null) {
+    if (tick.length === 0 || tick === null) {
       nam = "";
     } else {
       nam = tick.name;
@@ -56,28 +56,40 @@ const ListPage=()=>{
       setInputValue("");
       setAssetsprice([...asset_price1, inputVal]);
       setInputVal();
+      setIspurcha([...is_purcha, often]);
+      setOften();
       closeModal()
     }
      const handleSubmit =(event) => {
-      setIspurchase(is_purchase)
         event.preventDefault();
+        
         if (asset_name1.length < 1) {
           setMessage('Please Add items')
         } else {
-          let asset_name =(asset_name1.toString())
-          let asset_price= (asset_price1.toString())
-          let assets = [{asset_name, asset_price, is_purchase}]
+          let is_purchase = (is_purcha)
+          let asset_name =(asset_name1)
+          let asset_price= (asset_price1)
+          let asset = {asset_name, asset_price, is_purchase}
+          const separatedData = asset.asset_name.map((_, index) => ({
+            asset_name: asset.asset_name[index],
+            asset_price:parseInt( asset.asset_price[index]),
+            is_purchase: Boolean(asset.is_purchase[index])
+          }));
+          let assets = separatedData;
+          
           let pro = {assets, name, tota}
           
                 navigate('/components/frequent', {state:{pro}})
         }
+        
      }
-  console.log(tick)
+     console.log(is_purcha)
+  
     return(
         <div>
             <Link to='/components/createp'><i class="fa-solid fa-chevron-left bac" onClick={openModal}></i></Link>
             <h3>What do you intend to purchase<br/> or lease as part of this project?</h3>
-            <p className='ptt'>Add a list of resource you will need for this project<br/>eg land for farming, Equipment</p>
+            <p>Add a list of resource you will need for this project<br/>eg land for farming, Equipment</p>
             <h1 >₦{total}</h1>
             <p className="listp">Estimated amount needed for your business</p>
             <button onClick={openModal} className="ulbut">Add Item</button>
@@ -93,6 +105,12 @@ const ListPage=()=>{
                     <p key={index1}>₦{to}</p>
                   ))}
                  </ul>
+                 <ul>
+                     {is_purcha.map((tod, index1) => (
+                    <p key={index1}>{tod}</p>
+                  ))}
+                 </ul>
+
            </div>
            
             </div>
@@ -116,8 +134,8 @@ const ListPage=()=>{
                    <label> On Purchase</label>
             
                    <input type='radio' className='rad'
-                    value='false'
-                    checked={often === 'false'}
+                    value= ''
+                    checked={often === ''}
                     onChange={handleChange} />
                    <label>On Lease</label>
                 

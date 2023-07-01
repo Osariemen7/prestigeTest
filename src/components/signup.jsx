@@ -3,10 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = () => {
     const [message, setMessage] = useState("");
-    const [messag, setMessag] = useState('')
+    const [messag, setMessag] = useState("");
     const [phone_number, setPhoneNumber] = useState('')
     const navigate = useNavigate()
-    
 
     const handlePhoneChange = (e) => (
         setPhoneNumber((e.target.value).replace('0', '234'))
@@ -23,21 +22,20 @@ const Signup = () => {
          },
          body:JSON.stringify(item)
         });
-                
+       
         
-        if (item.phone_number.length !== 13) {
+        if (res.status !== 200) {
           setMessage("Invalid Phone number!");
         } else{
-          setMessag('loading')
           res = await res.json();
-          localStorage.setItem('user-info', JSON.stringify(res))
           
-          navigate('/components/verify', {state:{item}});   
+          localStorage.setItem('user-info', JSON.stringify(res))
+         navigate('/components/verify');   
 
         }
-        console.log(item)
-      }
-      
+        
+     }
+
     return(
         <div>
            <Link to='/'><i class="fa-solid fa-chevron-left bac"></i></Link>
@@ -54,6 +52,5 @@ const Signup = () => {
            
         </div>
      )
-     
 }
 export default Signup

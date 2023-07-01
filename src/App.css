@@ -1,59 +1,3 @@
-main {
-  text-align: center;
-}
-.card {
-  background: aqua;
-  width:300px;
-  border: 1px solid aqua;
-  padding:2%;
-  border-radius:15px;
-  margin:20px;
-  display: inline-block;
-}
-nav {
-  background-color: black;
-  text-align: end;
-  padding: 2%;
-}
-.nav {
-  text-decoration: none;
-  background-color: black;
-  margin: 20px;
-  color:white;
-  padding: 10px;
-  font-size: 20px;
-  border-radius: 5px;
-}
-.nav:hover {
-  color:aqua;
-}
-.paginationBtns {
-  list-style: none;
-  display: flex;
-  width: 80%;
-  justify-content: center;
-}
-.paginationBtns a {
-  margin:20px 10px;
-  padding: 8px;
-  border: 1px solid aqua;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.paginationBtns a:hover {
-  background-color: aqua;
-} 
-.paginationActive a {
-  background-color: aqua; 
-}
-.prod {
-  text-decoration: none;
-  background-color: rgb(10, 68, 78);
-  color:beige;
-  margin: 10px;
-  padding: 4px;
-  font-size: 25px;
-}
 .App {
   text-align: center;
 }
@@ -68,20 +12,6 @@ nav {
   text-align: left;
   margin: 4% 12%;
 }
-.pof {
-  color:#fff;
-  background-color: blue;
-  border: 1px solid blue;
-  width: 40%;
-  height: 37px;
-}
-.re{
-  display: flex;
-  gap: 300px;
-  padding: 25px;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
 .h1{
   color: #fff;
   margin: 0 auto;
@@ -89,16 +19,6 @@ nav {
 .ul{
   display: flex;
   gap: 100px;
-}
-.dah3{
-  text-align: left;
-  margin: 0% 12%;
-}
-.shi{
-  margin: 0;
-}
-.ptt{
-  padding: 2%;
 }
 .rev{
   border: 1px solid rgb(233, 230, 230);
@@ -147,8 +67,6 @@ hr{
 }
 .plus{
   margin-top: 290px;
-  margin-left: 210px;
-  height: 80px;
 }
 .bac{
   position: relative;
@@ -179,7 +97,7 @@ hr{
   margin: 0;
 }
 .dash{
-  background-color: rgb(23, 23, 116);
+  background-color: #060b26;
   margin:2% 5%;
   width: 90%;
   border-radius: 10px;
@@ -240,6 +158,13 @@ hr{
   width: 120px;
   background-color: lightcyan;
 }
+.mon1{
+  border: 1px solid lightcyan;
+  width: 150px;
+  background-color: lightcyan;
+  font-size: 18px;
+  padding:2% ;
+}
 .freq{
   display: flex;
   gap:10px;
@@ -282,24 +207,84 @@ hr{
   height: 5px;
   background-color: blue;
   margin-top: 10%;
-  margin-left: 5%;
   margin-bottom: 2%;
 }
+.cl{
+  margin-top: 40%;
+}
+.clt{
+  margin-bottom: 35%;
+}
+.cut{
+    width: 90%;
+    height: 50px;
+    background-color: skyblue;
+    border: none;
+    color:blue;
+    margin-bottom: 25%;
+}
+.clup{
+  display: flex;
+  gap: 10px;
+  padding:3% 5%;
+  
 
-.progress-bar:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
+}
+.clu{
+  background-color:  #F8F9FC;
+  border: 1px solid  #F8F9FC;;
+  padding: 3%;
+  text-align: left;
+  margin-top: 0;
+  border-radius: 4px;
+  width: 150px;
+  height: 72px;
+}
+.clund{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  font-size: 13px;
+}
+.ppn{
+  display: flex;
+  gap: 30%;
+  padding: 0;
+  height: 20px;
+  font-size: 13px;
+}
+.clun{
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.progress-b {
   height: 100%;
-  background-color:gray;
+  background-color: lightblue;
   transition: width 0.3s ease-in-out;
+}
+.cpp{
+  display: flex;
+  gap:10px;
+  padding: 2% 8%;
+}
+.cprog{
+  height: 5px;
+  width: 100%;
+}
+.cpn{
+  margin-top: 0;
+}
+.cprof{
+  background-color: blue;
+  color:#fff;
+  border-radius: 50%;
+  padding: 6%;
 }
 .pd{
   border: 1px solid gainsboro;
   margin:2% 9%;
-  border-radius: 5%;
+  border-radius: 4px;
   padding:2% 5%;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
 }
 .pp{
   display: flex;
@@ -347,6 +332,13 @@ hr{
   text-decoration: none;
   padding-top:2% ;
   font-size: 13px;
+}
+.pof {
+  color:#fff;
+  background-color: blue;
+  border: 1px solid blue;
+  width: 40%;
+  height: 37px;
 }
 .aflex{
   display: flex;
@@ -451,10 +443,12 @@ hr{
 }
 .dflex2{
    display: flex;
-   gap:40px;
+   gap:50px;
    margin: 0 10%;
-   margin-top: 5%;
+   margin-top: 10%;
    padding: 5%;
+   position: relative;
+   top: 40px;
    }
 .dfp2{
   font-size: 13px;
@@ -485,7 +479,7 @@ hr{
 .modal{
   text-align: center;
   margin-top: 30px;
-  width:95%;
+  width:90%;
   background-color: #fff;
   height: 500px;
   
@@ -511,6 +505,67 @@ hr{
 }
 .listp{
   color: grey;
+}
+.nav-menu{
+  background-color: #060b26;
+  width: 50%;
+  height:100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;;
+  padding: 0;
+}
+.nav-menu.active {
+  left: 0;
+  transition: 350ms;
+}
+.nav-text{
+  justify-content: start;
+  align-items: center;
+  text-decoration: none;
+  color:#fff;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px solid #fff ;
+}
+.nav-text span{
+  margin-left: 14px;
+}
+.nav-text i{
+  color: #fff;
+  font-size: 30px;
+}
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 99px;
+  padding: 8px 0px 8px 16px;
+  
+}
+.nav-close{
+  list-style: none;
+  justify-content: end;
+  color:#fff;
+  margin-left: 60%;
+  
+}
+.nav-active{
+  justify-content: start;
+  align-items: center;
+  text-decoration: none;
+  color:#fff;
+  width: 95%;
+  height: 50%;
+  padding-top: 5%;
+  background-color: #060b26;
+}
+.nav-menu-item{
+  width:100%;
 }
 .home1{
   color: blue;
@@ -565,20 +620,83 @@ hr{
 } 
 .logb{
   width:275px;
-    height:32px;
+    height:35px;
     padding:0 2%;
     background-color: blue;
     border: none;
     margin-top: 20px;
     color: #fff;
-} 
-.pog{
-  height: 32px;
-  color:#fff;
+}
+.tranb{
+  width: 285px;
+  height: 35px;
+  padding: 0 2%;
   background-color: blue;
-  width: 254px;
-  margin: 10% 5%;
-  border: 1px solid blue;
+  margin-top: 45px;
+  color: #fff;
+  border: none;
+  margin-left: 15px;
+} 
+.meat{
+  background-color: rgb(235, 245, 248);
+  padding:1% 5%;
+  width: 320px;
+  margin-left: 18px;
+}
+.meats{
+  background-color: rgb(219, 241, 234);
+  padding: 1% 5%;
+  width: fit-content;
+  margin-top: 20%;
+  margin-left: 6%;
+  font-size: 15px;
+}
+.vasa{
+  display: flex;
+  gap:80px;
+  height:25px;
+  border-bottom: 1px solid gainsboro;
+  padding: 4% 12%;
+}
+.vasa1{
+  display: flex;
+  gap:145px;
+  height:25px;
+  border-bottom: 1px solid gainsboro;
+  padding: 4% 12%;
+}
+.vasa2{
+  display: flex;
+  gap:160px;
+  height:25px;
+  border-bottom: 1px solid gainsboro;
+  padding: 4% 12%;
+}
+.me{
+  background-color: lightblue;
+  width: fit-content;
+  margin-left: 100px;
+}
+.trmo{
+  margin-top: 50%;
+  width: 300px;
+  padding: 15%;
+  background-color: #fff;
+  height: 70vh;
+}
+.tx{
+  text-align: right;
+  color: #060b26;
+  margin-left: 80%;
+}
+.totp{
+  font-size: 40px;
+    margin: 10% 3%;
+    border: 3px solid #060b26;
+    box-shadow: 10%;
+}
+.space{
+  margin-bottom: 100px;
 }
   .but1{
     margin: 10px;
@@ -617,15 +735,22 @@ hr{
   }
   .lin{
     width:275px;
-    height:30px;
+    height:35px;
     padding: 0 2%;
     margin-bottom: 0;
     }
   .line{
     padding:0 2%;
     width: 265px;
-    height: 30px;
+    height: 35px;
     margin-left:18px ;
+  }
+  .lne {
+    padding: 0 2%;
+    width: 295px;
+    margin-left: 55px;
+    height: 35px;
+    border-color: black;
   }
   .fot{
     margin-top: 50px;

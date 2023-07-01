@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage =()=>{
     const [passwordType, setPasswordType] = useState("password");
@@ -9,12 +9,10 @@ const RegisterPage =()=>{
     const [middle_name, setMiddlename] = useState('')
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
-    const location= useLocation()
+    const [username, setUsername] = useState('');
     const [message, setMessage] = useState("");
     const navigate = useNavigate()
-    const user =location.state.num
-    let username = user.phone_number
-    
+
     const handleEmailChange = (event) =>{
        setEmail(event.target.value)
     }
@@ -34,6 +32,10 @@ const RegisterPage =()=>{
   const handlePasswordConfirm =(evnt)=>{
         
     setPassword2(evnt.target.value);
+}
+const handleUsernameChange =(evnt) => {
+
+  setUsername((evnt.target.value).replace('0', '234'));
 }
     const togglePassword =()=>{
         if(passwordType==="password")
@@ -55,17 +57,15 @@ const RegisterPage =()=>{
              },
              body:JSON.stringify(item)
             });
-        
+            
             if (resut.status !== 201) {
-              resut = await resut.json();
-              setMessage(JSON.stringify(resut));
+              setMessage('Invalid Information');
             } else {
               resut = await resut.json();
-              localStorage.setItem('user-info', JSON.stringify(resut)) 
+            localStorage.setItem('user-info', JSON.stringify(resut)) 
             navigate('/components/personal')
             }
           }
-          //
       return(
         <div>
       
@@ -79,7 +79,9 @@ const RegisterPage =()=>{
             <p className='sp'>Last Name</p>
             <input type='text' className="lin" onChange={handleLastname} name='last-name' placeholder='Last Name' /><br/>
             <p className='sp'>Middle Name</p>
-             <input className="lin"  onChange={handleMiddlename} type="text" name="middlename" placeholder='Middle Name' required/><br/>
+            <input type='text' className="lin"  onChange={handleMiddlename} name='middle-name' placeholder='Middle Name' /><br/>
+            <p className='sp'>Phone number</p>
+            <input className="lin"  onChange={handleUsernameChange} type="text" name="username" placeholder='Phone Number' required/><br/>
             <p className='sp'>Create Password</p>
             <input type={passwordType} className="line" onChange={handlePasswordChange} name='password1' />
             { passwordType==="password"?

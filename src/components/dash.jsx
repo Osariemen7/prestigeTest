@@ -5,34 +5,21 @@ import stack from './images/stack.svg';
 import sidearrow from './images/sidearrow.svg';
 import money from './images/money.svg';
 import club from './images/club.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 
 const Dashboard =()=>{
   const [users, setUsers] = useState('');
   const [hidden, setHidden] = useState("******");
   const navigate = useNavigate()
-  
+  const [sidebar, setSidebar] = useState('')
+
+  const showSidebar = () => setSidebar(!sidebar)
+
   let tok= JSON.parse(localStorage.getItem("user-info"));
   let refresh = tok.refresh_token
   let name = tok.user
   
- 
-  const project = () => {
-    localStorage.setItem('user-info', JSON.stringify(tok))
-    navigate('/components/project')
-  }
-  // useEffect(() => {
-  //   const reloadCount = sessionStorage.getItem('reloadCount');
-    
-  //   if (!reloadCount || reloadCount < 2) {
-  //     const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
-  //     sessionStorage.setItem('reloadCount', String(updatedReloadCount));
-  //     window.location.reload();
-  //   } else {
-  //     sessionStorage.removeItem('reloadCount');
-  //   }
-  // }, []);
   
   
     const fetchData = async () => {
@@ -53,15 +40,18 @@ const Dashboard =()=>{
       })
       response = await response.json()
       localStorage.setItem('user-info', JSON.stringify(tok))
-      
+      if (response.status === 401){
+        navigate('/components/login')
+      } else {
      setUsers(response)
-
-       
-     }
+      
+      }
+    }
   
     useEffect(() => {
       fetchData()
     }, [])
+    
     console.log(tok)
     
 //   useEffect(() => {
@@ -88,25 +78,42 @@ const toggleHidden =()=>{
         }
         setHidden("******")
       }
-      // useEffect(() => {
-      //   const reloadCount = sessionStorage.getItem('reloadCount');
       
-      //   if (!reloadCount || parseInt(reloadCount) < 2) {
-      //     const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
-      //     sessionStorage.setItem('reloadCount', String(updatedReloadCount));
-      //     if (!reloadCount) {
-      //       window.location.reload();
-      //     }
-      //   } else {
-      //     sessionStorage.removeItem('reloadCount');
-      //   }
-      // }, []);
         
     return(
         <div>
-            <Link to='/'><i class="fa-solid fa-chevron-left bac"></i></Link>
-
-            <h3 className='dah3'>Hi, {name.first_name} </h3>
+            <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-item'>
+                    <li className='nav-close'>
+                    <i onClick={showSidebar} class="fa-solid fa-x"></i>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <span className='dfp'>Home</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
+                  <span className='dfp'>Project</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
+                     <span className='dfp'>Club</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    
+                    <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
+                      <span className='dfp'>Log Out</span></Link>
+                    </li>
+                
+                    
+                </ul>
+            </nav>
+            <h3 className='h4'>Hi, {name.first_name} </h3>
             <div className='dash'>
                 <p className='dp'>Total Balance</p>
                 
@@ -126,7 +133,7 @@ const toggleHidden =()=>{
             </div>
             <p className='l'>QUICK ACTION</p>
             <Link to='/components/project' className='link'> <div className='dflex1'>
-                <img  src={stack} alt='' />
+                <img src={stack} alt='' />
                 <div >
                     <h4 className='dh3'>Create project plan</h4>
                     <p className='dfp'>Start your project plan now</p>
@@ -149,25 +156,7 @@ const toggleHidden =()=>{
                 </div>
                 <img src={sidearrow} alt='' />
             </div>
-            <footer className='dflex2'>
-                <div>
-                  <i class="fa-solid fa-house home1"></i>
-                  <p className='dfp'>Home</p>
-                </div>
-                <div>
-                <Link to='/components/project'><i class="fa-solid fa-layer-group home"></i></Link>
-                  <p className='dfp'>Project</p>
-                </div>
-                <div>
-                  <i class="fa-solid fa-people-group home"></i>
-                  <p className='dfp'>Club</p>
-                </div>
-                <div>
-                <Link to='/components/accounts'><i class="fa-solid fa-wallet home"></i></Link>
-                  
-                  <p className='dfp'>Account</p>
-                </div> 
-            </footer>
+            
         </div>
     )
 }

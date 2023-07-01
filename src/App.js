@@ -21,7 +21,14 @@ import ListPage from './components/listp';
 import Frequent from './components/frequent';
 import Accounts from './components/accounts';
 import Transact from './components/transact';
-import Pro from './components/pro'
+import Pro from './components/pro';
+import Club from './components/club';
+import CreateClub from './components/cclub';
+import GetGroup from './components/getgroup';
+import Join from './components/joinc';
+import Navbar from './components/navbar';
+import PostMon from './components/getgrp2';
+import Receipt from './components/getrec';
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -55,7 +62,14 @@ function App() {
         <Route path="/components/transact" element={<Transact />} />
         <Route path ='/components/Addlist' element={<Transact />} />
         <Route path='/components/pro' element={<Pro />} />
-      
+        <Route path='/components/club' element={<Club />}/>
+        <Route path='/components/joinc' element={<Join />} />
+        <Route path='/components/cclub' element={<CreateClub />} />
+        <Route path='/components/getgroup' element={<GetGroup />} />
+        <Route path='/components/navbar' element={<Navbar />} />
+        <Route path='/components/getgrp2' element={<PostMon />} />
+        <Route path='/components/getrec' element={<Receipt />} />
+              
      </Routes>
       
     </div>

@@ -1,76 +1,72 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BusinesPage=()=>{
-    const [business_name, setBusinessname] = useState('');
-    const [business_type, setBusinesstype] = useState('');
-    const [create_anchor_user, setCreateanchoruser] = useState(true);
-    const [message, setMessage] = useState("");
-    const navigate = useNavigate()
-    
-    let pers =  JSON.parse(localStorage.getItem("user-info"));   
-    let re= JSON.parse(localStorage.getItem("user-info"));
-        let bane = re.first_name
-        let gender =pers.gender
-        let dob = pers.dob
-        let bvn = pers.bvn
-        let address = pers.address
-        let city = pers.city
-        let state = pers.state
-    const handleBusiness=(event) =>{
-        setBusinessname(event.target.value)
+const GetGroup = () => {
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
+  const fetchData = async () => {
+    try {
+      let tok = JSON.parse(localStorage.getItem('user-info'));
+      let refresh = tok ? tok.refresh_token : 0;
+      let item = { refresh };
+
+      let rep = await fetch('https://sandbox.prestigedelta.com/refreshtoken/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: JSON.stringify(item),
+      });
+
+      if (rep.status === 401) {
+        navigate('/components/login');
+        return;
+      }
+
+      rep = await rep.json();
+      let bab = rep.access_token;
+
+      let response = await fetch('https://sandbox.prestigedelta.com/group/', {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${bab}` },
+      });
+
+      response = await response.json();
+      setUsers(response);
+    } catch (error) {
+      // Handle error
     }
-    const handleBusinesstype =(event) => {
-        setBusinesstype(event.target.value)
-    }
-    async function bus(e) {
-        e.preventDefault();
-          setCreateanchoruser(create_anchor_user)
-          console.warn(gender, address, dob, bvn, city, state, business_name, business_type, create_anchor_user)
-          let item = {gender, address, dob, bvn, city, state, business_name, business_type, create_anchor_user};
-          let result = await fetch ('https://sandbox.prestigedelta.com/updateuser/',{
-              method: 'POST',
-              headers:{
-                'Content-Type': 'application/json',
-                'accept' : 'application/json',
-                'Authorization': `Bearer ${access}`
-           },
-           body:JSON.stringify(item)
-          });
-          localStorage.setItem('user-info', JSON.stringify(item))
-          if (result.status !== 200) {
-            setMessage("Some error occured");
-          } else {
-            result = await result.json();
-          localStorage.setItem('user-info', JSON.stringify(result)) 
-          navigate('/components/personal')
-          }
-        }
-    return(
-        <div>
-            <h2>Hi {bane}, tell us about<br /> your business</h2>
-            <p>Prestige finance is legally required to collect this information</p>
-            <form>
-                <p className='sp'>Business Name</p>
-                <input type="text" onChange={handleBusiness} className="line" />
-                <p className='sp'>Type of Business</p>
-                <select className="li" onChange={handleBusinesstype}>
-                    <option> </option>
-                    <option>Agency Banking</option>
-                    <option>Fast Food Restuarants</option>
-                    <option>Pharmacies</option>
-                    <option>Health and Beauty Spas</option>
-                    <option>Retail Merchant</option>
-                    <option>Barber and Beauty Spas</option>
-                    <option>Electrical delivery business</option>
-                    <option>Car Washes</option>
-                    <option>Stationaries/Office Supplies</option>
-                    <option>Others</option>
-                </select>
-                <div className="message">{message ? <p>{message}</p> : null}</div>
-                <button className='but' onClick={bus} type="submit">Next</button>
-            </form>
-        </div>
-    )
-}
-export default BusinesPage
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // Empty dependency array ensures that the effect runs only once during the initial render
+
+  console.log(users);
+
+  return (
+    <div>
+       
+       <div  className='pd'>
+                <div className='pp'>
+                <p className='pn' >Your Progress</p>
+                    <p className='prog'>On Track</p>
+                </div>
+                <div className='ppn'>
+                    <p >Average Total of Project</p>
+                    <p>{info[0].my_membership.performance * 100}% </p>
+                </div>
+                <div>
+                  <div className="progress-b" style={{ width: `${100}%` }}>
+                  <div className="progress-bar" style={{ width: `${info[0].my_membership.performance *100}%` }}>
+                   </div> </div>
+                 
+                </div>
+       </div>
+    </div>
+  );
+};
+
+export default GetGroup;

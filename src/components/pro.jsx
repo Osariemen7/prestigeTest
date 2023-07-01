@@ -8,7 +8,7 @@ const Pro = ()=> {
   let pine =  location.state.name
   const teem = (pine) => {
     let nam;  
-    if (pine === null || typeof pine === "undefined") {
+    if (pine.length === 0) {
       nam = 'null';
     } else {
       nam = pine.name;

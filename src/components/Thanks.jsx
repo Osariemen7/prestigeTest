@@ -1,37 +1,24 @@
 import tick from './images/tick.svg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 const ThankPage=()=>{
      const [monthly_revenue, setMonthly] = useState(100000)
      const [message, setMessage] = useState("");
      const navigate= useNavigate()
-    //  useEffect(() => {
-    //   const reloadCount = sessionStorage.getItem('reloadCount');
-    
-    //   if (!reloadCount || parseInt(reloadCount) < 1) {
-    //     const updatedReloadCount = reloadCount ? parseInt(reloadCount) + 1 : 1;
-    //     sessionStorage.setItem('reloadCount', String(updatedReloadCount));
-    //     if (!reloadCount) {
-    //       window.location.reload();
-    //     }
-    //   } else {
-    //     sessionStorage.removeItem('reloadCount');
-    //   }
-    // }, []);
     
      let tok= JSON.parse(localStorage.getItem("user-info"));
-     const term = (tok) => {
-      let refval;  
-      if (tok === null || typeof tok === 'undefined') {
-        refval = 0;
+     const terms = (tok) => {
+      let refreshval;
+    
+      if (tok.length === 0) {
+        refreshval = 0;
       } else {
-        refval = tok.refresh_token;
+        refreshval = tok.refresh_token;
       }
     
-      return refval;
-    }
-    let refresh = term(tok)
+      return refreshval;
+    };
+    let refresh = terms(tok)
      async function create(e) {
         e.preventDefault();
         let ite ={refresh}
@@ -58,14 +45,14 @@ const ThankPage=()=>{
            body:JSON.stringify(item)
           });
           if (result.status !== 201) {
-            setMessage(JSON.stringify(result.response));
+            setMessage("Some error occured");
           } else {
             result = await result.json();
           localStorage.setItem('user-info', JSON.stringify(result)) 
           navigate('/components/login')
           }
-        }
-        console.log(tok)
+          
+       }
     return(
         <div className='tha'>
            <div className=''>
