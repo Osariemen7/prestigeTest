@@ -11,6 +11,7 @@ const GetGroup =()=>{
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [narration, setNarration] = useState('')
+  const [pin_id, setPinid] = useState('')
   const navigate = useNavigate();
   
    
@@ -23,7 +24,7 @@ const GetGroup =()=>{
 
   const handleSubmit=(e)=>{
     e.preventDefault()
-    let data ={amount, selectedOption, nuban, users, narration}
+    let data ={amount, selectedOption, nuban, users, narration, pin_id}
     navigate('/components/getgrp2', {state:{data}})
   }
 
@@ -67,13 +68,18 @@ let refresh = terms(tok)
   headers:{'Authorization': `Bearer ${bab}`},
   })
   //localStorage.setItem('user-info', JSON.stringify(tok))
-
+  let respet = await fetch("https://sandbox.prestigedelta.com/transferpinid/",{
+    method: "GET",
+    headers:{'Authorization': `Bearer ${bab}`},
+    })
   if (response.status === 401) {
     navigate('/components/login');
-  } else {  
+  } else { 
+  respet = await respet.json(); 
   response = await response.json();
   setLoading(false)
   setInfo(response)
+  setPinid(respet)
     }}
     useEffect(() => {
       fetchDa()
@@ -133,7 +139,7 @@ let refresh = terms(tok)
 
   return(
     <div>
-       <Link to='/components/account'><i class="fa-solid fa-chevron-left bac"></i></Link>
+       <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
             
             <h3>Send Money</h3>
        <form>
@@ -148,7 +154,7 @@ let refresh = terms(tok)
     />
                 <p className='sp'>Account Number</p>
                 <input type='number' onChange={handleAcct} className="line" placeholder="Enter Account Number" name="birth"/><br/> 
-                <div className="me">{users ? <p>{users.account_number}</p> : null}</div>
+                <div className="me">{users ? <p>{users.account_name}</p> : null}</div>
                 <p className='sp'>Enter Amount</p>
                 <input type="number" onChange={handleAmount} className="line" placeholder="0.00" name="BVN"/><br/><br/>
                 <p className='sp'>Add a Note</p>

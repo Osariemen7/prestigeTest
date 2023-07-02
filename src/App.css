@@ -97,10 +97,14 @@ hr{
   margin: 0;
 }
 .dash{
+  background: url(/src/components/images/outlined.png) no-repeat;
   background-color: #060b26;
   margin:2% 5%;
   width: 90%;
   border-radius: 10px;
+}
+.receipt{
+  color: blue;
 }
 /* transact */
 .tl{

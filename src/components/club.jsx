@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import  ShareButton  from './business.jsx'
 
 const Club = () => {
   const [info, setInfo] = useState([]);
@@ -10,8 +11,8 @@ const Club = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'My React App',
-        text: 'Check out this awesome React app!',
+        title: 'Prestige Finance',
+        text: 'Sign up and join by club!',
         url: window.location.href,
       })
         .then(() => console.log('App shared successfully.'))
@@ -160,9 +161,12 @@ const Club = () => {
           </div>
         </div>
         <div>
+        
+
         <button onClick={handleShare} className='logb'>Add Members</button>
   {info[0].my_membership.super_admin === true ? (
-    <p>Invite Code: {info[0].my_membership.invite_code}</p>
+    <ShareButton inviteCode={info[0].my_membership.invite_code}/>
+   
   ) : null}
 </div>
         <p></p>
