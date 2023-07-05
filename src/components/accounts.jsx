@@ -21,11 +21,14 @@ const Accounts =()=> {
     };
     let refresh = terms(tok)
 
-  
+    const currentDate = new Date(); // Get the current date
+
+    const thirtyDaysBefore = new Date(); // Create a new Date object
+    thirtyDaysBefore.setDate(currentDate.getDate() - 30)  
 
   const fetchData = async () => {
     let item ={refresh}
-    let rep = await fetch ('https://api.prestigedelta.com/refreshtoken/',{
+    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
@@ -35,7 +38,7 @@ const Accounts =()=> {
     });
     rep = await rep.json();
     let bab = rep.access_token
-  let response = await fetch("https://api.prestigedelta.com/accounts/",{
+  let response = await fetch("https://sandbox.prestigedelta.com/accounts/",{
   method: "GET",
   headers:{'Authorization': `Bearer ${bab}`},
   })
@@ -64,7 +67,7 @@ const toggleHidden =()=>{
          
          const fetchInfo = async () => {
           let item ={refresh}
-          let rep = await fetch ('https://api.prestigedelta.com/refreshtoken/',{
+          let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
               method: 'POST',
               headers:{
                 'Content-Type': 'application/json',
@@ -74,7 +77,7 @@ const toggleHidden =()=>{
           });
           rep = await rep.json();
           let bab = rep.access_token
-        let response = await fetch("https://api.prestigedelta.com/transactionlist/?start_date=01/31/2022&end_date=07/31/2023",{
+        let response = await fetch(`https://sandbox.prestigedelta.com/transactionlist/?start_date=${(thirtyDaysBefore).toLocaleDateString('en-GB')}&end_date=${(new Date()).toLocaleDateString('en-GB')}`,{
         method: "GET",
         headers:{'Authorization': `Bearer ${bab}`},
         })

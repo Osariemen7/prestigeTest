@@ -68,13 +68,13 @@ let refresh = terms(tok)
             setMessage('Invalid Information');
           } else {
             resut = await resut.json();
-          localStorage.setItem('user-info', JSON.stringify(resut)) 
+          localStorage.setItem('user-info', JSON.stringify(tok)) 
           navigate('/components/getrec', {state:{ite}} )
           }
         }
     return(
         <div>
-        <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
+        <Link to='/components/getgroup'><i class="fa-solid fa-chevron-left bac"></i></Link>
             
             <h3>Confirm Details</h3>
            <div className="meat">
@@ -102,6 +102,7 @@ let refresh = terms(tok)
              onRequestClose={closeModal}
                contentLabel="Example Popup">
              <i class="fa-solid fa-x tx" onClick={closeModal}></i>
+             <p>Enter the 4-digit verification code<br/> sent to your phone number in the boxes below</p>
            <OtpInput  
                  value={pin}
                  onChange={setPin}

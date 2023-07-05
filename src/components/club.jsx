@@ -1,27 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import  ShareButton  from './business.jsx'
+import Modal from 'react-modal';
 
 const Club = () => {
   const [info, setInfo] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState('')
+  const [selectedUser, setSelectedUser] = useState(null)
   const navigate = useNavigate();
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Prestige Finance',
-        text: 'Sign up and join by club!',
-        url: window.location.href,
-      })
-        .then(() => console.log('App shared successfully.'))
-        .catch((error) => console.log('Error sharing app:', error));
-    } else {
-      console.log('Web Share API is not supported in this browser.');
-    }
-  };
-
+  
   const terms = (tok) => {
     let refreshval;
 
@@ -108,6 +97,14 @@ const Club = () => {
   useEffect(() => {
     fetchDa();
   }, []);
+  const openModal = (index) => {
+    setSelectedUser(users[index]);
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  console.log(selectedUser)
 
   if (info.length < 1) {
     return (
@@ -137,6 +134,7 @@ const Club = () => {
             <p className='dfp'>Account</p>
           </div>
         </footer>
+       
       </div>
     );
   } else {
@@ -163,7 +161,7 @@ const Club = () => {
         <div>
         
 
-        <button onClick={handleShare} className='logb'>Add Members</button>
+       
   {info[0].my_membership.super_admin === true ? (
     <ShareButton inviteCode={info[0].my_membership.invite_code}/>
    
@@ -193,7 +191,7 @@ const Club = () => {
         <h3>Members</h3>
         <div>
           {users.map((obj, index) =>
-            <div className='cpp' key={index}>
+            <div className='cpp' key={index} onClick={() => openModal(index)}>
               <div className='cprof'>{obj.member.first_name[0]}{obj.member.last_name[0]}</div>
               <div className='cprog'>
                 <p className='cpn'>{obj.member.first_name} {obj.member.last_name}</p>
@@ -206,6 +204,7 @@ const Club = () => {
             </div>
           )}
         </div>
+
         <footer className='dflex2'>
           <div>
             <Link to='/components/dash'><i className="fa-solid fa-house home"></i></Link>
@@ -224,6 +223,16 @@ const Club = () => {
             <p className='dfp'>Account</p>
           </div>
         </footer>
+        <Modal
+            className='trmo'
+           isOpen={isOpen}
+             onRequestClose={closeModal}
+               contentLabel="Example Popup">
+               <i class="fa-solid fa-x tx" onClick={closeModal}></i>
+              {selectedUser && (
+          <div className='blk'>{selectedUser.member.first_name[0]}{selectedUser.member.last_name[0]}</div>
+        )}
+        </Modal>
       </div>
     );
   }

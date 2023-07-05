@@ -1,6 +1,7 @@
 import {  useLocation, Link } from "react-router-dom";
 import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
+import Logo from './images/Logo.png';
 const Receipt=()=> {
     const location = useLocation()
     let meal = location.state.ite
@@ -16,7 +17,7 @@ const Receipt=()=> {
         <div>
         <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
             <main id="main-element">
-                <h1 className="receipt">Prestige Receipt</h1>
+            <img src={Logo} alt="logo" className="frame"/>
                 <h2>Sucessful!</h2>
                 <h3>Tranfer of ₦{(parseInt(meal.amount)).toLocaleString('en-US')} to<br/> {meal.account_name}</h3>
                 <div className="vasa1">

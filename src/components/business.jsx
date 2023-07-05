@@ -5,8 +5,8 @@ const ShareButton = ({ inviteCode }) => {
     if (navigator.share) {
       navigator.share({
         title: 'Prestige Finance',
-        text: `Sign up and join by club!, use invite code ${inviteCode}`,
-        url: window.location.href,
+        text: `Sign up and join my club!, use invite code ${inviteCode}`,
+        url: 'https://prestigefinance.vercel.app',
       })
         .then(() => console.log('App shared successfully.'))
         .catch((error) => console.log('Error sharing app:', error));
@@ -16,7 +16,7 @@ const ShareButton = ({ inviteCode }) => {
   };;
 
   return (
-    <button className='logb' onClick={handleShare}>Share App</button>
+    <button className='logb' onClick={handleShare}>Add Members</button>
   );
 };
 

@@ -106,6 +106,13 @@ hr{
 .receipt{
   color: blue;
 }
+.blk{
+  border-radius: 50%;
+  background-color: blue;
+  color:#fff;
+  padding: 5%;
+  width: fit-content;
+}
 /* transact */
 .tl{
   display: flex;
