@@ -1,8 +1,42 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Vector from './images/Vector.svg';
 import Modal from 'react-modal';
-let tok= JSON.parse(localStorage.getItem("user-info"));
+
+
+const Addlist=()=>{
+  const [info, setInfo] = useState('')
+  const [loading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [amount, setAmount] = useState('')
+  const [message, setMessage] = useState('')
+  const [isOpens, setIsOpens] = useState(false);
+  const [tock, setTock] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate()
+  const location = useLocation();
+  let index = location.state.data
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal1 = () => {
+    setIsOpens(true);
+  };
+  const closeModal1 = () => {
+    setIsOpens(false);
+    
+  };
+  const close = () => {
+    navigate('/components/project')
+  }
+  
+  const handleInputChange = (event) => {
+    setAmount(event.target.value);
+  };
+  let tok= JSON.parse(localStorage.getItem("user-info"));
 const terms = (tok) => {
   let refreshval;
 
@@ -16,25 +50,6 @@ const terms = (tok) => {
 };
 let refresh = terms(tok)
 
-
-const Addlist=()=>{
-  const [info, setInfo] = useState('')
-  const [loading, setLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [amount, setAmount] = useState('')
-  const [message, setMessage] = useState('')
-  const location = useLocation();
-  let index = location.state.data
-  const openModal = () => {
-    setIsOpen(true);
-  };
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  
-  const handleInputChange = (event) => {
-    setAmount(event.target.value);
-  };
   const fetchDa = async () => {
     let item ={refresh}
     let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -79,7 +94,7 @@ async function fproj(e) {
   
 
   try {
-    let result = await fetch('https://api.prestigedelta.com/fundproject/', {
+    let result = await fetch('https://sandbox.prestigedelta.com/fundproject/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -93,8 +108,8 @@ async function fproj(e) {
       const errorResult = await result.json();
       setMessage(JSON.stringify(errorResult));
     } else {
-      const successResult = await result.json();
-      localStorage.setItem('user-info', JSON.stringify(successResult));
+       result =await result.json();
+      
       closeModal();
     }
   } catch (error) {
@@ -103,7 +118,39 @@ async function fproj(e) {
   }
 ;
 }
-
+async function closeProj(e){
+  e.preventDefault()
+  let project_name = index.name;
+  let item ={refresh}
+      let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json',
+            'accept' : 'application/json'
+       },
+       body:JSON.stringify(item)
+      });
+      
+      rep = await rep.json();
+      let bab = rep.access_token
+        console.warn(project_name )
+        let ite ={project_name}
+        let resut = await fetch ('https://sandbox.prestigedelta.com/closeproject/',{
+            method: 'POST',
+            headers:{
+              'Content-Type': 'application/json',
+              'accept' : 'application/json',
+              'Authorization': `Bearer ${bab}`
+         },
+         body:JSON.stringify(ite)
+        });
+        if (resut.status !== 200) {
+          const errorResult = await resut.json();
+          setError(JSON.stringify(errorResult));
+        } else {
+           resut =await resut.json();
+              setTock(JSON.stringify(resut))}
+}
 console.log(index)
 console.log(info)
 
@@ -174,7 +221,7 @@ return (
           </div>
         </div>
       </div>
-  
+        <button className="plog" onClick={openModal1} >Close Project</button>
     <Modal
       className='modal'
       isOpen={isOpen}
@@ -182,7 +229,7 @@ return (
       contentLabel="Example Popup"
     >
       <i className="fa-solid fa-x mx" onClick={closeModal}></i>
-      <h3 className='h4'>Instantly Top up</h3>
+      <h3 className='h4'>Instantly Top Up</h3>
       <form>
         <p className='mp'>Enter Amount</p>
         <input type="text" className='mine' onChange={handleInputChange} /><br />
@@ -192,9 +239,30 @@ return (
                 <option>Prestige Account</option>
                 </select>
                 {message ? <p>{message}</p> : null} 
-                <button className='logb' onClick={fproj}>Continue</button>
+                <button className='logbs' onClick={fproj}>Continue</button>
             </form>
             </Modal> 
+            <Modal
+      className='prmo'
+      isOpen={isOpens}
+      onRequestClose={closeModal1}
+      contentLabel="Example Popup"
+    >
+    {tock === '' ? (
+      <div>
+         <h3>Are you sure you want to close this project?</h3>
+        <div  className="aflex">
+          <button className="plut" onClick={closeProj}>Yes</button>
+          <button className="plut" onClick={closeModal1}>No</button>
+        </div>
+        <p>Funds will be transfered into main account</p>
+      </div>) :
+      <div>
+          <i class="fa-solid fa-x tx" onClick={close}></i>
+          <h4>{tock}</h4>
+          <p>{error}</p>
+      </div>}
+    </Modal>
     </div>
   )
 }

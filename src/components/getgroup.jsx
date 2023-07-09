@@ -26,7 +26,7 @@ const GetGroup =()=>{
   const handleSubmit=(e)=>{
     e.preventDefault()
     let data ={amount, selectedOption, nuban, users, narration, pin_id}
-    if (typeof users !=='object'){
+    if (typeof users !=='object' || narration.length < 1){
       setMessage('invalid Input')
     }
     else {

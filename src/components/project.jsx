@@ -8,8 +8,12 @@ import { Link, useNavigate } from 'react-router-dom';
 const ProjectPage =()=>{
      const [hidden, setHidden] = useState("******");
     const [info, setInfo] = useState('')
-    const [color, setColor] = useState('')
     const navigate = useNavigate()
+    const [sidebar, setSidebar] = useState('')
+    const [tock, setTock] = useState('');
+
+    const showSidebar = () => setSidebar(!sidebar)
+  
     
     let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
@@ -45,12 +49,16 @@ let refresh = terms(tok)
       headers:{'Authorization': `Bearer ${bab}`},
       })
       //localStorage.setItem('user-info', JSON.stringify(tok))
-
+      let respon = await fetch("https://sandbox.prestigedelta.com/projects/",{
+        method: "GET",
+        headers:{'Authorization': `Bearer ${bab}`},
+        })
       if (response.status === 401) {
         navigate('/components/login');
       } else {  
       response = await response.json();
-    
+      respon = await respon.json()
+      setTock(respon)
       setInfo(response)
         }}
   
@@ -71,7 +79,7 @@ let refresh = terms(tok)
   } 
   const toggleHidden =()=>{
     if(hidden==="******")
-    {let gal =(info[0].balance).toLocaleString('en-US')
+    {let gal =(tock.total_balance).toLocaleString('en-US')
       
      setHidden(`₦${gal}`)
      return;
@@ -82,6 +90,37 @@ let refresh = terms(tok)
  if(info.length < 1){
     return(
         <div>
+        <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-item'>
+                    <li className='nav-close'>
+                    <i onClick={showSidebar} class="fa-solid fa-x"></i>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <span className='dfp'>Home</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
+                  <span className='dfp'>Project</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
+                     <span className='dfp'>Club</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    
+                    <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
+                      <span className='dfp'>Log Out</span></Link>
+                    </li>
+                
+                    
+                </ul>
+            </nav>
         <h2 className='head'>Project</h2>
         <div className="dash">
            <p className='dp'>Total Balance</p>
@@ -93,19 +132,44 @@ let refresh = terms(tok)
         </div>
          <Link to='/components/pop'>
          <button className='logb'>Create First Project</button></Link>
-        <footer className='dflex2'>
-        <Link to='/components/dash'><i class="fa-solid fa-house home"></i></Link>  
-          <i class="fa-solid fa-layer-group home1"></i>
-          <i class="fa-solid fa-people-group home"></i>
-        <Link to='/components/accounts'><i class="fa-solid fa-wallet home"></i></Link>
-          
-        </footer>
+        
     </div>    
     )} else{
       
       
         return(
             <div>
+            <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-item'>
+                    <li className='nav-close'>
+                    <i onClick={showSidebar} class="fa-solid fa-x"></i>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <span className='dfp'>Home</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
+                  <span className='dfp'>Project</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
+                     <span className='dfp'>Club</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    
+                    <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
+                      <span className='dfp'>Log Out</span></Link>
+                    </li>
+                
+                    
+                </ul>
+            </nav>
             <div className="dash">
                     <h3 className="h1">Project</h3>
                     <p className='dp'>Total Balance</p>
@@ -134,26 +198,6 @@ let refresh = terms(tok)
             </div>)}
             <Link to='/components/pop'>
          <button className='logb'>New Project</button></Link>
-         <footer className='dflex2'>
-                <div>
-                <Link to='/components/dash'><i class="fa-solid fa-house home"></i>
-                  
-                  <p className='dfp'>Home</p></Link>
-                </div>
-                <div>
-                <i class="fa-solid fa-layer-group home1"></i>
-                  <p className='dfp'>Project</p>
-                </div>
-                <div>
-                <Link to='/components/club'><i class="fa-solid fa-people-group home"></i></Link>
-                  <p className='dfp'>Club</p>
-                </div>
-                <div>
-                <Link to='/components/accounts'><i class="fa-solid fa-wallet home"></i></Link>
-                  
-                  <p className='dfp'>Account</p>
-                </div> 
-            </footer>
             </div>
         )
     }

@@ -9,6 +9,8 @@ const Club = () => {
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState('')
   const [selectedUser, setSelectedUser] = useState(null)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const navigate = useNavigate();
   
   const terms = (tok) => {
@@ -103,8 +105,47 @@ const Club = () => {
   };
   const closeModal = () => {
     setIsOpen(false);
+    setMessage(null);
+    setError(null)
   };
   console.log(selectedUser)
+  const blacklist =()=> {
+    setMessage('Blacklist this user?')
+  }
+  async function blacklisted(e){
+    e.preventDefault()
+    let blacklist = true
+    let invite_code =info[0].my_membership.invite_code
+    let item ={refresh}
+        let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+            method: 'POST',
+            headers:{
+              'Content-Type': 'application/json',
+              'accept' : 'application/json'
+         },
+         body:JSON.stringify(item)
+        });
+        
+        rep = await rep.json();
+        let bab = rep.access_token
+          console.warn(blacklist, invite_code )
+          let ite ={blacklist, invite_code}
+          let resut = await fetch ('https://sandbox.prestigedelta.com/blacklistgroup/',{
+              method: 'POST',
+              headers:{
+                'Content-Type': 'application/json',
+                'accept' : 'application/json',
+                'Authorization': `Bearer ${bab}`
+           },
+           body:JSON.stringify(ite)
+          });
+          if (resut.status !== 200) {
+            const errorResult = await resut.json();
+            setError(JSON.stringify(errorResult));
+          } else {
+             resut =await resut.json();
+                setMessage(null)}
+  }
 
   if (info.length < 1) {
     return (
@@ -158,10 +199,7 @@ const Club = () => {
             </div>
           </div>
         </div>
-        <div>
-        
-
-       
+        <div>   
   {info[0].my_membership.super_admin === true ? (
     <ShareButton inviteCode={info[0].my_membership.invite_code}/>
    
@@ -230,12 +268,73 @@ const Club = () => {
                contentLabel="Example Popup">
                <i class="fa-solid fa-x tx" onClick={closeModal}></i>
               {selectedUser && (
-          <div className='blk'>{selectedUser.member.first_name[0]}{selectedUser.member.last_name[0]}</div>
+
+                <div>
+                    <div className='blk'>{selectedUser.member.first_name[0]}{selectedUser.member.last_name[0]}</div>
+                    <div className='plex'>
+                    <h4 className=''>{selectedUser.member.first_name} {selectedUser.member.last_name}</h4>
+                    <p className='trk'>On Track</p>
+                    </div>
+
+                    <div className='clunm'>
+          <div className='clu'>
+            <p className='clund'>Project Performance</p>
+            <h3 className='clun'>{selectedUser.performance}%</h3>
+          </div>
+          <div className='clu'>
+            <p className='clund'>Project Plans</p>
+            <h3 className='clun'>{selectedUser.projects_no}</h3>
+          </div>
+        </div>
+        <div className='since'>
+              <p>Member since:{(new Date(selectedUser.join_date)).toLocaleDateString('en-GB')} </p>
+             <p>Last Deposit: {(new Date(selectedUser.last_deposit)).toLocaleDateString('en-GB')}</p>
+        </div>
+        <div>
+        {info[0].my_membership.super_admin === true ? (
+          <div>
+              <h4 className='black' onClick={blacklist}>Add user to Blacklist</h4>
+              <div >{message ? <button className="blog" onClick={blacklisted}>{message}</button> : null}</div>
+              <div className="message">{error ? <p>{error}</p> : null}</div>
+              <p className='l'>Add user to blacklist so to restrict the user from accessing overdraft and project funds</p>
+         </div>
+     ) : null}
+        </div>
+        
+                </div>
+          
         )}
         </Modal>
       </div>
     );
   }
 };
+// {selectedUser && (
+                
+//   <div>
+//       <div className='blk'>{selectedUser.member.first_name[0]}{selectedUser.member.last_name[0]}</div>
+//       <div className='plex'>
+//       <h4 className=''>{selectedUser.member.first_name} {selectedUser.member.last_name}</h4>
+//       <p className='trk'>On Track</p>
+//       </div>
+
+//       <div className='clunm'>
+// <div className='clu'>
+// <p className='clund'>Project Performance</p>
+// <h3 className='clun'>{selectedUser.performance}%</h3>
+// </div>
+// <div className='clu'>
+// <p className='clund'>Project Plans</p>
+// <h3 className='clun'>{selectedUser.projects_no}</h3>
+// </div>
+// </div>
+// <div className='since'>
+// <p>Member since:{(new Date(selectedUser.join_date)).toLocaleDateString('en-GB')} </p>
+// <p>Last Deposit: {(new Date(selectedUser.last_deposit)).toLocaleDateString('en-GB')}</p>
+// </div>
+
+//   </div>
+
+// )}
 
 export default Club;
