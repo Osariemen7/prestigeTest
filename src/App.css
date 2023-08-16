@@ -161,7 +161,7 @@ hr{
     width: 300px;
     padding: 15%;
     background-color: #fff;
-    height: 10vh;
+    height: 15vh;
 }
 .logbs{
     width: 250px;
@@ -173,25 +173,93 @@ hr{
     margin-top: 30px;
     color: #fff;
 }
+.goo{
+    margin-left: 25%;
+    height: 70px;
+}
+.hoo{
+  margin-left:8% ;
+}
+.oveh{
+  margin: 0 auto;
+}
+.ove {
+  margin-bottom: 0;
+}
+.logbd{
+  width: 310px;
+  height:35px;
+  padding:0 2%;
+  background-color: blue;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.ovp{
+  display: flex;
+  gap: 42%;
+  padding: 0;
+  height: 40px;
+  font-size: 13px;
+  border-bottom: 1px solid gainsboro;
+}
+.ovpi{
+  display: flex;
+  gap: 62%;
+  padding: 0;
+  height: 40px;
+  font-size: 13px;
+  border-bottom: 0.8px solid gainsboro;
+}
+.opp{
+  display: flex;
+  gap: 52%;
+  padding: 0;
+  height: 40px;
+  font-size: 13px;
+}
+.ov{
+  padding:1% 9%;
+  font-size: 13px;
+}
+.orev{
+  border: 1px solid rgb(233, 230, 230);
+  border-left: none;
+  border-right: none;
+  padding: 2% 7%;
+  display: flex;
+  gap: 160px;
+  text-align: center;
+}
+.orev2{
+  border: 1px solid rgb(233, 230, 230);
+  border-left: none;
+  border-right: none;
+  padding: 2% 6%;
+  display: flex;
+  gap: 215px;
+  text-align: center;
+}
 /* transact */
 .tl{
   display: flex;
-  gap: 70%;
+  gap: 60%;
   padding: 0 3%;
   margin: 0;
   height: 20px;
 }
 .tg{
-  font-size: 10px;
+  font-size: 13px;
   display: flex;
   height: 33px;
-  gap: 50%;
+  gap: 40%;
   padding: 0 3%;
   margin: 0;
   color: grey;
 }
 .td{
-  font-size: 12px;
+  font-size: 15px;
   padding: 5%;
   border-bottom: 1px solid gainsboro;
 }
@@ -298,8 +366,6 @@ hr{
   display: flex;
   gap: 10px;
   padding:3% 5%;
-  
-
 }
 .clu{
   background-color:  #F8F9FC;
@@ -411,6 +477,7 @@ hr{
   width: 40%;
   height: 37px;
 }
+
 .aflex{
   display: flex;
   gap:5%;
@@ -506,11 +573,97 @@ hr{
 .dflex1{
   display: flex;
   padding: 3%;
-  gap:60px;
+  gap:20px;
   text-align: left;
   margin: 5%;
   border:1px solid rgb(216, 213, 213);
   border-radius: 5px;
+}
+.svin{
+  display:flex;
+  gap:10%;
+  padding:0 5%;
+  font-size: 13px;
+}
+.saed{
+  text-align: left;
+  margin-bottom: 0;
+  padding-left: 5%;
+}
+.loos{
+  text-align: right;
+  font-size: 12px;
+}
+.svmo{
+  padding: 10% 5%;
+  text-align: center;
+  margin-top: 30px;
+  width:90%;
+  background-color: #fff;
+  height: 39vh;
+}
+.oves{
+  margin-top: 5%;
+}
+.sev{
+  display: flex;
+  gap: 150px;
+  padding: 0% 8%;
+}
+.sco{
+  color: green;
+}
+.ax{
+  border-top: 1px solid gainsboro;
+  display: flex;
+  gap: 150px;
+  padding: 0% 8%;
+}
+.pax{
+  display: flex;
+  gap:60px;
+  margin: 0 2%;
+}
+.spt{
+  border: 1px solid gainsboro;
+  margin:2% 9%;
+  border-radius: 14px;
+  padding:5% 3% 4% 5%;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+  background-color: rgb(136, 205, 233);
+  font-size: 13px;
+}
+.wad{
+  height: 25px;
+}
+.bfle{
+  display: flex;
+  gap: 160px;
+  margin: 0;
+}
+.h2{
+  color:#fff;
+}
+.pdf{
+  background-color:rgb(18, 86, 112);
+  color: #fff;
+  border-color: rgb(18, 86, 112);
+  padding:2% 5%;
+  font-size: 14px;
+  margin-bottom: 5%;
+}
+.progress-bi {
+  width: 100%;
+  height: 6px;
+  background-color: blue;
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
+.pbp{
+  color:rgb(77, 75, 75);
+  margin: 0;
+  font-size: 13px;
+  display: flex;
 }
 .dflex2{
    display: flex;
@@ -751,7 +904,7 @@ hr{
 .trmo{
   margin-top: 50%;
   width: 300px;
-  padding: 15%;
+  padding: 12%;
   background-color: #fff;
   height: 70vh;
 }

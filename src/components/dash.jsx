@@ -13,6 +13,7 @@ const Dashboard =()=>{
   const [hidden, setHidden] = useState("******");
   const navigate = useNavigate()
   const [sidebar, setSidebar] = useState('')
+  const [info, setInfo] = useState('')
 
   const showSidebar = () => setSidebar(!sidebar)
 
@@ -38,13 +39,18 @@ const Dashboard =()=>{
       method: "GET",
       headers:{'Authorization': `Bearer ${bab}`},
       })
+      let respet = await fetch("https://sandbox.prestigedelta.com/tasks/",{
+    method: "GET",
+    headers:{'Authorization': `Bearer ${bab}`},
+    })
+      respet = await respet.json();
       response = await response.json()
       localStorage.setItem('user-info', JSON.stringify(tok))
       if (response.status === 401){
         navigate('/components/login')
       } else {
      setUsers(response)
-      
+     setInfo(respet)
       }
     }
   
@@ -53,6 +59,7 @@ const Dashboard =()=>{
     }, [])
     
     console.log(tok)
+    
     
 //   useEffect(() => {
 //     fetch('https://sandbox.prestigedelta.com/accounts/')
@@ -64,7 +71,7 @@ const Dashboard =()=>{
 let wark =users[0]
 
 console.log(users) 
-
+console.log(info)
 
 const toggleHidden =()=>{
   
@@ -105,6 +112,10 @@ const toggleHidden =()=>{
                       <span className='dfp'>Account</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Savings</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <span className='dfp'>Log Out</span></Link>
@@ -131,6 +142,8 @@ const toggleHidden =()=>{
                   <p className='dfp'>Get access to loan when you save 30% of your estimated project amount</p>
                 </div>   
             </div>
+       {info.label === '' ? (
+            <div>
             <p className='l'>QUICK ACTION</p>
             <Link to='/components/project' className='link'> <div className='dflex1'>
                 <img src={stack} alt='' />
@@ -156,6 +169,35 @@ const toggleHidden =()=>{
                 </div>
                 <img src={sidearrow} alt='' />
             </div>
+            </div> ) :
+            <div>
+            <p className='l'>Quick Action</p>
+            <Link to='/components/project' className='link'> <div className='dflex1'>
+                <img src={stack} alt='' />
+                
+                <div>
+                    <h4 className='dh3'>Create Your Project Plan</h4>
+                    <p className='dfp'>Start your project plan</p>
+                </div>
+                <img src={sidearrow} alt='' />
+            </div></Link>
+            <div className='dflex1'>
+                <img src={money} alt='' />
+                <div >
+                    <h4 className='dh3'>Get quick credit</h4>
+                    <p className='dfp'>Start your project plan now</p>
+                </div>
+                <img src={sidearrow} alt='' />
+            </div>
+            <div className='dflex1'>
+                <img src={club} alt='' />
+                <div >
+                    <h4 className='dh3'>Create lending club</h4>
+                    <p className='dfp'>Start your project plan now</p>
+                </div>
+                <img src={sidearrow} alt='' />
+            </div>
+            </div> }
             
         </div>
     )

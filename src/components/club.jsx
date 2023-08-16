@@ -190,7 +190,7 @@ const Club = () => {
           </div>
           <div className='ppn'>
             <p>Average Total of Project</p>
-            <p>{info[0].my_membership.performance * 100}%</p>
+            <p>{ Math.round((info[0].my_membership.performance * 100) + Number.EPSILON)}%</p>
           </div>
           <div>
             <div className="progress-b" style={{ width: `${100}%` }}>
@@ -209,7 +209,7 @@ const Club = () => {
         <div className='clup'>
           <div className='clu'>
             <p className='clund'>Group Performance</p>
-            <h3 className='clun'>{info[0].performance}%</h3>
+            <h3 className='clun'>{Math.round((info[0].performance * 100) + Number.EPSILON)}%</h3>
           </div>
           <div className='clu'>
             <p className='clund'>Number of Users</p>
@@ -300,9 +300,7 @@ const Club = () => {
          </div>
      ) : null}
         </div>
-        
-                </div>
-          
+        </div>   
         )}
         </Modal>
       </div>

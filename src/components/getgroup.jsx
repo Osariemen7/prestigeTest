@@ -5,6 +5,7 @@ import Select from 'react-select';
   
 const GetGroup =()=>{
   const [info, setInfo] = useState([])
+  const [infos, setInfos] = useState([]);
   const [nuban, setNuban] = useState('')
   const [amount, setAmount] = useState('')
   const [selectedOption, setSelectedOption] = useState(null)
@@ -13,8 +14,22 @@ const GetGroup =()=>{
   const [narration, setNarration] = useState('')
   const [pin_id, setPinid] = useState('')
   const [message, setMessage] = useState('')
+  const [selectedOptions, setSelectedOptions] = useState('')
   const navigate = useNavigate();
   
+  const option = [
+    ...infos.map((item) => ({
+      label: item.name,
+      value: item.name,
+    })),
+    {
+      value: 'main',
+      label: 'Main Account',
+    },
+  ];
+  const handleBanks = (selectedOptions) => {
+    setSelectedOptions(selectedOptions);
+  };
    
   const handleBank = (selectedOption) => {
     setSelectedOption(selectedOption);
@@ -25,9 +40,9 @@ const GetGroup =()=>{
 
   const handleSubmit=(e)=>{
     e.preventDefault()
-    let data ={amount, selectedOption, nuban, users, narration, pin_id}
-    if (typeof users !=='object' || narration.length < 1){
-      setMessage('invalid Input')
+    let data ={amount, selectedOption, sub_account, nuban, users, narration, pin_id}
+    if (typeof users !=='object' || narration.length < 1 || users.length < 1 || amount.length < 1 || sub_account < 1){
+      setMessage('All Fields must be Filled')
     }
     else {
     
@@ -41,6 +56,37 @@ const handleAmount=(event)=> {
   setAmount(event.target.value)
 }
 
+const fetchDap = async () => {
+  let item ={refresh}
+  let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'accept' : 'application/json'
+   },
+   body:JSON.stringify(item)
+  });
+  
+  rep = await rep.json();
+  let bab = rep.access_token
+let response = await fetch("https://sandbox.prestigedelta.com/subaccount/",{
+method: "GET",
+headers:{'Authorization': `Bearer ${bab}`},
+})
+//localStorage.setItem('user-info', JSON.stringify(tok))
+
+if (response.status === 401) {
+  navigate('/components/login');
+} else { 
+ 
+response = await response.json();
+setLoading(false)
+setInfos(response)
+
+  }}
+  useEffect(() => {
+    fetchDap()
+  }, [])
 
   let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
@@ -54,6 +100,17 @@ const handleAmount=(event)=> {
 
   return refreshval;
 };
+const debit = (selectedOptions) => {
+  let menu
+  if (selectedOptions.value === 'main'){
+      menu = true;
+  }else{
+      menu = false
+  }
+  return menu
+}
+let sub_account = debit(selectedOptions)
+
 let refresh = terms(tok)
 
   const fetchDa = async () => {
@@ -91,7 +148,7 @@ let refresh = terms(tok)
       label: item.bank_name,
       value: item.bank_code,
     }));
-    
+   
     const teams = (selectedOption) => {
       let ref;
 
@@ -149,9 +206,18 @@ let refresh = terms(tok)
   return(
     <div>
        <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
-            
+      
             <h3>Send Money</h3>
        <form>
+       <p className='sp'>Select Account</p>
+       <Select
+      onChange={handleBanks}
+      className="lne"
+      placeholder="Select Account"
+      options={option}
+      isSearchable={true}
+      value={selectedOptions}
+    />
                 <p className='sp'>Select Bank</p>
                 <Select
       onChange={handleBank}

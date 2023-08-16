@@ -30,6 +30,8 @@ const Select =()=> {
     return nam;
   };
   let name = terms(pane)
+  let goal_amount = pane.pan.tick.payment_amount
+  let goal_type = pane.pan.tick.often
   
   const term1 = (pane) => {
     let tots;  
@@ -81,7 +83,7 @@ const Select =()=> {
   let interest = seventy * 6 / 100;
   const targetAmount = thirty;
   const frequentSavings = payment_amount;
-  
+  let remain = Math.ceil(thirty / payment_amount);
   const paying = (payment_frequency, targetAmount, frequentSavings) => {
     let repayment_mat;
     const currentDate = new Date();
@@ -113,7 +115,7 @@ const Select =()=> {
   let funding_dat = paying(payment_frequency, targetAmount, frequentSavings);
   
   let funding_date = (funding_dat).toLocaleDateString('en-GB')
-
+   
   const pay = (payment_frequency, tota, frequentSavings) => {
     let repayment_mat;
     const currentDate = new Date();
@@ -130,16 +132,13 @@ const Select =()=> {
         break;
   
       default:
-         let startDate = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth() + 1,
-          1
-        );
+        let startDate = new Date(2023, 7, 9); // August is represented by month number 7
         repayment_mat = new Date(startDate.setMonth(startDate.getMonth() + remain));
         break;
     }
   
     return repayment_mat;
+    
   };
   
   let repayment_mature = pay(payment_frequency, tota, frequentSavings);
@@ -164,7 +163,7 @@ const Select =()=> {
         rep = await rep.json();
         let bab = rep.access_token
       console.warn(name, payment_amount, payment_frequency, repayment_maturity, funding_date, assets)
-      let project = {name, payment_amount, payment_frequency, repayment_maturity, funding_date, assets};
+      let project = {name, goal_amount, goal_type, payment_amount, payment_frequency, repayment_maturity, funding_date, assets};
       let result = await fetch ('https://sandbox.prestigedelta.com/createproject/',{
           method: 'POST',
           headers:{
@@ -183,10 +182,10 @@ const Select =()=> {
         navigate('/components/pro', { state: { name } });
       }
     }
-    console.log(funding_date)
-    console.log(assets)
- console.log(tok)
- //console.log(funding_dat)
+    console.log(thirty)
+    console.log(payment_amount)
+ console.log(tota)
+ console.log(remain)
  
  
   return(
@@ -197,19 +196,19 @@ const Select =()=> {
             <h1 className='rh'>₦{total}</h1>
             <div className='rev'>
                 <p>Saving target</p>
-             <p className='revp'>{thirty}</p>
+             <p className='revp'>₦{(thirty).toLocaleString('en-US')}</p>
             </div>
             <div className='rev'>
                 <p>Recuring Savings</p>
-                <p>₦{payment_amount}/{payment_frequency}</p>
+                <p>₦{(parseInt(payment_amount)).toLocaleString('en-US')}/{payment_frequency}</p>
             </div>
             <div className='rev'>
-                <p>Amount to be loan</p>
-                <p>₦{seventy}</p>
+                <p>Loan Amount</p>
+                <p>₦{(seventy).toLocaleString('en-US')}</p>
             </div>
             <div className='rev'>
                 <p>Interest value</p>
-                <p className='revp'>₦{interest}(2%p.a)</p>
+                <p className='revp'>₦{(interest).toLocaleString('en-US')}(2%p.a)</p>
             </div>
             <div className='rev'>
                 <p>Est. Maturity date</p>

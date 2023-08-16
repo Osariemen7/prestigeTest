@@ -77,7 +77,7 @@ const ListPage=()=>{
           }));
           let assets = separatedData;
           
-          let pro = {assets, name, tota}
+          let pro = {assets, name, tota, tick}
           
                 navigate('/components/frequent', {state:{pro}})
         }
@@ -105,12 +105,7 @@ const ListPage=()=>{
                     <p key={index1}>₦{to}</p>
                   ))}
                  </ul>
-                 <ul>
-                     {is_purcha.map((tod, index1) => (
-                    <p key={index1}>{tod}</p>
-                  ))}
-                 </ul>
-
+        
            </div>
            
             </div>

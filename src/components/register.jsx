@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PasswordChecklist from "react-password-checklist"
 
 const RegisterPage =()=>{
     const [passwordType, setPasswordType] = useState("password");
@@ -94,6 +95,19 @@ const handleUsernameChange =(evnt) => {
              <input class="check" type="checkbox" name="" id="check" required></input>
              <label>By tapping next, you agree to our private policy<br/> and Terms & Condition</label>
              <div className="message">{message ? <p>{message}</p> : null}</div>
+             <PasswordChecklist
+				rules={["minLength","specialChar","number","capital","match"]}
+				minLength={8}
+				value={password1}
+				valueAgain={password2}
+				messages={{
+					minLength: "Password is too short",
+					specialChar: "Password must contain a special character",
+					number: "Password must have a number",
+					capital: "Password must have a capital letter",
+					match: "Password must match",
+				}}
+			/>
         </form>
         <button className="but" onClick={reg} type="submit">Next</button>
      </div>

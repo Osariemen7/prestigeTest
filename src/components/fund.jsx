@@ -5,7 +5,12 @@ import f123 from './images/f123.svg';
 import { Link, useNavigate } from 'react-router-dom'
 
 
-let tok= JSON.parse(localStorage.getItem("user-info"));
+ 
+const FundPage =()=>{
+  const [data, setData] = useState('')
+  const navigate = useNavigate()
+
+  let tok= JSON.parse(localStorage.getItem("user-info"));
 const term = (tok) => {
   let refval;  
   if (tok === null || typeof tok === 'undefined') {
@@ -17,10 +22,7 @@ const term = (tok) => {
   return refval;
 }
 let refresh = term(tok)
- 
-const FundPage =()=>{
-  const [data, setData] = useState('')
-  const navigate = useNavigate()
+
   const fetchDat = async () => {
     let item ={refresh}
     let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{

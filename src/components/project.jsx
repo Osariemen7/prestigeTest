@@ -113,6 +113,10 @@ let refresh = terms(tok)
                       <span className='dfp'>Account</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Savings</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <span className='dfp'>Log Out</span></Link>
@@ -160,6 +164,10 @@ let refresh = terms(tok)
                     <li className='nav-list'>
                     <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
                       <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Savings</span></Link>
                     </li>
                     <li className='nav-list'>
                     

@@ -97,7 +97,7 @@ console.log(pin)
                <div onClick={() => handleClick2('50000')} style={{backgroundColor:backgroundColor2}} className="mon">₦50000</div>
             </div>
             <div className="freq">
-               <div onClick={() => handleClick3('₦100000')} style={{backgroundColor:backgroundColor3}} className="mon">₦100000</div>
+               <div onClick={() => handleClick3('100000')} style={{backgroundColor:backgroundColor3}} className="mon">₦100000</div>
                <input onChange={valueChange} className="mon1" type="number" placeholder="Different amount"/>
             </div>  
             <p>{clickedItem}</p>  

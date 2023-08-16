@@ -63,11 +63,11 @@ let refresh = terms(tok)
            },
            body:JSON.stringify(items)
           });
-          
+          resut = await resut.json();
           if (resut.status !== 201) {
-            setMessage('Invalid Information');
+            setMessage(JSON.stringify(resut.message));
           } else {
-            resut = await resut.json();
+            
           localStorage.setItem('user-info', JSON.stringify(tok)) 
           navigate('/components/getrec', {state:{ite}} )
           }

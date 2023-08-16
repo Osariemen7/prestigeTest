@@ -29,6 +29,12 @@ import Join from './components/joinc';
 import Navbar from './components/navbar';
 import PostMon from './components/getgrp2';
 import Receipt from './components/getrec';
+import Overdraft from './components/overdraft';
+import Request from './components/overd';
+import Display from './components/odisplay';
+import Done from './components/odip';
+import Savings from './components/savings';
+import Detail from './components/detail'
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -69,7 +75,13 @@ function App() {
         <Route path='/components/navbar' element={<Navbar />} />
         <Route path='/components/getgrp2' element={<PostMon />} />
         <Route path='/components/getrec' element={<Receipt />} />
-              
+        <Route path='/components/overdraft' element={<Overdraft />} />
+        <Route path='/components/overd' element={<Request />} />
+        <Route path='/components/odisplay' element={<Display />} />
+        <Route path='/components/odip' element={<Done />} />
+        <Route path='/components/savings' element={<Savings />} />
+        <Route path='/components/detail' element={<Detail />} />
+             
      </Routes>
       
     </div>

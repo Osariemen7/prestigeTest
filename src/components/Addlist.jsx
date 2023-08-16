@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Vector from './images/Vector.svg';
 import Modal from 'react-modal';
+import good from './images/good.svg'
 
 
 const Addlist=()=>{
@@ -13,6 +14,7 @@ const Addlist=()=>{
   const [isOpens, setIsOpens] = useState(false);
   const [tock, setTock] = useState('');
   const [error, setError] = useState('');
+  const [fun, setFun] = useState('')
   const navigate = useNavigate()
   const location = useLocation();
   let index = location.state.data
@@ -106,11 +108,10 @@ async function fproj(e) {
 
     if (result.status !== 200) {
       const errorResult = await result.json();
-      setMessage(JSON.stringify(errorResult));
+      setMessage(JSON.stringify(errorResult.message));
     } else {
        result =await result.json();
-      
-      closeModal();
+       setFun(JSON.stringify(result))
     }
   } catch (error) {
     // Handle fetch error
@@ -152,7 +153,7 @@ async function closeProj(e){
               setTock(JSON.stringify(resut))}
 }
 console.log(index)
-console.log(info)
+console.log(error)
 
 if(loading) {
   return(
@@ -206,6 +207,9 @@ return (
             <p>{(new Date(index.repayment_day)).toLocaleDateString('en-GB')}</p>
           </div>
         </div>
+        {index.goal_type === 'Cost' ? (
+          <p>This project will save you ₦{index.goal_amount} Monthly</p>) : 
+          <p>This project will make you ₦{index.goal_amount} Monthly</p> }
         <h4 className="prit">Project Resources</h4>
         <p className="prip">List of project resources you will need for this project</p>
         <div>
@@ -228,6 +232,8 @@ return (
       onRequestClose={closeModal}
       contentLabel="Example Popup"
     >
+      {fun === '' ? (
+      <div>
       <i className="fa-solid fa-x mx" onClick={closeModal}></i>
       <h3 className='h4'>Instantly Top Up</h3>
       <form>
@@ -241,6 +247,12 @@ return (
                 {message ? <p>{message}</p> : null} 
                 <button className='logbs' onClick={fproj}>Continue</button>
             </form>
+            </div>) :
+            <div>
+          <i class="fa-solid fa-x tx" onClick={close}></i>
+          <img src={good} alt="" />
+          <h4 className="hoo">Project Successfully funded!</h4>  
+      </div>}
             </Modal> 
             <Modal
       className='prmo'
@@ -256,11 +268,12 @@ return (
           <button className="plut" onClick={closeModal1}>No</button>
         </div>
         <p>Funds will be transfered into main account</p>
+        {error ? <p>{error}</p> : null}
       </div>) :
       <div>
           <i class="fa-solid fa-x tx" onClick={close}></i>
-          <h4>{tock}</h4>
-          <p>{error}</p>
+          <img className="goo" src={good} alt="" />
+          <h4 className="hoo">Project Closed Successfully</h4>  
       </div>}
     </Modal>
     </div>
