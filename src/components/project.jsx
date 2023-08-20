@@ -101,6 +101,14 @@ let refresh = terms(tok)
                     <span className='dfp'>Home</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Sub-Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <span className='dfp'>Project</span></Link>
                     </li>
@@ -108,14 +116,7 @@ let refresh = terms(tok)
                     <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
                      <span className='dfp'>Club</span></Link>
                     </li>
-                    <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <span className='dfp'>Account</span></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
-                      <span className='dfp'>Savings</span></Link>
-                    </li>
+                   
                     <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
@@ -154,6 +155,14 @@ let refresh = terms(tok)
                     <span className='dfp'>Home</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Sub-Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <span className='dfp'>Project</span></Link>
                     </li>
@@ -161,14 +170,7 @@ let refresh = terms(tok)
                     <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
                      <span className='dfp'>Club</span></Link>
                     </li>
-                    <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <span className='dfp'>Account</span></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
-                      <span className='dfp'>Savings</span></Link>
-                    </li>
+                    
                     <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>

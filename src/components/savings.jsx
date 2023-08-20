@@ -141,20 +141,20 @@ let refresh = terms(tok)
                     <span className='dfp'>Home</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Sub-Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <span className='dfp'>Project</span></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
                      <span className='dfp'>Club</span></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <span className='dfp'>Account</span></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
-                      <span className='dfp'>Savings</span></Link>
                     </li>
                     <li className='nav-list'>
                     
@@ -169,24 +169,41 @@ let refresh = terms(tok)
               <p>Create budget and manage your cash flow towards that big goal</p>
               <img className=''  src={pic} alt='' onClick={openModal}/>
            </div>
-           {total !== Array ? (<div>
-           {total.map((obj, index) =>
            
-           <div key={index} className='spt' onClick={() => show(index)}>
-              <div className='bfle'>
-                 <img src={add} alt='' className='wad'/>
-                 <span>{obj.name}</span>
-              </div>
-              <div className='bfle'>
-              <p className='clun' key={index}>{ Math.round(((parseInt( obj.spent)/parseInt(obj.budget) * 100) + Number.EPSILON) * 100) / 100}% </p>
-              <p className='clun'> ₦{(obj.spent).toLocaleString('en-US')}/ ₦{(obj.budget).toLocaleString('en-US') }</p>
-              </div>
-              
-              <div className="progress-b" style={{ width: `${100}%` }}>
-                <div className="progress-bi" style={{ width: `${parseInt( obj.spent)/parseInt(obj.budget) * 100}%` }}>
-                   </div> </div>
-           </div>)}</div>):
-           <h4>You have no Sub Account</h4>}
+           {total.map((obj, index) => (
+  <div key={index} className='spt' onClick={() => show(index)}>
+    <div className='bfle'>
+      <img src={add} alt='' className='wad' />
+      <span>{obj.name}</span>
+    </div>
+    {obj.budget !== 0 ? (
+      <div>
+        <div className='bfle'>
+          <p className='clun' key={index}>
+            {Math.round(((parseInt(obj.spent) / parseInt(obj.budget)) * 100 + Number.EPSILON) * 100) / 100}%
+          </p>
+          <p className='clun'>₦{obj.spent.toLocaleString('en-US')} / ₦{obj.budget.toLocaleString('en-US')}</p>
+        </div>
+        <div className="progress-b" style={{ width: '100%' }}>
+          <div className="progress-bi" style={{ width: `${(parseInt(obj.spent) / parseInt(obj.budget)) * 100}%` }}>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div>
+        <div className='bfle'>
+          <p className='clun' key={index}>0%</p>
+          <p className='clun'>₦{obj.spent.toLocaleString('en-US')} / ₦{obj.budget.toLocaleString('en-US')}</p>
+        </div>
+        <div className="progress-b" style={{ width: '100%' }}>
+          <div className="progress-bi" style={{ width: '0%' }}>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+))}
+
            <Modal
       className='svmo'
       isOpen={isOpen}
@@ -198,15 +215,8 @@ let refresh = terms(tok)
       <i className="fa-solid fa-x mx" onClick={closeModal}></i>
       <h3 className='h4'>Budget</h3>
       <form>
-        
-      
-        <select className="line" placeholder=''>
-                <option>Type of Sub-Account</option>
-                <option>EXPENSE</option>
-                </select> 
-                <p></p>
-            <input type='text' placeholder='Budget Name' className='mine' onChange={handleName}/><br />
-        <input type="number" className='mine' onChange={handleInputChange}  placeholder='Enter Amount'/><br />
+            <input type='text' placeholder='Name of Category' className='mine' onChange={handleName}/><br />
+        <input type="number" className='mine' onChange={handleInputChange}  placeholder='Enter Monthly Budget Amount'/><br />
                 {message ? <p>{message}</p> : null} 
                 <button className='logbs' onClick={fproj}>Add</button>
             </form>

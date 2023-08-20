@@ -333,6 +333,11 @@ hr{
   .ad{
     margin:60% 0;
   }
+  .act{
+    display: flex;
+    gap: 20px;
+    padding: 3% 7%;
+  }
 .li{
   height: 40px;
   width: 275px;
@@ -638,7 +643,7 @@ hr{
 }
 .bfle{
   display: flex;
-  gap: 160px;
+  gap: 150px;
   margin: 0;
 }
 .h2{
@@ -768,7 +773,7 @@ hr{
   justify-content: start;
   align-items: center;
   height: 99px;
-  padding: 8px 0px 8px 16px;
+  padding: 8px 20px 8px 16px;
   
 }
 .nav-close{
@@ -975,6 +980,13 @@ hr{
     margin-left: 55px;
     height: 35px;
     border-color: black;
+  }
+  .pne{
+    padding: 0 2%;
+    width: 295px;
+    margin-left: 35px;
+    height: 35px;
+    border-color:black;
   }
   .fot{
     margin-top: 50px;

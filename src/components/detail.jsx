@@ -268,7 +268,7 @@ const openModal = () => {
     })),
     {
       value: 'main',
-      label: 'Main Account',
+      label: 'MAIN ACCOUNT',
     },
   ];
   if(loading) {
@@ -284,7 +284,11 @@ const openModal = () => {
              <div className="dash">
                 <p className="dp">Balance</p>
                 <h2 className="h2">₦{(index.balance.available_balance).toLocaleString('en-Us')}</h2> 
-                <button className="pdf" onClick={openModal}>Transfer</button>                
+      
+                <button className="pdf" onClick={openModal}>Fund</button>  
+                
+              
+                             
              </div>
              <div className="sev">
                 <p>Set Budget</p>
@@ -322,13 +326,13 @@ const openModal = () => {
       {fun === '' ? (
       <div>
       <i className="fa-solid fa-x mx" onClick={closeModal}></i>
-      <h3 className='h4'>Budget</h3>
+      <h3 className='h4'>Fund {index.name }</h3>
       <form>
         
        <Select
       onChange={handleBank}
-      className="lne"
-      placeholder="Select Account"
+      className="pne"
+      placeholder="Transfer From"
       options={options}
       isSearchable={true}
       value={selectedOption}
@@ -337,14 +341,14 @@ const openModal = () => {
                 <input type="number" onChange={handleAmount} className="line" placeholder="₦0.00" name="BVN"/><br/><br/>
                 <p className='sp'>Add a Note</p>
                 <input type='text' placeholder='Add a note' className='line' />
-                <button onClick={fsav} className='logbs'>Next</button>
+                <button onClick={fsav} className='logbs'>Fund</button>
                 <div className="message">{message ? <p>{message}</p> : null}</div>
             </form>
             </div>) :
             <div>
           <i class="fa-solid fa-x tx" onClick={closeModal}></i>
           <img src={good} alt="" />
-          <h4 className="hoo">Transfer Successful!</h4>  
+          <h4 className="hoo">Sub-Account Successfully Funded!</h4>  
       </div>}
             </Modal>
             <Modal
@@ -378,17 +382,12 @@ const openModal = () => {
       {fin === '' ? (
       <div>
       <i className="fa-solid fa-x mx" onClick={closeModals}></i>
-      <h3 className='h4'>Budget</h3>
+      <h4 className='h4'>Set Monthly Amount for {index.name}</h4>
       <form>
         
       
-        <select className="line" placeholder=''>
-                <option>Type of Sub-Account</option>
-                <option>EXPENSE</option>
-                </select> 
-                <p></p>
-            <br />
-        <input type="number" className='mine' onChange={handleInputChange}  placeholder='Enter Amount'/><br />
+        
+        <input type="number" className='mine' onChange={handleInputChange}  placeholder='Enter New Amount'/><br />
                 {messages ? <p>{messages}</p> : null} 
                 <button className='logbs' onClick={fproj}>Save</button>
             </form>
