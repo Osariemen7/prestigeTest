@@ -48,7 +48,7 @@ const Overdraft = () => {
                </div>
                <div className="opp">
                    <p>Daily Interest</p>
-                   <p>0.3%</p>
+                   <p>0.1%</p>
                </div>
              </div>
              <p className="ov">The fees will be applied only after you borrow from your loan account</p>

@@ -144,8 +144,8 @@ return(
               <p className='dp'>Total Balance</p>
               { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
               <h1 className="h1">{hidden}</h1>
-              <div className="acct">
-               <Link to='/components/fund'><button className='abut'>Add Fund</button></Link> 
+              <div className="dax">
+               <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
                <div>
                   <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
                </div>
@@ -200,8 +200,8 @@ return(
                 <p className='dp'>Total Balance</p>
                 { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
                 <h1 className="h1">{hidden}</h1>
-                <div className="act">
-                 <Link to='/components/fund'><button className='abut'>Add Fund</button></Link> 
+                <div className="dax">
+                 <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
                  <div>
                     <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
                  </div>

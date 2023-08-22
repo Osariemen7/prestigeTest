@@ -215,18 +215,19 @@ const openModal = () => {
       });
       rep = await rep.json();
       let bab = rep.access_token 
-      const love =(auto) =>{
+      const love =(index) =>{
         let sort
-      if (auto.auto_sort === true){
+      if (index.auto_fund === true){
         sort = false
       } else {
         sort = true
       }
       return sort
     }
-      let auto_sort= love(auto)
-      console.warn(auto_sort)
-      let item = {auto_sort};
+      let auto_sort= love(index)
+      let name = index.name
+      console.warn(auto_sort, name)
+      let item = {auto_sort, name};
     
     try {
       let result = await fetch('https://sandbox.prestigedelta.com/autosort/', {
@@ -239,7 +240,7 @@ const openModal = () => {
         body: JSON.stringify(item)
       });
       result =await result.json();
-        fetchInfo()
+        fetchDa()
     
     } catch (error) {
       // Handle fetch error
@@ -357,7 +358,7 @@ const openModal = () => {
           
              <div className="dax">
              
-             {auto.auto_sort === false ?(
+             {index.auto_fund === false ?(
              <button onClick={dauto} className="logb">Enable Auto Fund</button>):(
               <button onClick={dauto} className="logb">Disable Auto Fund</button>
              )}
