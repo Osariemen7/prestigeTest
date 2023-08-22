@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Overdraft = () => {
-    const [users, setUsers] = useState('');
-    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
+    const location = useLocation();
+     let index = location.state.data
 
     let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
@@ -24,50 +25,22 @@ const Overdraft = () => {
     const thirtyDaysBefore = new Date(); // Create a new Date object
     thirtyDaysBefore.setDate(currentDate.getDate() - 30)  
 
-  const fetchData = async () => {
-    let item ={refresh}
-    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-          'accept' : 'application/json'
-     },
-     body:JSON.stringify(item)
-    });
-    rep = await rep.json();
-    let bab = rep.access_token
-  let response = await fetch("https://sandbox.prestigedelta.com/accounts/",{
-  method: "GET",
-  headers:{'Authorization': `Bearer ${bab}`},
-  })
-  response = await response.json()
-  localStorage.setItem('user-info', JSON.stringify(tok))
-//   if (data.code === 'token_not_valid'){
-//     navigate('/components/token')
-//   } else {
-    setLoading(false)
- setUsers(response)
+  
+  const overdraft= ()=>{
+    const data = index.name
+       navigate('/components/overd', {state:{data}})
   }
-
-useEffect(() => {
-  fetchData()
-}, [])
-if(loading) {
-    return(
-    <p>Loading...</p>)
-  }
-
     return(
         <div>
-            <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
+            <Link to='/components/savings'><i class="fa-solid fa-chevron-left bac"></i></Link>
              <h4 className="oveh">Overdraft</h4>
-             <h5 className="ove">You Owe</h5>
-             <h1 className="oveh">₦{(users[0].overdraft.balance).toLocaleString('en-US')}</h1>
-            <Link to='/components/overd'><button className="logbd">Quick Credit</button></Link> 
+             <h5 className="ove">Overdraft Balance</h5>
+             <h1 className="oveh">₦{(index.overdraft.balance).toLocaleString('en-US')}</h1>
+            <button onClick={overdraft} className="logbd">Quick Credit</button>
              <div className="pd">
                <div className="ovp">
-                  <p>Available to you</p>
-                  <h4>₦{(users[0].overdraft.limit).toLocaleString('en-US')}</h4>
+                  <p>Overdraft Limit</p>
+                  <h4>₦{(index.overdraft.limit).toLocaleString('en-US')}</h4>
                </div> 
                <div className="ovpi">
                     <p>Tenure</p>

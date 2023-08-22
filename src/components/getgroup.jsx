@@ -50,8 +50,8 @@ const GetGroup =()=>{
 
   const handleSubmit=(e)=>{
     e.preventDefault()
-    let data ={amount, selectedOption, sub_account, nuban, users, narration, pin_id}
-    if (typeof users !=='object' || narration.length < 1 || users.length < 1 || amount.length < 1 || sub_account < 1){
+    let data ={amount, selectedOption, selectedOptions, nuban, users, narration, pin_id}
+    if (typeof users !=='object' || narration.length < 1 || nuban.length < 1 || selectedOptions.length < 1){
       setMessage('All Fields must be Filled')
     }
     else {
@@ -116,16 +116,16 @@ setBen(respet)
 
   return refreshval;
 };
-const debit = (selectedOptions) => {
-  let menu
-  if (selectedOptions.value === 'main'){
-      menu = true;
-  }else{
-      menu = false
-  }
-  return menu
-}
-let sub_account = debit(selectedOptions)
+// const debit = (selectedOptions) => {
+//   let menu
+//   if (selectedOptions.value === 'main'){
+//       menu = true;
+//   }else{
+//       menu = false
+//   }
+//   return menu
+// }
+// let sub_account = debit(selectedOptions)
 
 let refresh = terms(tok)
 
@@ -180,7 +180,7 @@ let refresh = terms(tok)
            ref= selectedOption.value;
          }
           return ref}
-       let bank_code = teams(selectedOption, selected)
+       let bank_code = teams(selectedOption)
 
     const fetchData = async () => {
       let item ={refresh}

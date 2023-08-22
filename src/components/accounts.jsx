@@ -149,18 +149,10 @@ return(
                <div>
                   <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
                </div>
-              
-                  <Link to='/components/overdraft'><button className='abut'>Overdraft</button></Link>   
+                
               </div>
            </div>
-            <div className="acct">
-               <Link to='/components/fund'><button className='abut'>Add Fund</button></Link> 
-               <div>
-                  <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
-               </div>
-              
-                  <Link to='/components/overdraft'><button className='abut'>Overdraft</button></Link>   
-              </div>
+           
               <p className='l'>RECENT TRANSACTIONS</p>
               <p className='ad'>No Transaction Yet</p>
 
@@ -213,8 +205,6 @@ return(
                  <div>
                     <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
                  </div>
-        
-                  <Link to='/components/overdraft'><button className='abut'>Overdraft</button></Link>
                 </div>
              </div>
               

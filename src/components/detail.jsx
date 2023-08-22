@@ -21,6 +21,7 @@ const Detail = () => {
     const [tock, setTock] = useState('');
     const [list, setList] = useState([])
     const [expense_budget, setExpense] = useState('');
+    const [auto, setAuto] = useState('');
     const navigate = useNavigate()
     const location = useLocation();
      let index = location.state.data
@@ -98,13 +99,18 @@ const openModal = () => {
   method: "GET",
   headers:{'Authorization': `Bearer ${bab}`},
   })
-  
+  let result =  await fetch("https://sandbox.prestigedelta.com/autosort/",{
+    method: "GET",
+    headers:{'Authorization': `Bearer ${bab}`},
+    })
+    result = await result.json();
   if (response.status === 401) {
     navigate('/components/login');
   } else {  
   response = await response.json();}
 
   setList(response)
+  setAuto(result)
 
   }
   useEffect(() => {
@@ -196,6 +202,50 @@ const openModal = () => {
       console.error(error);
     };
   }
+  async function dauto() {
+    
+     let items ={refresh}
+      let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json',
+            'accept' : 'application/json'
+       },
+       body:JSON.stringify(items)
+      });
+      rep = await rep.json();
+      let bab = rep.access_token 
+      const love =(auto) =>{
+        let sort
+      if (auto.auto_sort === true){
+        sort = false
+      } else {
+        sort = true
+      }
+      return sort
+    }
+      let auto_sort= love(auto)
+      console.warn(auto_sort)
+      let item = {auto_sort};
+    
+    try {
+      let result = await fetch('https://sandbox.prestigedelta.com/autosort/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': `Bearer ${bab}`
+        },
+        body: JSON.stringify(item)
+      });
+      result =await result.json();
+        fetchInfo()
+    
+    } catch (error) {
+      // Handle fetch error
+      console.error(error);
+    };
+  }
   const fetchDa = async () => {
     let item ={refresh}
     let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -271,6 +321,10 @@ const openModal = () => {
       label: 'MAIN ACCOUNT',
     },
   ];
+  const overdraft= ()=>{
+    const data = index
+       navigate('/components/overdraft', {state:{data}})
+  }
   if(loading) {
     return(
     <p>Loading...</p>)} 
@@ -280,29 +334,35 @@ const openModal = () => {
             <Link to='/components/savings'>
                  <i className="fa-solid fa-chevron-left bac"></i>
              </Link>
-             <h4 className="cpn">{index.name}</h4>
+             <h4 className="cpn">{index.name} SUB ACCOUNT</h4>
              <div className="dash">
                 <p className="dp">Balance</p>
                 <h2 className="h2">₦{(index.balance.available_balance).toLocaleString('en-Us')}</h2> 
-      
-                <button className="pdf" onClick={openModal}>Fund</button>  
+            <div className="act">
+                 <button className="dogb" onClick={openModal}>Fund</button>  
+                <button className="dogb" onClick={openModals}>Edit Budget</button>  
+                <button onClick={() => overdraft()} className='dogb'>Overdraft</button>
+            </div>
                 
-              
                              
              </div>
-             <div className="sev">
-                <p>Set Budget</p>
+             <div className="asx">
+                <p>Monthly Budget</p>
                 <h4 className="sco">₦{(index.budget).toLocaleString('en-US')}</h4>
              </div>
              <div className="sev">
                 <p>Amount Spent</p>
                 <h4 className="sco">₦{(index.spent).toLocaleString('en-US')}</h4>
              </div>
-             <div className="ax">
-                <p>Total Balance</p>
-                <h4 className="sco">₦{(index.balance.available_balance).toLocaleString('en-Us')}</h4>
+          
+             <div className="dax">
+             
+             {auto.auto_sort === false ?(
+             <button onClick={dauto} className="logb">Enable Auto Fund</button>):(
+              <button onClick={dauto} className="logb">Disable Auto Fund</button>
+             )}
              </div>
-             <button className="logb" onClick={openModals}>Edit Sub Account</button>
+            
              <h4 className="saed">Activity</h4>
              {list.map((obj, index) => 
                   <div className='td'>

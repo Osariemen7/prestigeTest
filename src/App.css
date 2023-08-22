@@ -612,7 +612,7 @@ hr{
 }
 .sev{
   display: flex;
-  gap: 150px;
+  gap: 140px;
   padding: 0% 8%;
 }
 .sco{
@@ -641,9 +641,29 @@ hr{
 .wad{
   height: 25px;
 }
+.dogb{
+  width: 100px;
+  height:30px;
+  padding:0 1%;
+  background-color: blue;
+  border: none;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color: #fff;
+}
+.dax{
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+.asx{
+  display: flex;
+  gap: 128px;
+  padding: 0% 8%; 
+}
 .bfle{
   display: flex;
-  gap: 150px;
+  gap: 145px;
   margin: 0;
 }
 .h2{

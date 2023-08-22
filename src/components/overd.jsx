@@ -1,19 +1,22 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 const Request = () => {
     const [message, setMessage] = useState("");
     const [amount, setAmount] = useState('')
     const navigate = useNavigate()
+    const location = useLocation();
+     let next = location.state.data
+     let sub_account = next
 
     const handleAmountChange = (e) => (
         setAmount(e.target.value)
     )
 
-    
+    console.log(next)
       const send = () =>{
         console.warn(amount)
-        let data = {amount}
+        let data = {amount, sub_account}
         if (amount.length > 1 ) {
           navigate('/components/odisplay', {state:{data}})
         } else {
@@ -24,7 +27,7 @@ const Request = () => {
     
     return(
         <div>
-           <Link to='/components/overdraft'><i class="fa-solid fa-chevron-left bac"></i></Link>
+           <Link to='/components/savings'><i class="fa-solid fa-chevron-left bac"></i></Link>
            <h2>Request for an Overdraft</h2>
            <p className='ov' >How much do you want?</p>
 

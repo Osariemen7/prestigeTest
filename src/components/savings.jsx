@@ -163,10 +163,10 @@ let refresh = terms(tok)
                     </li>
                 </ul>
             </nav>
-           <h4 className='oves'>Cash Flow</h4>
-           <h3 className='saed'>Sub-Account</h3>
+           
+           <h3 className='saed'>Budget</h3>
            <div className='svin'>
-              <p>Create budget and manage your cash flow towards that big goal</p>
+              <p>Create sub-account and manage your cash flow</p>
               <img className=''  src={pic} alt='' onClick={openModal}/>
            </div>
            
@@ -178,7 +178,7 @@ let refresh = terms(tok)
     </div>
     {obj.budget !== 0 ? (
       <div>
-        <div className='bfle'>
+        <div className='asx'>
           <p className='clun' key={index}>
             {Math.round(((parseInt(obj.spent) / parseInt(obj.budget)) * 100 + Number.EPSILON) * 100) / 100}%
           </p>
