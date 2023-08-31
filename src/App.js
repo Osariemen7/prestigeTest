@@ -35,6 +35,9 @@ import Display from './components/odisplay';
 import Done from './components/odip';
 import Savings from './components/savings';
 import Detail from './components/detail'
+import Customer from './components/customer';
+import Cusdet from './components/cusdet';
+import Recdet from './components/Receipt';
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -81,6 +84,9 @@ function App() {
         <Route path='/components/odip' element={<Done />} />
         <Route path='/components/savings' element={<Savings />} />
         <Route path='/components/detail' element={<Detail />} />
+        <Route path='/components/customer' element={<Customer />} />
+        <Route path='/components/cusdet' element={<Cusdet />} />
+        <Route path='/components/Receipt' element={<Recdet />} />
              
      </Routes>
       

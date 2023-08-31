@@ -253,7 +253,7 @@ hr{
   font-size: 13px;
   display: flex;
   height: 33px;
-  gap: 40%;
+  gap: 30%;
   padding: 0 3%;
   margin: 0;
   color: grey;
@@ -398,6 +398,7 @@ hr{
   padding-bottom: 0;
   margin-bottom: 0;
 }
+
 .progress-b {
   height: 100%;
   background-color: lightblue;
@@ -653,7 +654,7 @@ hr{
 }
 .dax{
   display: flex;
-  gap: 30px;
+  gap: 10px;
   justify-content: center;
 }
 .asx{
@@ -832,8 +833,9 @@ hr{
   margin: 0;
 }
 .frame{
-  animation: alternate-reverse;
+  animation: alternate-reverse; 
 }
+
 .openu{
   display: flex;
   align-items: center;
@@ -902,24 +904,151 @@ hr{
 }
 .vasa{
   display: flex;
-  gap:80px;
+  gap:20%;
   height:25px;
   border-bottom: 1px solid gainsboro;
   padding: 4% 12%;
 }
 .vasa1{
   display: flex;
-  gap:145px;
+  gap:45%;
   height:25px;
   border-bottom: 1px solid gainsboro;
   padding: 4% 12%;
 }
 .vasa2{
   display: flex;
-  gap:160px;
+  gap:45%;
   height:25px;
   border-bottom: 1px solid gainsboro;
   padding: 4% 12%;
+}
+.dlog{
+  margin: 5% auto;
+  background-color:blue;
+  color:#fff;
+  border-color: blue;
+  padding: 2%;
+  margin-right: 0;
+}
+.cbl{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.blc{
+  background-color:  #c9d4f5;
+  border: 1px solid  #c9d4f5;;
+  padding: 3%;
+  text-align: left;
+  margin-top: 0;
+  border-radius: 4px;
+  width: 150px;
+  height: 60px;
+}
+.dnc{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-top: 2px;
+  font-size: 13px;
+}
+.xp{
+    border: 1px solid #c9d4f5;
+    margin:2% 9%;
+    border-radius: 4px;
+    padding:2%;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+  
+}
+.pepl{
+    display: flex;
+    gap:10px;
+    padding: 2%;
+  
+}
+.zp{
+  display: flex;
+  font-size: 13px;
+  gap: 75px;
+  margin-top: 0;
+  margin-left: 10%;
+}
+.dlu{
+  background-color:  #F8F9FC;
+  border: 1px solid  #F8F9FC;;
+  padding: 3%;
+  text-align: left;
+  margin-top: 0;
+  border-radius: 4px;
+  width: 150px;
+  height: 82px;
+}
+.frame1{
+  margin-left: 60%;
+  height: 20px;
+  margin-top: 2%;
+}
+.jos{
+  border: 1px solid  #c9d4f5;
+  padding:3% 5%;
+  width: fit-content;
+  margin-left: 25%;
+}
+.minus{
+  text-align: left;
+  margin-left: 7%;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.ld{
+  font-size: 13px;
+  color:#060b26;
+  text-align: left;
+  margin:0 7%;
+  margin-bottom: 5%;
+}
+.box{
+  border: 1px solid #c9d4f5;
+  width: 80%;
+  margin-left: 10%;
+}
+.rasa{
+   display: flex;
+      gap: 15%;
+      height:22px;
+      align-items: center;
+      border-bottom: 1px solid gainsboro;
+      padding: 2% 5%;
+      font-size: 13px;
+}
+.dasa{
+  display: flex;
+  gap: 5%;
+  height:22px;
+  align-items: center;
+  border-bottom: 1px solid gainsboro;
+  padding: 2% 5%;
+  font-size: 13px;
+}
+.vasa3{
+  display: flex;
+      gap: 20%;
+      height:22px;
+      align-items: center;
+      border-bottom: 1px solid gainsboro;
+      padding: 2% 5%;
+      font-size: 13px;
+}
+.w{
+  font-size: 12px;
+  color: blue;
+  text-align: left;
+  margin-left: 5%;
+}
+.rax{
+  background-color: blue;
+  color:#fff;
+  width: 150px;
 }
 .me{
   background-color: lightblue;

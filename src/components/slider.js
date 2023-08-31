@@ -24,22 +24,19 @@ const SlidingPage =() => {
     <div className="each-slide-effect">
         <div >
             <img src={images[0]} alt=''/>
-            <h2> Grow with low interest<br/> asset and lease financing</h2>
-            <p>Start or expand your business with a<br/> guaranteed access to long term financing<br/> at 6% per annum.</p>
+            
         </div>
     </div>
     <div className="each-slide-effect">
         <div >
             <img src={images[1]} alt=''/>
-            <h2>Don't just go fast,<br/> Go far with accountability partners</h2>
-            <p>Create or join a closed community of<br/>business peers and help each other<br/> stay on track to reaching your goals.</p>
+            
         </div>
     </div>
     <div className="each-slide-effect">
         <div>
             <img src={images[2]} alt=''/>
-            <h2>Get a bank account for your<br/> business in minutes</h2>
-            <p>Get an NDIC insured bank account optimised<br/> for fast convenient, and reliable transaction<br/> processing</p>
+            
         </div>
     </div>
 </Slide>

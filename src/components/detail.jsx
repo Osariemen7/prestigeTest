@@ -215,19 +215,19 @@ const openModal = () => {
       });
       rep = await rep.json();
       let bab = rep.access_token 
-      const love =(index) =>{
+      const love =(finfo) =>{
         let sort
-      if (index.auto_fund === true){
+      if (finfo.auto_fund === true){
         sort = false
       } else {
         sort = true
       }
       return sort
     }
-      let auto_sort= love(index)
-      let name = index.name
-      console.warn(auto_sort, name)
-      let item = {auto_sort, name};
+      let auto_sort= love(finfo)
+      let sub_account = index.name
+      console.warn(auto_sort, sub_account)
+      let item = {auto_sort, sub_account};
     
     try {
       let result = await fetch('https://sandbox.prestigedelta.com/autosort/', {
@@ -278,7 +278,12 @@ const openModal = () => {
     useEffect(() => {
       fetchDa()
     }, [])
-
+    const receipt =(index)=>{
+      const ite = list[index]
+      navigate('/components/Receipt', {state:{ite}} )
+    }
+    const finfo = info.find(inf => inf.name === index.name)
+    console.log(finfo)
     async function closeProj(e){
         e.preventDefault()
         let project_name = index.name;
@@ -326,6 +331,10 @@ const openModal = () => {
     const data = index
        navigate('/components/overdraft', {state:{data}})
   }
+  const transfer= ()=>{
+    const mata = finfo
+       navigate('/components/getgroup', {state:{mata}})
+  }
   if(loading) {
     return(
     <p>Loading...</p>)} 
@@ -338,7 +347,7 @@ const openModal = () => {
              <h4 className="cpn">{index.name} SUB ACCOUNT</h4>
              <div className="dash">
                 <p className="dp">Balance</p>
-                <h2 className="h2">₦{(index.balance.available_balance).toLocaleString('en-Us')}</h2> 
+                <h2 className="h2">₦{(finfo.balance.available_balance).toLocaleString('en-US')}</h2> 
             <div className="act">
                  <button className="dogb" onClick={openModal}>Fund</button>  
                 <button className="dogb" onClick={openModals}>Edit Budget</button>  
@@ -355,29 +364,30 @@ const openModal = () => {
                 <p>Amount Spent</p>
                 <h4 className="sco">₦{(index.spent).toLocaleString('en-US')}</h4>
              </div>
-          
-             <div className="dax">
-             
-             {index.auto_fund === false ?(
-             <button onClick={dauto} className="logb">Enable Auto Fund</button>):(
-              <button onClick={dauto} className="logb">Disable Auto Fund</button>
-             )}
-             </div>
+             <button onClick={() => transfer()} className="logb">Transfers</button>
             
              <h4 className="saed">Activity</h4>
              {list.map((obj, index) => 
-                  <div className='td'>
+                  <div className='td' onClick={() => receipt(index)}>
                   <div className='pax'>
                   <p className="tm" key={index}>{(new Date(obj.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</p>
                        <h4 className="tm" key={index}>₦{obj.amount}</h4>
                   </div>
                   <div className='tg'>
                        <p  key={index}>{obj.status}</p>
+                       <i class="fa-solid fa-file-export"></i>
                   </div>
                        <p className='tm' key={index}>{obj.narration}</p>
                   </div>
                        )}
-             <button className="plog" onClick={openModal1} >Close Sub Account</button>
+                       <div className="dax">
+                       {finfo.auto_fund === false ?(
+             <button onClick={dauto} className="dlog">Enable Auto Fund</button>):(
+              <button onClick={dauto} className="dlog">Disable Auto Fund</button>
+             )}
+                       <button className="plog" onClick={openModal1} >Close Sub Account</button>
+                       </div>
+            
              <Modal
       className='modal'
       isOpen={isOpen}

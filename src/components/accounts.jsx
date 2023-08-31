@@ -23,6 +23,10 @@ const Accounts =()=> {
       return refreshval;
     };
     let refresh = terms(tok)
+    const receipt =(index)=>{
+      const ite = info[index]
+      navigate('/components/Receipt', {state:{ite}} )
+    }
 
     const currentDate = new Date(); // Get the current date
 
@@ -117,6 +121,18 @@ return(
                     <span className='dfp'>Home</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <span className='dfp'>Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
+                      <span className='dfp'>Sub-Account</span></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
+                      <span className='dfp'>Customers</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <span className='dfp'>Project</span></Link>
                     </li>
@@ -124,14 +140,7 @@ return(
                     <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
                      <span className='dfp'>Club</span></Link>
                     </li>
-                    <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <span className='dfp'>Account</span></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
-                      <span className='dfp'>Savings</span></Link>
-                    </li>
+                    
                     <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
@@ -144,12 +153,9 @@ return(
               <p className='dp'>Total Balance</p>
               { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
               <h1 className="h1">{hidden}</h1>
-              <div className="dax">
+              <div>
                <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
-               <div>
-                  <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
-               </div>
-                
+                              
               </div>
            </div>
            
@@ -180,6 +186,10 @@ return(
                       <span className='dfp'>Sub Account</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
+                      <span className='dfp'>Customers</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <span className='dfp'>Project</span></Link>
                     </li>
@@ -200,17 +210,15 @@ return(
                 <p className='dp'>Total Balance</p>
                 { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
                 <h1 className="h1">{hidden}</h1>
-                <div className="dax">
+                <div >
                  <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
-                 <div>
-                    <Link to='/components/getgroup'><button className='abut'>Transfer</button></Link>
-                 </div>
+                
                 </div>
              </div>
               
           <p className='l'>RECENT TRANSACTIONS</p>
           {info.map((obj, index) => 
-                  <div className='td'>
+                  <div className='td' onClick={() => receipt(index)}>
                   <div className='tl'>
                        <p key={index}>{obj.classification}</p>
                        <p key={index}>{obj.amount}</p>
@@ -221,6 +229,7 @@ return(
                   </div>
                   {obj.transaction_type === 'CLOSE_PROJECT' || obj.transaction_type ==='NIPCR' ? (
                        <p className='tm' key={index}>{obj.narration}</p>) : <p className='tm' key={index}>Beneficiary: {obj.beneficiary.account_name} {obj.beneficiary.bank_name}</p>}
+                  <div ><i class="fa-solid fa-file-export"></i></div>    
                   </div>
                        )}
                        

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Select from 'react-select';
 
   
@@ -14,26 +14,21 @@ const GetGroup =()=>{
   const [narration, setNarration] = useState('')
   const [pin_id, setPinid] = useState('')
   const [message, setMessage] = useState('')
-  const [ben, setBen] = useState([])
-  const [selectedOptions, setSelectedOptions] = useState('')
+  const [ben, setBen] = useState([]);
   const [selected, setSelected] = useState('')
   const navigate = useNavigate();
+  const location = useLocation();
+
+  let selectedOptions = location.state.mata.name
   
-  const option = infos.map((item) => ({
-    label: `${item.name} (₦${(item.balance.available_balance).toLocaleString('en-Us')})`,
-    value: item.name
-  }));
+  
   const opt = ben.map((item) => ({
-    label: `${item.account_name} 
+    label: `${item.account_name} s
              (${item.bank_name})`,
     value: item.account_number,
     team:   item.bank_code,
     code: item.bank_name
   }));
-  
-  const handleBanks = (selectedOptions) => {
-    setSelectedOptions(selectedOptions);
-  };
    
   const handleBank = (selectedOption) => {
     setSelectedOption(selectedOption);
@@ -51,7 +46,7 @@ const GetGroup =()=>{
   const handleSubmit=(e)=>{
     e.preventDefault()
     let data ={amount, selectedOption, selectedOptions, nuban, users, narration, pin_id}
-    if (typeof users !=='object' || narration.length < 1 || nuban.length < 1 || selectedOptions.length < 1){
+    if (typeof users !=='object' || narration.length < 1 || nuban.length < 1 || selectedOption.length < 1){
       setMessage('All Fields must be Filled')
     }
     else {
@@ -96,7 +91,6 @@ if (response.status === 401) {
  
 response = await response.json();
 setLoading(false)
-setInfos(response)
 setBen(respet)
 
   }}
@@ -169,7 +163,7 @@ let refresh = terms(tok)
 //      else {}
 //    }
 //  }
-   console.log(nuban)
+   console.log(selectedOptions)
     const teams = (selectedOption) => {
       let ref;
 
@@ -223,24 +217,14 @@ let refresh = terms(tok)
 
     if(loading) {
       return(
-      <p>Loading</p>)} 
+      <p>Loading...</p>)} 
 
   return(
     <div>
-       <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
+       <Link to='/components/savings'><i class="fa-solid fa-chevron-left bac"></i></Link>
       
             <h3>Send Money</h3>
        <form>
-
-       <p className='sp'>Select Account to debit</p>
-       <Select
-      onChange={handleBanks}
-      className="lne"
-      placeholder="Account to debit"
-      options={option}
-      isSearchable={true}
-      value={selectedOptions}
-    />
     <p className='sp'>Select Beneficiary</p>
                 <Select
       onChange={handleBen}
@@ -285,7 +269,7 @@ let refresh = terms(tok)
                   </div>)}
                 <div className="me">{users ? <p>{users.account_name}</p> : null}</div>
                 <p className='sp'>Enter Amount</p>
-                <input type="number" onChange={handleAmount} className="line" placeholder="0.00" name="BVN"/><br/><br/>
+                <input type="number" onChange={handleAmount} className="line" placeholder="0.00" name="BVN"/><br/><br/> 
                 <p className='sp'>Add a Note</p>
                 <input type='text' onChange={handleNote} placeholder='Add a note' className='line' />
                 <button onClick={handleSubmit} className='tranb'>Next</button>

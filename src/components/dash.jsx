@@ -108,6 +108,10 @@ const toggleHidden =()=>{
                       <span className='dfp'>Sub-Account</span></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
+                      <span className='dfp'>Customers</span></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <span className='dfp'>Project</span></Link>
                     </li>
