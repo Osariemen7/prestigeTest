@@ -28,6 +28,16 @@ const Cusdet=()=> {
             <h4 className='clun'>{item.last_30_value}</h4>
           </div>
          </div>
+         <div className='clup'>
+          <div className='dlu'>
+            <p className='clund'>Customer's Ranking</p>
+            <h4 className='clun'>{item.ranking}</h4>
+          </div>
+          <div className='dlu'>
+            <p className='clund'>Customer's Category</p>
+            <h4 className='clun'>{item.category}</h4>
+          </div>
+         </div>
                   
           <div className='clup'>
               <p className='svin'>First Transaction: {(new Date(item.first_transaction)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</p>

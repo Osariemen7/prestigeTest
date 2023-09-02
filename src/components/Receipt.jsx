@@ -98,11 +98,11 @@ let refresh = terms(tok)
             <main id="main-element">
             <img src={Logo} alt="logo" className="frame1"/>
 
-                <div>
-                <h4 className='jos'>{list[0].business_name}</h4>
+                <div className='jos'>
+                <h4 >{list[0].business_name}</h4>
                 </div>
+                {meal.transaction_type === 'NIPCR'?(<h3 className='minus'>+ ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>):<h3 className='minus'>- ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>}
                 
-                <h3 className='minus'>- ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>
                  <p className='ld'>{(new Date(meal.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
                  
                 <div className='box'>
@@ -122,14 +122,18 @@ let refresh = terms(tok)
                <p>Receiver Bank:</p>
                <p>{meal.beneficiary.bank_name}</p>
            </div>
-              <div className="vasa3">
-                <p>Narration:</p>
-                <p>{meal.narration}</p>
+           <div className='vasa3'>
+               <p className=''>Status:</p>
+               <p>{meal.status}</p>
+           </div>
+              <div className="vasa4">
+              <p className='dnc'>Session Id:</p>
+                    <p>{meal.session_id}</p>
               </div>
                 </div><br></br>
                 <div className='box'>
-                    <p className='dnc'>Session Id:</p>
-                    <p>{meal.session_id}</p>
+                    <p>Narration:</p>
+                <p>{meal.narration}</p>
                 </div>
                 <p className='w'>prestigefinance.app</p>
                 </main>

@@ -767,6 +767,7 @@ hr{
   left: -100%;
   transition: 850ms;;
   padding: 0;
+  overflow-x: scroll;
 }
 .nav-menu.active {
   left: 0;
@@ -779,7 +780,7 @@ hr{
   color:#fff;
   width: 100%;
   height: 50%;
-  border-bottom: 1px solid #fff ;
+ 
 }
 .nav-text span{
   margin-left: 14px;
@@ -793,9 +794,9 @@ hr{
   display: flex;
   justify-content: start;
   align-items: center;
-  height: 99px;
-  padding: 8px 20px 8px 16px;
-  
+  height: 85px;
+  padding: 8px 15px 8px 16px;
+  border-bottom: 1px solid #fff ;
 }
 .nav-close{
   list-style: none;
@@ -969,9 +970,9 @@ hr{
 .zp{
   display: flex;
   font-size: 13px;
-  gap: 75px;
+  gap: 70px;
   margin-top: 0;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 .dlu{
   background-color:  #F8F9FC;
@@ -992,7 +993,7 @@ hr{
   border: 1px solid  #c9d4f5;
   padding:3% 5%;
   width: fit-content;
-  margin-left: 25%;
+  
 }
 .minus{
   text-align: left;
@@ -1039,6 +1040,15 @@ hr{
       padding: 2% 5%;
       font-size: 13px;
 }
+.vasa4{
+  display: flex;
+  gap: 10%;
+      height:22px;
+      align-items: center;
+      border-bottom: 1px solid gainsboro;
+      padding: 2% 5%;
+      font-size: 13px;
+}
 .w{
   font-size: 12px;
   color: blue;
@@ -1061,6 +1071,14 @@ hr{
   padding: 12%;
   background-color: #fff;
   height: 70vh;
+}
+.pog{
+  height: 32px;
+  color:#fff;
+  background-color: blue;
+  width: 254px;
+  margin: 10% 5%;
+  border: 1px solid blue;
 }
 .tx{
   text-align: right;

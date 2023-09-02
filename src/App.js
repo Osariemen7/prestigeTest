@@ -38,6 +38,10 @@ import Detail from './components/detail'
 import Customer from './components/customer';
 import Cusdet from './components/cusdet';
 import Recdet from './components/Receipt';
+import Resident from './components/resident';
+import Business from './components/rebout';
+import Bud from './components/reboard';
+import Addlist from './components/Addlist';
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -64,12 +68,11 @@ function App() {
         <Route path='/components/project' element={<ProjectPage />} />
         <Route path='/components/pop' element={<PopPage />} />
         <Route path='/components/createp' element={<CreatePage />} />
-        <Route path='/components/Addlist' element={<AddPage />} />
         <Route path='/components/listp' element={<ListPage />} />
         <Route path='/components/select' element={<Select />} />
         <Route path='/components/accounts' element={<Accounts />} />
         <Route path="/components/transact" element={<Transact />} />
-        <Route path ='/components/Addlist' element={<Transact />} />
+        <Route path ='/components/Addlist' element={<Addlist />} />
         <Route path='/components/pro' element={<Pro />} />
         <Route path='/components/club' element={<Club />}/>
         <Route path='/components/joinc' element={<Join />} />
@@ -87,6 +90,9 @@ function App() {
         <Route path='/components/customer' element={<Customer />} />
         <Route path='/components/cusdet' element={<Cusdet />} />
         <Route path='/components/Receipt' element={<Recdet />} />
+        <Route path='/components/resident' element={<Resident />} />
+        <Route path='/components/rebout' element={<Business />} />
+        <Route path='/components/reboard' element={<Bud />} />
              
      </Routes>
       
