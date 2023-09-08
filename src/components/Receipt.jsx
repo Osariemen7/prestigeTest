@@ -98,9 +98,9 @@ let refresh = terms(tok)
             <main id="main-element">
             <img src={Logo} alt="logo" className="frame1"/>
 
-                <div className='jos'>
+            
                 <h4 >{list[0].business_name}</h4>
-                </div>
+              
                 {meal.transaction_type === 'NIPCR'?(<h3 className='minus'>+ ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>):<h3 className='minus'>- ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>}
                 
                  <p className='ld'>{(new Date(meal.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
@@ -133,7 +133,7 @@ let refresh = terms(tok)
                 </div><br></br>
                 <div className='box'>
                     <p>Narration:</p>
-                <p>{meal.narration}</p>
+                <p className='dnc'>{meal.narration}</p>
                 </div>
                 <p className='w'>prestigefinance.app</p>
                 </main>

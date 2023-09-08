@@ -144,10 +144,10 @@ let refresh = terms(tok)
            body:JSON.stringify(items)
           });
           console.log(items)
-          setButtonVisible(false)
-          resut = await resut.json();
+                    resut = await resut.json();
           if (resut.status === 201) {
             localStorage.setItem('user-info', JSON.stringify(tok)) 
+            setButtonVisible(false)
           navigate('/components/getrec', {state:{ite}} )
 
           } else {

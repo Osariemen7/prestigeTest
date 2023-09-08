@@ -42,6 +42,7 @@ import Resident from './components/resident';
 import Business from './components/rebout';
 import Bud from './components/reboard';
 import Addlist from './components/Addlist';
+import Credit from './components/credit';
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -93,6 +94,7 @@ function App() {
         <Route path='/components/resident' element={<Resident />} />
         <Route path='/components/rebout' element={<Business />} />
         <Route path='/components/reboard' element={<Bud />} />
+        <Route path='/components/credit' element={<Credit />} />
              
      </Routes>
       
