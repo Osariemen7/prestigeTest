@@ -21,7 +21,27 @@ const Dashboard =()=>{
   let refresh = tok.refresh_token
   let name = tok.user
   
-  
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      // You can prevent the default behavior here if needed
+      event.preventDefault();
+      
+      // Check if the user should be on the home page
+      const shouldRedirect = window.location.href;
+
+      if (shouldRedirect) {
+        // Redirect the user
+        window.location.href = '/components/login'
+      }
+    };
+
+    // Add a listener for the popstate event (back button press)
+    window.addEventListener('popstate', handleBackButton);
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };}, []);
   
     const fetchData = async () => {
         let item ={refresh}
@@ -89,7 +109,7 @@ const toggleHidden =()=>{
         
     return(
         <div>
-            <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+            <i onClick={showSidebar} class="fa-solid fa-bars ac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-item'>
                     <li className='nav-close'>

@@ -21,6 +21,10 @@ const Recdet = () =>{
   }
   return refreshval;
 };
+const credit =()=>{
+  const ite = meal
+  navigate('/components/credit', {state:{ite}} )
+}
 
 let refresh = terms(tok)
     const fetchData = async () => {
@@ -101,7 +105,7 @@ let refresh = terms(tok)
             
                 <h4 >{list[0].business_name}</h4>
               
-                {meal.transaction_type === 'NIPCR'?(<h3 className='minus'>+ ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>):<h3 className='minus'>- ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>}
+                {meal.transaction_type === 'NIPCR' || meal.transaction_type ==='CLOSE_PROJECT'?(<h3 className='minus'>+ ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>):<h3 className='minus'>- ₦{(parseInt(meal.amount)).toLocaleString('en-US')} </h3>}
                 
                  <p className='ld'>{(new Date(meal.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
                  
@@ -132,13 +136,14 @@ let refresh = terms(tok)
               </div>
                 </div><br></br>
                 <div className='box'>
-                    <p>Narration:</p>
+                    <p className='dnc'>Narration:</p>
                 <p className='dnc'>{meal.narration}</p>
                 </div>
                 <p className='w'>prestigefinance.app</p>
                 </main>
-            
-                    <button className='logb' onClick={handleCaptureClick}>Download</button>
+                {meal.transaction_type ==='NIPCR' ? (
+                    <button className='logb' onClick={credit}>Generate Receipt</button>
+                    ): <button className='logb' onClick={handleCaptureClick}>Download</button>}
                     
                 
         </div>

@@ -27,10 +27,7 @@ const Accounts =()=> {
       const ite = info[index]
       navigate('/components/Receipt', {state:{ite}} )
     }
-    const credit =(index)=>{
-      const ite = info[index]
-      navigate('/components/credit', {state:{ite}} )
-    }
+   
     const currentDate = new Date(); // Get the current date
 
     const thirtyDaysBefore = new Date(); // Create a new Date object
@@ -221,22 +218,6 @@ return(
               
           <p className='l'>RECENT TRANSACTIONS</p>
           {info.map((obj, index) => 
-          <div>
-          {obj.transaction_type ==='NIPCR' ? (
-          
-            <div className='td' onClick={() => credit(index)}>
-                  <div className='tl'>
-                       <p key={index}>{obj.classification}</p>
-                       <p key={index}>{obj.amount}</p>
-                  </div>
-                  <div className='tg'>
-                       <p  key={index}>{obj.status}</p>
-                       <p key={index}>{(new Date(obj.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</p>
-                  </div>
-                       <p className='tm' key={index}>{obj.narration}</p>
-            </div> 
-          
-          ):
                   <div className='td' onClick={() => receipt(index)}>
                   <div className='tl'>
                        <p key={index}>{obj.classification}</p>
@@ -250,7 +231,7 @@ return(
                        <p className='tm' key={index}>{obj.narration}</p>) : <p className='tm' key={index}>Beneficiary: {obj.beneficiary.account_name} {obj.beneficiary.bank_name}</p>}
                   <div ><i class="fa-solid fa-file-export"></i></div>    
                   </div>
-                }</div>)}
+                )}
                        
       </div>
    )

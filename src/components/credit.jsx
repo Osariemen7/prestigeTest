@@ -11,10 +11,12 @@ const Credit =()=> {
     const [loading, setLoading] = useState(true);
     const [quantity, setQuatity] = useState([]);
     const [price, setPrice] = useState([]);
+    const [type, setType] = useState([]);
     const [item, setItem] = useState([])
     const [inputVal, setInputVal] = useState("");
     const [inputValue, setInputValue] = useState("");
     const [inputVa, setInputVa] = useState('')
+    const [inputV, setInputV] = useState('')
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation()
     const navigate = useNavigate()
@@ -39,6 +41,8 @@ const handleFormSubmit = (event) => {
     setInputVal();
     setItem([...item, inputVa]);
     setInputVa();
+    setType([...type, inputV])
+    setInputV();
     closeModal()
   }
   let tota =(price.reduce((total, to) => {
@@ -63,7 +67,13 @@ const handleFormSubmit = (event) => {
   const handleInputchan = (event) => {
     setInputVa(event.target.value)
   }
-
+  const handleInputCha = (event) => {
+    setInputV(event.target.value)
+  }
+  function toSentenceCase(inputString) {
+    if (!inputString) return inputString; // Handle empty or null input
+    return inputString.charAt(0).toUpperCase() + inputString.slice(1);
+}
 
 let refresh = terms(tok)
     const fetchData = async () => {
@@ -120,7 +130,7 @@ let refresh = terms(tok)
         <div>
         <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
             <main id="main-element">
-            <div className='rax'><h4 className='shi'>{list[0].business_name}</h4></div> 
+            <div className='rax'><h4 className='shi'>{toSentenceCase(list[0].business_name)}</h4></div> 
             <p className='ld'>{(new Date(meal.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
                  
             <hr className='hr'></hr>
@@ -130,6 +140,7 @@ let refresh = terms(tok)
                 <h4>Item</h4>
                 <h4>Quantity</h4>
                 <h4>Amount</h4>
+                <h4>Quantity Type</h4>
             </div>
     
             <div className='cul'>
@@ -146,16 +157,23 @@ let refresh = terms(tok)
                      {price.map((t, index1) => (
                     <p key={index1}>₦{parseFloat(t).toLocaleString('en-US')}</p>
                   ))}
+                 </ul>
+                 <ul className="aul">
+                     {type.map((tod, index1) => (
+                    <p key={index1}>{tod}</p>
+                  ))}
                  </ul></div>
                     <p className='cveh'>Total: ₦{total}</p>
                     <p className='cveh'>Settled</p>
                 <div className='cule'>
                 <p>Prestige Finance</p>
                 <p></p>
-                <p>₦{total}</p>
+                <p>₦{(meal.amount).toLocaleString()}</p>
                 </div> 
                 <p className='font'>Thank you for your Patronage!!!</p>
                 <p className='font'>Phone No: {list[0].owner_phone}</p>
+                <p className='font'>{list[0].owner_email}</p>
+                <p className='font'>{list[0].address}</p>
                 </main>
             {tota ===parseFloat(meal.amount)  ? (<button className='logb' onClick={handleCaptureClick}>Download</button>) : <button className='logb' onClick={openModal}>Add Item</button> }
             <Modal
@@ -166,17 +184,19 @@ let refresh = terms(tok)
         <i class="fa-solid fa-x mx" onClick={closeModal}></i>
            <h3 className='h4'>Add Items Purchased</h3>
             <form >
-                <p className='mp'>Item</p>
-                <input type="text" className='mine'  onChange={handleInputchan} /><br/>
-                <p className='mp'>Amount</p>
-                <input type="number" className='mine' onChange={handleInputChang} /><br/>
-                <p className='mp'>Quantity</p>
-                   <input type='number' className='mine'
+                <input type="text" className='mine' placeholder='Item' onChange={handleInputchan} /><br/>
+                <input type="number" className='mine' placeholder='Amount' onChange={handleInputChang} /><br/>
+                   <input type='number' className='mine' placeholder='Quantity'
                     onChange={handleInputChange}
-                    />
+                    /><br/>
+                    <select className='mine' onChange={handleInputCha}>
+                      <option>Quantity type</option>
+                      <option>Unit</option>
+                      <option>Packs</option>
+                    </select>
                 
                 
-                <button className='put' onClick={handleFormSubmit}>Continue</button>
+                <button className='put' onClick={handleFormSubmit}>Add</button>
             </form>
             </Modal> 
         </div>

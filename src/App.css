@@ -1078,13 +1078,13 @@ hr{
 }
 .cul{
   display: flex;
-  gap: 40px;
+  gap: 10px;
   font-size: 10px;
 }
 .cule{
   display: flex;
   margin: 0 10%;
-  gap: 55px;
+  gap: 40px;
   border-bottom: 1px dashed black;
   font-size: 10px;
 }
@@ -1095,6 +1095,12 @@ hr{
 }
 .font{
   font-size: 10px;
+}
+.ac{
+  position: relative;
+    right: 40%;
+    margin: 3%;
+    font-size: 25px;
 }
 .me{
   background-color: lightblue;
