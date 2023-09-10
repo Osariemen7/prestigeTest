@@ -23,21 +23,21 @@ const Dashboard =()=>{
   
   useEffect(() => {
     const handleBackButton = (event) => {
-      // You can prevent the default behavior here if needed
+      // Prevent the default behavior to stop the browser from going back
       event.preventDefault();
       
-       // Redirect the user to the login page
-       window.location.href = '/components/login';
-      };
-  
-      // Add a listener for the popstate event (back button press)
-      window.addEventListener('popstate', handleBackButton);
-  
-      // Clean up the listener when the component unmounts
-      return () => {
-        window.removeEventListener('popstate', handleBackButton);
-      };    }, []);
-  
+      // Redirect the user to the login page
+      navigate('/components/login');
+    };
+
+    // Add a listener for the popstate event (back button press)
+    window.addEventListener('popstate', handleBackButton);
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
     const fetchData = async () => {
         let item ={refresh}
         let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{

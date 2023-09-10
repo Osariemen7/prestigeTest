@@ -93,7 +93,7 @@ console.log(parseFloat(budget2) + parseFloat(budget3) + parseFloat(budget4))
            },
            body:JSON.stringify(item)
           });
-          if (result.status !== 200) {
+          if (result.status !== 201) {
             result = await result.json()
             setMessage(JSON.stringify(result.message));
           } else {

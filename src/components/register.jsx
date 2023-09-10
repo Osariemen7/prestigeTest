@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PasswordChecklist from "react-password-checklist"
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 const RegisterPage =()=>{
     const [passwordType, setPasswordType] = useState("password");
@@ -10,10 +10,12 @@ const RegisterPage =()=>{
     const [middle_name, setMiddlename] = useState('')
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
-    const [username, setUsername] = useState('');
+    const location= useLocation()
     const [message, setMessage] = useState("");
     const navigate = useNavigate()
-
+    const user =location.state.num
+    let username = user.phone_number
+    
     const handleEmailChange = (event) =>{
        setEmail(event.target.value)
     }
@@ -33,10 +35,6 @@ const RegisterPage =()=>{
   const handlePasswordConfirm =(evnt)=>{
         
     setPassword2(evnt.target.value);
-}
-const handleUsernameChange =(evnt) => {
-
-  setUsername((evnt.target.value).replace('0', '234'));
 }
     const togglePassword =()=>{
         if(passwordType==="password")
@@ -58,18 +56,23 @@ const handleUsernameChange =(evnt) => {
              },
              body:JSON.stringify(item)
             });
-            
+        
             if (resut.status !== 201) {
-              setMessage('Invalid Information');
+              resut = await resut.json();
+              setMessage(JSON.stringify(resut));
             } else {
               resut = await resut.json();
-            localStorage.setItem('user-info', JSON.stringify(resut)) 
+              localStorage.setItem('user-info', JSON.stringify(resut)) 
             navigate('/components/personal')
             }
           }
+          //
       return(
         <div>
-      
+      <Helmet>
+         <title>Registration</title>
+            
+        </Helmet>
         <h2>Enter your details</h2>
          <p className='lp'>Let's set things up. Enter your details as they appear in your legal documents</p>
         <form>
@@ -80,9 +83,7 @@ const handleUsernameChange =(evnt) => {
             <p className='sp'>Last Name</p>
             <input type='text' className="lin" onChange={handleLastname} name='last-name' placeholder='Last Name' /><br/>
             <p className='sp'>Middle Name</p>
-            <input type='text' className="lin"  onChange={handleMiddlename} name='middle-name' placeholder='Middle Name' /><br/>
-            <p className='sp'>Phone number</p>
-            <input className="lin"  onChange={handleUsernameChange} type="text" name="username" placeholder='Phone Number' required/><br/>
+             <input className="lin"  onChange={handleMiddlename} type="text" name="middlename" placeholder='Middle Name' required/><br/>
             <p className='sp'>Create Password</p>
             <input type={passwordType} className="line" onChange={handlePasswordChange} name='password1' />
             { passwordType==="password"?
@@ -93,21 +94,8 @@ const handleUsernameChange =(evnt) => {
              <i onClick={togglePassword} class="fa-regular fa-eye-slash ic"></i> : <i class="fa-regular fa-eye ic" onClick={togglePassword}></i>} <br/>
              <br/>
              <input class="check" type="checkbox" name="" id="check" required></input>
-             <label>By tapping next, you agree to our private policy<br/> and Terms & Condition</label>
+             <label>By tapping next, you agree to our privacy policy<br/> and Terms & Condition</label>
              <div className="message">{message ? <p>{message}</p> : null}</div>
-             <PasswordChecklist
-				rules={["minLength","specialChar","number","capital","match"]}
-				minLength={8}
-				value={password1}
-				valueAgain={password2}
-				messages={{
-					minLength: "Password is too short",
-					specialChar: "Password must contain a special character",
-					number: "Password must have a number",
-					capital: "Password must have a capital letter",
-					match: "Password must match",
-				}}
-			/>
         </form>
         <button className="but" onClick={reg} type="submit">Next</button>
      </div>
