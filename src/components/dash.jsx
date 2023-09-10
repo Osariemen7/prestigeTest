@@ -26,22 +26,17 @@ const Dashboard =()=>{
       // You can prevent the default behavior here if needed
       event.preventDefault();
       
-      // Check if the user should be on the home page
-      const shouldRedirect = window.location.href;
-
-      if (shouldRedirect) {
-        // Redirect the user
-        window.location.href = '/components/login'
-      }
-    };
-
-    // Add a listener for the popstate event (back button press)
-    window.addEventListener('popstate', handleBackButton);
-
-    // Clean up the listener when the component unmounts
-    return () => {
-      window.removeEventListener('popstate', handleBackButton);
-    };}, []);
+       // Redirect the user to the login page
+       window.location.href = '/components/login';
+      };
+  
+      // Add a listener for the popstate event (back button press)
+      window.addEventListener('popstate', handleBackButton);
+  
+      // Clean up the listener when the component unmounts
+      return () => {
+        window.removeEventListener('popstate', handleBackButton);
+      };    }, []);
   
     const fetchData = async () => {
         let item ={refresh}
