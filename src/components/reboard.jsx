@@ -41,7 +41,7 @@ const Bud=()=>{
     }
     const updateTotal = (e) => {
         e.preventDefault();
-        const newTotal =parseFloat(budget1) - (parseFloat(budget2) +parseFloat(budget3) + parseFloat(budget4)) ;
+        const newTotal =parseFloat(budget1) + (parseFloat(budget2) +parseFloat(budget3) + parseFloat(budget4)) ;
          
         setTotal(newTotal);
       };
@@ -107,7 +107,7 @@ console.log(parseFloat(budget2) + parseFloat(budget3) + parseFloat(budget4))
         <div>
         <h2>Set your Monthly Budget</h2>
         <form>
-            <p className="sp">How much monthly profit are your expecting?</p>
+            <p className="sp">What is your profit target for the Month?</p>
             <input className="line" type='number' onChange={handleBuget1} /><br/><br/>
             <p className="sp">How much are you spending on salaries monthly?</p>
             <input className="line" type='number' onChange={handleBuget2} /><br/><br/>
@@ -116,7 +116,7 @@ console.log(parseFloat(budget2) + parseFloat(budget3) + parseFloat(budget4))
             <p className="sp">How much do spend on other expenses per month?</p>
             <input className="line" type='number' onChange={handleBuget4} /><br/><br/>
             <div className="message">{message ? <p>{message}</p> : null}</div>
-           {total === 0 ? null:<h4 >You are expecting a Monthly revenue of:<br/>₦{(total).toLocaleString('en-Us')}</h4>} 
+           {total === 0 ? null:<h4 >Your target Monthly revenue is:<br/>₦{(total).toLocaleString('en-Us')}</h4>} 
             {total === 0 ?(
              <button onClick={updateTotal} className="pog">Next</button>):(
                 <button className='pog' onClick={bus} type="submit">Next</button>

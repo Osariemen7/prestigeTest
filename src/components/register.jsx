@@ -12,10 +12,14 @@ const RegisterPage =()=>{
     const [password2, setPassword2] = useState("");
     const location= useLocation()
     const [message, setMessage] = useState("");
+    const [check, setCheck] = useState('')
     const navigate = useNavigate()
     const user =location.state.num
     let username = user.phone_number
     
+   const handleCheck =(event) =>{
+    setCheck(event.target.value)
+   }
     const handleEmailChange = (event) =>{
        setEmail(event.target.value)
     }
@@ -57,10 +61,13 @@ const RegisterPage =()=>{
              body:JSON.stringify(item)
             });
         
-            if (resut.status !== 201) {
+            if (check === ''){
+              setMessage('Privacy policy and Terms and Condition must be checked')
+          
+            }  else if (resut.status !== 201) {
               resut = await resut.json();
-              setMessage(JSON.stringify(resut));
-            } else {
+              setMessage(JSON.stringify(resut));}
+            else {
               resut = await resut.json();
               localStorage.setItem('user-info', JSON.stringify(resut)) 
             navigate('/components/personal')
@@ -93,8 +100,8 @@ const RegisterPage =()=>{
             { passwordType==="password"?
              <i onClick={togglePassword} class="fa-regular fa-eye-slash ic"></i> : <i class="fa-regular fa-eye ic" onClick={togglePassword}></i>} <br/>
              <br/>
-             <input class="check" type="checkbox" name="" id="check" required></input>
-             <label>By tapping next, you agree to our privacy policy<br/> and Terms & Condition</label>
+             <input class="check" type="checkbox" name="" onChange={handleCheck} value="check" required></input>
+             <label>By tapping next, you agree to our <a className='lsf' href='https://prestigefinance.co/policy.html'>privacy policy</a><br/> and <a className='lsf' href='https://prestigefinance.co/terms.html'>Terms & Condition</a> </label>
              <div className="message">{message ? <p>{message}</p> : null}</div>
         </form>
         <button className="but" onClick={reg} type="submit">Next</button>
