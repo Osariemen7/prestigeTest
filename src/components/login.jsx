@@ -116,7 +116,7 @@ const LoginPage = () => {
                 <i onClick={togglePassword} class="fa-regular fa-eye-slash ic"></i> : <i class="fa-regular fa-eye ic" onClick={togglePassword}></i>} <br/><br/>
                 <button className="logb" onClick={login} type="submit">Log in</button>
                 <div className="message">{message ? <p>{message}</p> : null}</div>
-                <p className="lop" onClick={openModal}>Forgot Password?</p>
+               <br/> <p className="lop" onClick={openModal}>Forgot Password?</p>
             </form>
             <footer className="fot">Dont have an account? <Link to='/components/signup'><span className="lsf">Sign Up</span></Link></footer>
             <Modal

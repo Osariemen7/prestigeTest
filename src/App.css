@@ -253,7 +253,7 @@ hr{
   font-size: 13px;
   display: flex;
   height: 33px;
-  gap: 30%;
+  gap: 20%;
   padding: 0 3%;
   margin: 0;
   color: grey;
@@ -792,7 +792,8 @@ hr{
 .nav-list {
   list-style: none;
   display: flex;
-  justify-content: start;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 85px;
   padding: 8px 15px 8px 16px;
@@ -1084,17 +1085,37 @@ hr{
 .cule{
   display: flex;
   margin: 0 10%;
+  margin-bottom: 2%;
   gap: 40px;
   border-bottom: 1px dashed black;
   font-size: 10px;
 }
 .cveh{
   margin-top: 0;
-  border-top: 1px black dashed;
   font-size: 10px;
 }
 .font{
   font-size: 10px;
+  margin: 0;
+}
+.invo{
+  text-align: right;
+  margin-right: 9%;
+}
+.grn{
+  background-color: rgb(242, 244, 247);
+}
+.frame2{
+  margin-right: 70%;
+  height: 15px;
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+.drz{
+  display: flex;
+  gap: 128px;
+  padding: 0% 8%; 
+  margin-bottom: 0;
 }
 .ac{
   position: relative;
@@ -1175,29 +1196,31 @@ hr{
     margin: 3% 12%;
   }
   .lin{
-    width:275px;
+    width:250px;
     height:35px;
     padding: 0 2%;
     margin-bottom: 0;
+    border-color: rgb(214, 209, 209);
     }
   .line{
     padding:0 2%;
-    width: 265px;
+    width: 250px;
     height: 35px;
     margin-left:18px ;
+    border-color: rgb(214, 209, 209);
   }
   .lne {
     padding: 0 2%;
-    width: 295px;
+    width: 280px;
     margin-left: 55px;
-    height: 35px;
+    height: 40px;
     border-color: black;
   }
   .pne{
     padding: 0 2%;
-    width: 295px;
-    margin-left: 35px;
-    height: 35px;
+    width: 280px;
+    margin-left: 33px;
+    height: 40px;
     border-color:black;
   }
   .fot{

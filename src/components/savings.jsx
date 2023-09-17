@@ -133,37 +133,37 @@ let refresh = terms(tok)
          <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-item'>
-                    <li className='nav-close'>
+                <li className='nav-close'>
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
-                    <span className='dfp'>Home</span></Link>
+                    <p className='dfp'>Home</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <span className='dfp'>Account</span></Link>
+                      <p className='dfp'>Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
-                      <span className='dfp'>Sub-Account</span></Link>
+                      <p className='dfp'>Sub-Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
-                      <span className='dfp'>Customers</span></Link>
+                      <p className='dfp'>Customers</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
-                  <span className='dfp'>Project</span></Link>
+                  <p className='dfp'>Project</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
-                     <span className='dfp'>Club</span></Link>
+                     <p className='dfp'>Club</p></Link>
                     </li>
                     <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
-                      <span className='dfp'>Log Out</span></Link>
+                      <p className='dfp'>Log Out</p></Link>
                     </li>
                 </ul>
             </nav>

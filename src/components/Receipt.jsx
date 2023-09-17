@@ -141,7 +141,7 @@ let refresh = terms(tok)
                 </div>
                 <p className='w'>prestigefinance.app</p>
                 </main>
-                {meal.transaction_type ==='NIPCR' ? (
+                {meal.transaction_type ==='NIPCR' ?  (
                     <button className='logb' onClick={credit}>Generate Receipt</button>
                     ): <button className='logb' onClick={handleCaptureClick}>Download</button>}
                     

@@ -41,7 +41,7 @@ const openModal = () => {
       // Start a timer if the input is empty
       timer = setTimeout(() => {
         setPinExpired(true);
-      }, 35000); // 30 seconds
+      }, 20000); // 30 seconds
     } else {
       // Clear the timer if there's input
       clearTimeout(timer);
@@ -51,6 +51,14 @@ const openModal = () => {
       clearTimeout(timer);
     };
   }, [pin]);
+
+  const handleClick = () => {
+    // When the button is clicked, setButtonVisible to false
+    setButtonVisible(false);
+    setTimeout(() => {
+      setButtonVisible(true);
+    }, 20000);
+  };
 
   const fetchData = async () => {
     let item ={refresh}
@@ -102,6 +110,7 @@ let refresh = terms(tok)
 
      async function transfer(e) {
         e.preventDefault();
+        handleClick()
         let amount = meal.amount
         const pent =(user, meal)=>{
           let pun
@@ -142,17 +151,18 @@ let refresh = terms(tok)
                 'Authorization': `Bearer ${bab}`
            },
            body:JSON.stringify(items)
-          });
-          console.log(items)
-                    resut = await resut.json();
-          if (resut.status === 201) {
-            localStorage.setItem('user-info', JSON.stringify(tok)) 
-            setButtonVisible(false)
-          navigate('/components/getrec', {state:{ite}} )
-
+          });       
+            
+          if (resut.status !== 201) {
+            const errorResult = await resut.json();
+            setMessage(JSON.stringify(errorResult.message)); 
+            setButtonVisible(true)
           } else {
-            setMessage(JSON.stringify(resut.message));
-                    }
+            
+            resut = await resut.json();
+          navigate('/components/getrec', {state:{ite}} )         
+        }
+        
         }
         console.log(meal)
     return(

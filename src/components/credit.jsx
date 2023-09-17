@@ -18,6 +18,10 @@ const Credit =()=> {
     const [inputVa, setInputVa] = useState('')
     const [inputV, setInputV] = useState('')
     const [isOpen, setIsOpen] = useState(false);
+    const [customer, setCustomer] = useState('');
+    const [inpu, setInpu] = useState('');
+    const [number, setNumber] = useState('')
+    const [val, setVal] = useState('')
     const location = useLocation()
     const navigate = useNavigate()
     let meal = location.state.ite
@@ -35,14 +39,20 @@ const Credit =()=> {
 };
 const handleFormSubmit = (event) => {
     event.preventDefault();
+    const newCustomer = customer || inpu;
+    const newNumber = number || val
     setQuatity([...quantity, inputValue]);
     setInputValue("");
     setPrice([...price, inputVal]);
-    setInputVal();
+    setInputVal('');
     setItem([...item, inputVa]);
-    setInputVa();
+    setInputVa('');
     setType([...type, inputV])
-    setInputV();
+    setInputV('');
+    setCustomer(newCustomer)
+    setInpu('')
+    setNumber(newNumber)
+    setVal('')
     closeModal()
   }
   let tota =(price.reduce((total, to) => {
@@ -56,7 +66,12 @@ const handleFormSubmit = (event) => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  
+  const handleCust = (event) =>{
+    setInpu(event.target.value)
+  }
+   const handlePhone =(event) => {
+    setVal(event.target.value)
+   }
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -131,11 +146,13 @@ let refresh = terms(tok)
         <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
             <main id="main-element">
             <div className='rax'><h4 className='shi'>{toSentenceCase(list[0].business_name)}</h4></div> 
+            <h5 className='invo'>INVOICE</h5> 
+            <h6 className='saed'>Bill To: {customer} -<span> {number}</span></h6>
             <p className='ld'>{(new Date(meal.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
-                 
+               
             <hr className='hr'></hr>
-                        <p className='font'>INVOICE</p>
-            <hr className='hr'></hr>
+                        
+          <div className='grn'>
             <div className='cule'>
                 <h4>Item</h4>
                 <h4>Quantity</h4>
@@ -164,16 +181,18 @@ let refresh = terms(tok)
                   ))}
                  </ul></div>
                     <p className='cveh'>Total: ₦{total}</p>
-                    <p className='cveh'>Settled</p>
+                    
                 <div className='cule'>
-                <p>Prestige Finance</p>
+                <p>Received:</p>
                 <p></p>
                 <p>₦{(meal.amount).toLocaleString()}</p>
+                </div>
                 </div> 
                 <p className='font'>Thank you for your Patronage!!!</p>
                 <p className='font'>Phone No: {list[0].owner_phone}</p>
                 <p className='font'>{list[0].owner_email}</p>
                 <p className='font'>{list[0].address}</p>
+                <img src={Logo} alt="logo" className="frame2"/>
                 </main>
             {tota ===parseFloat(meal.amount)  ? (<button className='logb' onClick={handleCaptureClick}>Download</button>) : <button className='logb' onClick={openModal}>Add Item</button> }
             <Modal
@@ -184,6 +203,9 @@ let refresh = terms(tok)
         <i class="fa-solid fa-x mx" onClick={closeModal}></i>
            <h3 className='h4'>Add Items Purchased</h3>
             <form >
+            {customer === ''? (<input type='text' className='mine' placeholder='Customer Name' onChange={handleCust} />): null}
+            {number === ''? (<input type='number' className='mine' placeholder='Customer Number' onChange={handlePhone} />): null}
+            
                 <input type="text" className='mine' placeholder='Item' onChange={handleInputchan} /><br/>
                 <input type="number" className='mine' placeholder='Amount' onChange={handleInputChang} /><br/>
                    <input type='number' className='mine' placeholder='Quantity'
@@ -192,7 +214,9 @@ let refresh = terms(tok)
                     <select className='mine' onChange={handleInputCha}>
                       <option>Quantity type</option>
                       <option>Unit</option>
-                      <option>Packs</option>
+                      <option>Pack</option>
+                      <option>Carton</option>
+                      <option>Bag</option>
                     </select>
                 
                 
