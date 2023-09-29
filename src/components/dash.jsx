@@ -22,22 +22,19 @@ const Dashboard =()=>{
   let name = tok.user
   
   useEffect(() => {
-    const handleBackButton = (event) => {
-      // Prevent the default behavior to stop the browser from going back
-      event.preventDefault();
-      
-      // Redirect the user to the login page
+    const handlePopstate = () => {
+      // Navigate to the login page when a popstate event occurs
       navigate('/components/login');
     };
-
-    // Add a listener for the popstate event (back button press)
-    window.addEventListener('popstate', handleBackButton);
-
-    // Clean up the listener when the component unmounts
+  
+    // Add an event listener for popstate events
+    window.addEventListener('popstate', handlePopstate);
+  
+    // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener('popstate', handleBackButton);
+      window.removeEventListener('popstate', handlePopstate);
     };
-  }, []);
+  }, [navigate]);
     const fetchData = async () => {
         let item ={refresh}
         let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -104,6 +101,7 @@ const toggleHidden =()=>{
         
     return(
         <div>
+        <div>
             <i onClick={showSidebar} class="fa-solid fa-bars ac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-item'>
@@ -127,22 +125,21 @@ const toggleHidden =()=>{
                       <p className='dfp'>Customers</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
-                  <p className='dfp'>Project</p></Link>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
+                      <p className='dfp'>Inventory</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
-                     <p className='dfp'>Club</p></Link>
+                    <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
+                  <p className='dfp'>Project</p></Link>
                     </li>
                     <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>
-                
-                    
+                    </li>  
                 </ul>
             </nav>
+            </div>
             <h3 className='h4'>Hi, {name.first_name} </h3>
             <div className='dash'>
                 <p className='dp'>Total Balance</p>

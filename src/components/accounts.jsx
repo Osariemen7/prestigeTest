@@ -110,7 +110,7 @@ return(
             <title>Transactions</title>
             
         </Helmet>
-        <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+        <i onClick={showSidebar} class="fa-solid fa-bars ac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className='nav-menu-item'>
                     <li className='nav-close'>
@@ -133,15 +133,14 @@ return(
                       <p className='dfp'>Customers</p></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
+                      <p className='dfp'>Inventory</p></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <p className='dfp'>Project</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
-                     <p className='dfp'>Club</p></Link>
-                    </li>
-                    <li className='nav-list'>
-                    
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
                     </li>
@@ -168,7 +167,8 @@ return(
     )
     return(
       <div>
-      <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+      <div  className=''>
+      <i onClick={showSidebar} class="fa-solid fa-bars ac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className='nav-menu-item'>
                     <li className='nav-close'>
@@ -191,13 +191,14 @@ return(
                       <p className='dfp'>Customers</p></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
+                      <p className='dfp'>Inventory</p></Link>
+                    </li>
+                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <p className='dfp'>Project</p></Link>
                     </li>
-                    <li className='nav-list'>
-                    <Link to='/components/club' className='nav-text'><i class="fa-solid fa-people-group home"></i>
-                     <p className='dfp'>Club</p></Link>
-                    </li>
+                
                     <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
@@ -205,6 +206,7 @@ return(
                     </li>
                 </ul>
             </nav>
+            </div>
              <div className="dash">
                 <h3 className="h1">Account</h3>
                 <p className='dp'>Total Balance</p>
@@ -215,6 +217,7 @@ return(
                 
                 </div>
              </div>
+             
               
           <p className='l'>RECENT TRANSACTIONS</p>
           {info.map((obj, index) => 

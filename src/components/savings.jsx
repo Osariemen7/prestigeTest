@@ -130,7 +130,7 @@ let refresh = terms(tok)
 
     return(
         <div>
-         <i onClick={showSidebar} class="fa-solid fa-bars bac"></i>
+         <i onClick={showSidebar} class="fa-solid fa-bars ac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-item'>
                 <li className='nav-close'>

@@ -5,6 +5,7 @@ import Select from 'react-select';
 import good from './images/good.svg'
 
 
+
 const Detail = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState('')
@@ -64,7 +65,7 @@ const openModal = () => {
     setIsOpen(false);
     fetchDa()
   };
-  const handleBank = (selectedOption) => {
+ const handleBank = (selectedOption) => {
     setSelectedOption(selectedOption);
   };
   const handleAmount=(event)=> {
@@ -219,7 +220,6 @@ const openModal = () => {
       console.warn(funder, debit_main, amount, receiver)
       let item = {funder, debit_main, amount, receiver};
     
-  
     try {
       let result = await fetch('https://sandbox.prestigedelta.com/fundsubaccount/', {
         method: 'POST',
@@ -354,6 +354,7 @@ const openModal = () => {
     <p>Loading...</p>)} 
 
     return(
+  
         <div>
             <Link to='/components/savings'>
                  <i className="fa-solid fa-chevron-left bac"></i>
@@ -467,9 +468,6 @@ const openModal = () => {
       <i className="fa-solid fa-x mx" onClick={closeModals}></i>
       <h4 className='h4'>Set Monthly Amount for {index.name}</h4>
       <form>
-        
-      
-        
         <input type="number" className='mine' onChange={handleInputChange}  placeholder='Enter New Amount'/><br />
                 {messages ? <p>{messages}</p> : null} 
                 <button className='logbs' onClick={fproj}>Save</button>
@@ -481,7 +479,9 @@ const openModal = () => {
           <h4 className="hoo">Sub Account Updated!</h4>  
       </div>}
             </Modal>
+          
         </div>
+    
     )
 }
 

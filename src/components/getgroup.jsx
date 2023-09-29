@@ -21,7 +21,7 @@ const GetGroup =()=>{
 
   let selectedOptions = location.state.mata.name
   
-  
+  console.log(selectedOptions)
   const opt = ben.map((item) => ({
     label: `${item.account_name} s
              (${item.bank_name})`,
@@ -192,18 +192,14 @@ let refresh = terms(tok)
     method: "GET",
     headers:{'Authorization': `Bearer ${bab}`},
     })
-    let respet = await fetch("https://sandbox.prestigedelta.com/transferpinid/",{
-    method: "GET",
-    headers:{'Authorization': `Bearer ${bab}`},
-    })
-    respet = await respet.json();
+    
     response = await response.json()
     localStorage.setItem('user-info', JSON.stringify(tok))
   //   if (data.code === 'token_not_valid'){
   //     navigate('/components/token')
   //   } else {
    setUsers(response)
-   setPinid(respet)
+  
     }
   
   useEffect(() => {

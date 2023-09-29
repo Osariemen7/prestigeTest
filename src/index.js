@@ -5,14 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ChakraProvider } from '@chakra-ui/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
   <BrowserRouter>
       <React.StrictMode>
         <App />
     </React.StrictMode>
   </BrowserRouter>
+  
   
 );
 

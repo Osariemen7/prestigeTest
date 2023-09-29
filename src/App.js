@@ -16,7 +16,6 @@ import TokenPage from './components/token';
 import ProjectPage from './components/project';
 import PopPage from './components/pop';
 import CreatePage from './components/createp';
-import AddPage from './components/Addlist';
 import ListPage from './components/listp';
 import Frequent from './components/frequent';
 import Accounts from './components/accounts';
@@ -43,6 +42,9 @@ import Business from './components/rebout';
 import Bud from './components/reboard';
 import Addlist from './components/Addlist';
 import Credit from './components/credit';
+import Inventory from './components/inventory';
+import Product from './components/product';
+import ProDe from './components/prodet';
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -51,6 +53,7 @@ function App() {
   }, [])
   return (
     <>
+     
          {loading === false ? (
     
     <div className="App">
@@ -95,13 +98,17 @@ function App() {
         <Route path='/components/rebout' element={<Business />} />
         <Route path='/components/reboard' element={<Bud />} />
         <Route path='/components/credit' element={<Credit />} />
-             
+        <Route path='/components/inventory' element={<Inventory />} />
+        <Route path='/components/product' element={<Product />} />
+        <Route path='/components/prodet' element={<ProDe />} />        
+     
      </Routes>
       
     </div>
     ) : (
         <ScreenLoad/>
       )}
+      
       </>
   );
 }

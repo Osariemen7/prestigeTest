@@ -41,7 +41,7 @@ const openModal = () => {
       // Start a timer if the input is empty
       timer = setTimeout(() => {
         setPinExpired(true);
-      }, 20000); // 30 seconds
+      }, 200); // 30 seconds
     } else {
       // Clear the timer if there's input
       clearTimeout(timer);
@@ -190,6 +190,24 @@ let refresh = terms(tok)
            <div className="meats">
              <p>Be sure of the account details before sending<br/> funds as this cannot be reversed</p>
            </div> 
+           {pinExpired === true ? (
+  user === '' ? (
+    <div>
+      <h4>
+        Send OTP to{' '}
+        <span className="lop" onClick={fetchData}>
+          Email?
+        </span>{' '}
+        or{' '}
+        <span className="lop" onClick={fetchDat}>
+          Phone Number?
+        </span>
+      </h4>
+    </div>
+  ) : (
+    <div>Done</div>
+  )
+) : null}
            <button onClick={openModal} className="tranb">Proceed</button>
            <Modal
             className='trmo'
@@ -205,24 +223,7 @@ let refresh = terms(tok)
                  renderSeparator={<span> </span>}
                  renderInput={(props) => <input {...props }  className='totp' />}
                 />
-                {pinExpired === true ? (
-  user === '' ? (
-    <div>
-      <p className="dnc">
-        Time out. Resend OTP to{' '}
-        <span className="lop" onClick={fetchData}>
-          Email?
-        </span>{' '}
-        or{' '}
-        <span className="lop" onClick={fetchDat}>
-          Phone Number?
-        </span>
-      </p>
-    </div>
-  ) : (
-    <div>Done</div>
-  )
-) : null}
+               
 
 <div className="message">{message ? <p>{message}</p> : null}</div>
       {buttonVisible === true ?  <button className="logb" onClick={transfer}>Transfer</button> : <p>Processing...</p>}
