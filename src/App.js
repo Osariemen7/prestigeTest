@@ -45,6 +45,8 @@ import Credit from './components/credit';
 import Inventory from './components/inventory';
 import Product from './components/product';
 import ProDe from './components/prodet';
+import Invoice from './components/invoice';
+import BuyP from './components/before';
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -100,7 +102,9 @@ function App() {
         <Route path='/components/credit' element={<Credit />} />
         <Route path='/components/inventory' element={<Inventory />} />
         <Route path='/components/product' element={<Product />} />
-        <Route path='/components/prodet' element={<ProDe />} />        
+        <Route path='/components/prodet' element={<ProDe />} /> 
+        <Route path='/components/invoice' element={<Invoice />} /> 
+        <Route path='/components/before' element={<BuyP />} />      
      
      </Routes>
       

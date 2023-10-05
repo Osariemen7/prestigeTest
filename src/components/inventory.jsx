@@ -154,7 +154,8 @@ setAcct(response)
 
 const options = [
   ...acct.map((item) => ({
-    label: item.name,
+    label: `${item.name} 
+    (₦${item.balance.available_balance})`,
     value: item.name,
   })),
   {
@@ -258,8 +259,9 @@ const options = [
             setMessage(JSON.stringify(errorResult.message));
           } else {
              result =await result.json();
+             navigate('/components/invoice', {state:{item}} )
              setFun(JSON.stringify(result)) 
-             fproj()  
+               
           } 
           
         } catch (error) {
@@ -325,9 +327,10 @@ const options = [
             <div className='dash'>
                <h3 className='h1'>Inventory</h3>
               <p className='dp'>Total Balance</p>
-              <Heading size='xl' color='#fff'>₦{(info[0].sub_account.balance.available_balance).toLocaleString('en-US')}</Heading>
+              {typeof info[0].sub_account === 'undefined'? (<Heading size='xl' color='#fff'>₦0</Heading>):
+              <Heading size='xl' color='#fff'>₦{(info[0].sub_account.balance.available_balance).toLocaleString('en-US')}</Heading>}
               <div className='act'>
-               <button onClick={onOpen} className='abut'>Fund</button>
+               <button onClick={onOpen} className='abut'>Sell/Fund</button>
               <button onClick={transfer} className='abut'>Transfers</button>
               <button onClick={overdraft} className='abut'>Overdraft</button>
             </div>
@@ -419,7 +422,7 @@ const options = [
         <ModalContent>
         {fun === '' ? ( 
           <div>
-          <ModalHeader>Fund</ModalHeader>
+          <ModalHeader>Receive Payment</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <Select

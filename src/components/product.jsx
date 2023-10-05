@@ -258,8 +258,7 @@ console.log(selectedOption)
     const handleOptionSelect = (selectedOption) => {
       // Handle option selection
       setSelectedOption(selectedOption);
-      setPacksize(selectedOption.team)
-      setCost(selectedOption.mony)
+     
     };
     
     const handleAddProduct = (newValue) => {
@@ -268,7 +267,10 @@ console.log(selectedOption)
       setSelectedOption(newProduct);
     }
   };
-
+  const transfer= ()=>{
+    const mata = info[0].sub_account
+       navigate('/components/before', {state:{mata}})
+  }
     if(loading) {
         return(
         <p>Loading...</p>)} 
@@ -279,13 +281,16 @@ console.log(selectedOption)
         <Link to='/components/inventory'>
                  <i className="fa-solid fa-chevron-left bac"></i>
              </Link>
+             <Heading size='md' mb={2}>Buy Product</Heading>
 <Stack direction='row' spacing={2} align='center' justify='center'>
+<div><p>Bought Already?</p>
   <Button colorScheme='blue' variant='solid' onClick={modal1.onOpen}>
     Add Product
-  </Button>
-  <Button colorScheme='blue' variant='outline' onClick={modal2.onOpen}>
-    Sell Product
-  </Button>
+  </Button></div>
+  <div><p>Buy through transfer</p>
+  <Button colorScheme='blue' variant='outline' onClick={transfer}>
+    Buy Product
+  </Button></div>
 </Stack>
 <Heading size='md' m={5} mb={0}>Product List</Heading>
         { info.length > 0 && typeof info[0].products[0] === 'object' ? (

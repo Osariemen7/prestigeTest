@@ -33,7 +33,51 @@ const openModal = () => {
     setIsOpen(false);
   };
   
-
+  async function aprod() {
+    
+     let items ={refresh}
+      let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json',
+            'accept' : 'application/json'
+       },
+       body:JSON.stringify(items)
+      });
+      rep = await rep.json();
+      let bab = rep.access_token 
+      let product_type = 'PRODUCT'
+      let quantity_type = meal.selectedValue.value
+      let name =meal.selectedOpt.value
+      let cost = meal.cost
+      let quantity = meal.quantity
+      let pack_size= meal.pack_size
+      console.warn(name, cost, quantity, quantity_type, pack_size)
+      let item = [{name, cost, quantity,  product_type , quantity_type, pack_size}];
+    
+    try {
+      let result = await fetch('https://sandbox.prestigedelta.com/products/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': `Bearer ${bab}`
+        },
+        body: JSON.stringify(item)
+      });
+            if (result.status !== 200) {
+        const errorResult = await result.json();
+    
+      } else {
+         result =await result.json();
+      
+      } 
+    } catch (error) {
+      // Handle fetch error
+      console.error(error);
+    };
+  }
+  
   useEffect(() => {
     let timer;
     
@@ -158,7 +202,7 @@ let refresh = terms(tok)
             setMessage(JSON.stringify(errorResult.message)); 
             setButtonVisible(true)
           } else {
-            
+            aprod()
             resut = await resut.json();
           navigate('/components/getrec', {state:{ite}} )         
         }
