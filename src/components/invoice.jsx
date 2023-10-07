@@ -15,7 +15,7 @@ import {
     ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
-  import { useDisclosure, Input,  Button  } from "@chakra-ui/react"
+  import { useDisclosure, Input,  Button, Stack  } from "@chakra-ui/react"
 
 
 const Invoice =()=> {
@@ -37,9 +37,8 @@ const Invoice =()=> {
     const [number, setNumber] = useState('')
     const [val, setVal] = useState('')
     const [product, setProduct] = useState([])
-    const location = useLocation()
+  
     const navigate = useNavigate()
-    let meal = location.state.item
     console.log(item)
     let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
@@ -52,6 +51,14 @@ const Invoice =()=> {
   }
   return refreshval;
 };
+
+
+// const opti = [
+//   ...acct.map((item) => ({
+//     label: `${item.name} 
+//     (₦${item.balance.available_balance})`,
+//     value: item.name,
+//   }))]
 
 
 const optio = ['item', 'pack'];
@@ -93,9 +100,14 @@ const handleFormSubmit = (event) => {
       team:  item.pack_size,
       mony: item.pack_cost,
   }));
-  let tota =(price.reduce((total, to) => {
-    return total + parseFloat (to);
-  }, 0));
+  // let amount = parseFloat(price) * parseFloat(quantity)
+  // let tota =(amount.reduce((total, to) => {
+  //   return total + parseFloat (to);
+  // }, 0));
+  const tota = quantity.reduce((total, q, index) => {
+  const itemAmount =parseFloat(q) * parseFloat(price[index]);
+  return total + itemAmount;
+}, 0);
   let total = (tota).toLocaleString('en-US')
 
   const handlePack =(e)=>{
@@ -209,6 +221,7 @@ const fetchDa = async () => {
         let bab = rep.access_token 
         let product_type = 'PRODUCT'
         let pack_size= pack_size1
+        let amount = tota
       
         let quantity_type = type.map(tod => tod.value)
         let name = item.map(todo => todo.value)
@@ -221,7 +234,8 @@ const fetchDa = async () => {
           quantity:itemd.quantity[index],
           quantity_type:itemd.quantity_type[index],
           pack_size:itemd.pack_size[index],
-          product_type: product_type
+          product_type: product_type,
+          amount: amount
         }));
         let ite = separatedData
       try {
@@ -247,10 +261,7 @@ const fetchDa = async () => {
       };
     }
     
-    useEffect(() => {
-     if (tota ===parseFloat(meal.amount)){
-      sprod()}
-      }, [tota, meal])
+    
 
         const handleCaptureClick = async () => {
             const mainElement = document.getElementById('main-element');
@@ -266,8 +277,9 @@ const fetchDa = async () => {
     
         // Save the PDF
         pdf.save(`${(new Date()).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}.pdf`);
-    }
-    console.log(meal)
+        sprod()
+      }
+    
         if(loading) {
           return(
           <p>Loading...</p>)}
@@ -313,9 +325,9 @@ const fetchDa = async () => {
                     <p className='cveh'>Total: ₦{total}</p>
                        
                 <div className='cules'>
-                <p>Received:</p>
+                <p>Expected Payment:</p>
                 <p></p>
-                <p>₦{(meal.amount).toLocaleString()}</p>
+                <p>₦{(tota).toLocaleString()}</p>
                 </div>
                 <hr className='hr1'></hr>
 
@@ -328,13 +340,17 @@ const fetchDa = async () => {
              
                </main>
                <ChakraProvider>
-            {tota ===parseFloat(meal.amount)  ? (<button className='logb' onClick={handleCaptureClick}>Download</button>) : <button className='logb' onClick={onOpen}>Add Item</button> }
-            
+               
+                <Stack direction='row' spacing={2} align='center' justify='center'>        
+                 <Button colorScheme='blue' variant='solid' onClick={onOpen}>Add Item</Button> 
+                 <Button colorScheme='blue' variant='solid' onClick={handleCaptureClick}>Download</Button> 
+                 </Stack>
+
             <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
         
-          <ModalHeader>Add Items Purchased</ModalHeader>
+          <ModalHeader>Add Items Sold</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
            <h3 className='h4'></h3>
@@ -354,7 +370,7 @@ const fetchDa = async () => {
 
       /><br/>
             
-            <Input placeholder='Amount' size='md' onChange={handleInputChang} width={273} ml={9}/><br/><br/>
+            <Input placeholder='Price of a single item/pack/service' size='md' onChange={handleInputChang} width={273} ml={9}/><br/><br/>
             <Input placeholder='Quantity' size='md' onChange={handleInputChange} width={273} ml={9}/><br/><br/>
             <Select
       onChange={handleInputCha}

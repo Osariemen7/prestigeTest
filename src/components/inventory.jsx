@@ -144,7 +144,6 @@ if (response.status === 401) {
 } else { 
  
 response = await response.json();
-setLoading(false)
 setAcct(response)
 
   }}
@@ -259,11 +258,9 @@ const options = [
             setMessage(JSON.stringify(errorResult.message));
           } else {
              result =await result.json();
-             navigate('/components/invoice', {state:{item}} )
-             setFun(JSON.stringify(result)) 
-               
+             fproj()
+             setFun(JSON.stringify(result))    
           } 
-          
         } catch (error) {
           // Handle fetch error
           console.error(error);
@@ -279,8 +276,8 @@ const options = [
            navigate('/components/overdraft', {state:{data}})
       }
       const transfer= ()=>{
-        const mata = info[0].sub_account
-           navigate('/components/getgroup', {state:{mata}})
+        
+           navigate('/components/before')
       }
       if(loading) {
         return(
@@ -330,7 +327,7 @@ const options = [
               {typeof info[0].sub_account === 'undefined'? (<Heading size='xl' color='#fff'>₦0</Heading>):
               <Heading size='xl' color='#fff'>₦{(info[0].sub_account.balance.available_balance).toLocaleString('en-US')}</Heading>}
               <div className='act'>
-               <button onClick={onOpen} className='abut'>Sell/Fund</button>
+               <button onClick={onOpen} className='abut'>Fund</button>
               <button onClick={transfer} className='abut'>Transfers</button>
               <button onClick={overdraft} className='abut'>Overdraft</button>
             </div>

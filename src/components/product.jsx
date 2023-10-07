@@ -93,6 +93,37 @@ const Product = () => {
     
       return refreshval;
     };
+    const fetchData = async () => {
+      let item ={refresh}
+      let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+          method: 'POST',
+          headers:{
+            'Content-Type': 'application/json',
+            'accept' : 'application/json'
+       },
+       body:JSON.stringify(item)
+      });
+      
+      rep = await rep.json();
+      let bab = rep.access_token
+    let response = await fetch("https://sandbox.prestigedelta.com/products/",{
+    method: "GET",
+    headers:{'Authorization': `Bearer ${bab}`},
+    })
+    //localStorage.setItem('user-info', JSON.stringify(tok))
+    
+    if (response.status === 401) {
+      navigate('/components/login');
+    } else { 
+     
+    response = await response.json();
+    setLoading(false)
+    setInfo(response)
+    
+      }}
+      useEffect(() => {
+        fetchData()
+      }, [])
     let refresh = terms(tok)
     async function aprod(e) {
       
@@ -216,37 +247,7 @@ setProduct(response)
   }, [])
 console.log(info)
 console.log(selectedOption)
-  const fetchData = async () => {
-    let item ={refresh}
-    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-          'accept' : 'application/json'
-     },
-     body:JSON.stringify(item)
-    });
-    
-    rep = await rep.json();
-    let bab = rep.access_token
-  let response = await fetch("https://sandbox.prestigedelta.com/products/",{
-  method: "GET",
-  headers:{'Authorization': `Bearer ${bab}`},
-  })
-  //localStorage.setItem('user-info', JSON.stringify(tok))
-  
-  if (response.status === 401) {
-    navigate('/components/login');
-  } else { 
-   
-  response = await response.json();
-  setLoading(false)
-  setInfo(response)
-  
-    }}
-    useEffect(() => {
-      fetchData()
-    }, [])
+ 
     const options = [
       ...product.map((item) => ({
         label: item.name,
@@ -268,8 +269,8 @@ console.log(selectedOption)
     }
   };
   const transfer= ()=>{
-    const mata = info[0].sub_account
-       navigate('/components/before', {state:{mata}})
+    
+       navigate('/components/before')
   }
     if(loading) {
         return(
@@ -281,23 +282,17 @@ console.log(selectedOption)
         <Link to='/components/inventory'>
                  <i className="fa-solid fa-chevron-left bac"></i>
              </Link>
-             <Heading size='md' mb={2}>Buy Product</Heading>
-<Stack direction='row' spacing={2} align='center' justify='center'>
-<div><p>Bought Already?</p>
-  <Button colorScheme='blue' variant='solid' onClick={modal1.onOpen}>
-    Add Product
-  </Button></div>
-  <div><p>Buy through transfer</p>
+<Stack direction='row' spacing={1} align='center' justify='center'>
   <Button colorScheme='blue' variant='outline' onClick={transfer}>
     Buy Product
-  </Button></div>
+  </Button>
 </Stack>
 <Heading size='md' m={5} mb={0}>Product List</Heading>
         { info.length > 0 && typeof info[0].products[0] === 'object' ? (
       <div>
       {info[0].products.map((obj, index) =>
 
-        <Card key={index} onClick={() => show(index)}>
+        <Card key={index} onClick={() => show(index)} m={3} >
   <CardBody padding={2}>
    <Heading size='xs'>{obj.name}</Heading>
     <Text>Total Sales: {obj.total_sales}</Text>

@@ -154,7 +154,7 @@ return(
               { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
               <h1 className="h1">{hidden}</h1>
               <div>
-               <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
+               <Link to='/components/invoice'><button className='dbut'>Receive Payment</button></Link> 
                               
               </div>
            </div>
@@ -213,7 +213,7 @@ return(
                 { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
                 <h1 className="h1">{hidden}</h1>
                 <div >
-                 <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
+                 <Link to='/components/invoice'><button className='dbut'>Receive Payment</button></Link> 
                 
                 </div>
              </div>

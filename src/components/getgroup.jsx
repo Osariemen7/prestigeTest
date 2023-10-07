@@ -23,7 +23,7 @@ const GetGroup =()=>{
   
   console.log(selectedOptions)
   const opt = ben.map((item) => ({
-    label: `${item.account_name} s
+    label: `${item.account_name} 
              (${item.bank_name})`,
     value: item.account_number,
     team:   item.bank_code,

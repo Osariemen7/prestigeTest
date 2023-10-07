@@ -1096,6 +1096,11 @@ hr{
   font-size: 10px;
   margin: 0 10%;
 }
+.culb{
+  display: flex;
+  gap: 40px;
+  margin: 0 5%;
+}
 .cules{
   display: flex;
   margin: 0 10%;
@@ -1112,7 +1117,7 @@ hr{
   height: 4px;
 }
 .frame3{
-  margin-right: 10%;
+  margin-left:2%;
   height: 15px;
   margin-top: 2%;
   margin-bottom: 0;
