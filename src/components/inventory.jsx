@@ -119,7 +119,38 @@ async function fproj() {
   }
 ;
 }
-let refresh = terms(tok)
+  const fetchData = async () => {
+    let item ={refresh}
+    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          'accept' : 'application/json'
+     },
+     body:JSON.stringify(item)
+    });
+    
+    rep = await rep.json();
+    let bab = rep.access_token
+  let response = await fetch("https://sandbox.prestigedelta.com/products/",{
+  method: "GET",
+  headers:{'Authorization': `Bearer ${bab}`},
+  })
+  //localStorage.setItem('user-info', JSON.stringify(tok))
+  
+  if (response.status === 401) {
+    navigate('/components/login');
+  } else { 
+   
+  response = await response.json();
+  setLoading(false)
+  setInfo(response)
+    }}
+
+    useEffect(() => {
+      fetchData()
+    }, [])
+    let refresh = terms(tok)
 const fetchDa = async () => {
   let item ={refresh}
   let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -162,37 +193,7 @@ const options = [
     label: 'MAIN ACCOUNT',
   },
 ];
-  const fetchData = async () => {
-    let item ={refresh}
-    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-          'accept' : 'application/json'
-     },
-     body:JSON.stringify(item)
-    });
-    
-    rep = await rep.json();
-    let bab = rep.access_token
-  let response = await fetch("https://sandbox.prestigedelta.com/products/",{
-  method: "GET",
-  headers:{'Authorization': `Bearer ${bab}`},
-  })
-  //localStorage.setItem('user-info', JSON.stringify(tok))
-  
-  if (response.status === 401) {
-    navigate('/components/login');
-  } else { 
-   
-  response = await response.json();
-  setLoading(false)
-  setInfo(response)
-    }}
 
-    useEffect(() => {
-      fetchData()
-    }, [])
     
     const fetchInfo = async () => {
       let item ={refresh}
@@ -419,7 +420,7 @@ const options = [
         <ModalContent>
         {fun === '' ? ( 
           <div>
-          <ModalHeader>Receive Payment</ModalHeader>
+          <ModalHeader>Add Funds</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <Select

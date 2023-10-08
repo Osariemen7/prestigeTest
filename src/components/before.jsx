@@ -27,7 +27,9 @@ const BuyP =()=>{
   const [inputValue, setInputValue] = useState("");
   const [inputVa, setInputVa] = useState('')
   const [inputV, setInputV] = useState('')
-  const [customer, setCustomer] = useState('');
+  const [outline, setOutline] = useState('');
+  const [outline1, setOutline1] = useState('')
+  const [outline2 , setOutline2] = useState('')
   const [pack_size1, setPacksize] = useState([])
   const [product, setProduct] = useState([])
   const [payment_method, setPayment] = useState('')
@@ -196,7 +198,7 @@ const options = product.map((item) => ({
       useEffect(() => {
         fetchDa()
       }, [])
-      async function aprod(payment_method) {
+      async function aprod() {
       
          let items ={refresh}
           let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -225,11 +227,10 @@ const options = product.map((item) => ({
           quantity_type:itemd.quantity_type[index],
           pack_size:itemd.pack_size[index],
           product_type: product_type,
-          payment_method: payment_method,
           amount:amount
         }));
         let products = separatedData
-        let ite = products
+        let ite = {products, payment_method}
         try {
           let result = await fetch('https://sandbox.prestigedelta.com/products/', {
             method: 'POST',
@@ -253,22 +254,28 @@ const options = product.map((item) => ({
         };
       }
       const openModal = () => {
-       
-        aprod('CASH')
-        navigate('/components/product')
+      setPayment('CASH')
+      setOutline(!outline)
+      
       };
       const openModal1 = () => {
         setPayment('POS');
-        aprod('POS')
-        navigate('/components/product')
+        setOutline1(!outline1)
       };
       const openModal2 = () => {
         setPayment('TRANSFER');
-        aprod('TRANSFER')
+        setOutline2(!outline2)
+      };
+      const next = () => {
+        aprod()
+        navigate('/components/product')
+      }
+      const conti = () => {
+        aprod()
         const mata = info[0].sub_account
         navigate('/components/getgroup', {state:{mata}})
-      };
-      console.log(total)
+      }
+      console.log(payment_method)
       if(loading) {
         return(
         <p>Loading...</p>)} 
@@ -280,10 +287,16 @@ const options = product.map((item) => ({
              </Link>
     <ChakraProvider>
     <Heading size='md' mb={2}>Buy Product</Heading>
-                 {total !== '0'  ? (<Button colorScheme='blue' variant='outline' m={2} onClick={onOpen}>Add More Items</Button>) : <Button m={2} colorScheme='blue' variant='outline' onClick={onOpen}>Add Item</Button> }
+    <div><p>Choose Method of Payment?</p>
+    <Stack direction='row' mt={2} gap='20px' spacing={3} align='center' justify='center'>        
+                 <Button colorScheme='blue' variant={outline ?'solid' : 'outline'} onClick={openModal}>CASH</Button> 
+                 <Button colorScheme='blue' variant={outline1 ?'solid' : 'outline'} onClick={openModal1}>POS</Button> 
+                 <Button colorScheme='blue' variant={outline2 ?'solid' : 'outline'} onClick={openModal2}>TRANSFER</Button>
+                 </Stack></div>
+                 
       <Card m={2} backgroundColor='gainsboro'>
       
-      <Stack direction='row'mb={2} gap='30px' mt={2} spacing={4} align='center' justify='center'>
+      <Stack direction='row'mb={2} gap='30px' mt={3} spacing={4} align='center' justify='center'>
                 <Heading size='xs'>Item</Heading>
                 <Heading size='xs'>Quantity</Heading>
                 <Heading size='xs'>Amount</Heading>
@@ -316,12 +329,10 @@ const options = product.map((item) => ({
                  </Card>  
                  <div className="message">{messag ? <p>{messag}</p> : null}</div>
                  <br></br>
-                {total !== '0' ? (<div><p>Choose Method of Payment?</p>
-    <Stack direction='row' mt={2} gap='20px' spacing={3} align='center' justify='center'>        
-                 <Button colorScheme='blue' variant='solid' onClick={openModal}>CASH</Button> 
-                 <Button colorScheme='blue' variant='solid' onClick={openModal1}>POS</Button> 
-                 <Button colorScheme='blue' variant='solid' onClick={openModal2}>TRANSFER</Button>
-                 </Stack></div>) : null} 
+                 <Stack direction='row' mt={2} spacing={2} align='center' justify='center'>
+                 {total !== '0'  ? (<Button colorScheme='blue' variant='solid' m={2} onClick={onOpen}>Add More Items</Button>) : <Button m={2} colorScheme='blue' variant='solid' onClick={onOpen}>Add Item</Button> }
+                 {payment_method !== 'TRANSFER' ? (<Button colorScheme='blue' variant='solid' onClick={next}>Save</Button>) : <Button colorScheme='blue' variant='solid' onClick={conti}>Continue</Button>}
+                 </Stack>
                  <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

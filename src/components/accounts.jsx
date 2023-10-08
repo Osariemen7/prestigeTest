@@ -1,11 +1,14 @@
 import {useState, useEffect} from 'react'
 import {Link, useNavigate} from "react-router-dom";
 import { Helmet } from "react-helmet"
+import { ChakraProvider } from '@chakra-ui/react';
+import { Card, Stack, CardBody, Heading, Text } from '@chakra-ui/react'
 
 const Accounts =()=> {
   const [info, setInfo] = useState('')
   const [users, setUsers] = useState('');
   const [hidden, setHidden] = useState("******");
+  const [data, setData] = useState('')
   const navigate= useNavigate()
   const [sidebar, setSidebar] = useState('')
 
@@ -100,6 +103,35 @@ const toggleHidden =()=>{
         useEffect(() => {
           fetchInfo()
           }, [])
+          const fetchDat = async () => {
+            let item ={refresh}
+            let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+                method: 'POST',
+                headers:{
+                  'Content-Type': 'application/json',
+                  'accept' : 'application/json'
+             },
+             body:JSON.stringify(item)
+            });
+            rep = await rep.json();
+            
+            let bab = rep.access_token
+          let response = await fetch("https://sandbox.prestigedelta.com/virtualnuban/",{
+          method: "GET",
+          headers:{'Authorization': `Bearer ${bab}`},
+          })
+          response = await response.json()
+          if (response.status !== 200) {
+            navigate(window.location.pathname, { replace: true });
+          } else {
+          
+            response = await response.json();}
+         setData(response)
+          
+        }
+        useEffect(() => {
+          fetchDat()
+        }, [])
 console.log(info)
 if (info.length < 1)        
 return(
@@ -158,6 +190,15 @@ return(
                               
               </div>
            </div>
+           <ChakraProvider>
+            <Card m={4}>
+                <Text mb={0}>Bank</Text>
+                <Heading size='xs' mb={2}>{data.bank}</Heading>
+                <Text>Account Number</Text>
+                <Heading size='xs'>{data.account_number}</Heading>
+
+            </Card>
+           </ChakraProvider>
            
               <p className='l'>RECENT TRANSACTIONS</p>
               <p className='ad'>No Transaction Yet</p>
@@ -217,7 +258,17 @@ return(
                 
                 </div>
              </div>
-             
+             <ChakraProvider>
+            <Card m={4}  >
+            
+                <Text mb={0} >Bank</Text>
+                <Heading size='xs' mb={2}>{data.bank}</Heading>
+                <Text>Account Number</Text>
+                <Heading size='xs' >{data.account_number}</Heading>
+              
+            </Card>
+           </ChakraProvider>
+           
               
           <p className='l'>RECENT TRANSACTIONS</p>
           {info.map((obj, index) => 

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+
+ import { useState, useEffect } from 'react';
 import {  useLocation, Link, useNavigate } from "react-router-dom";
 import html2canvas from 'html2canvas';
 import Logo from './images/Logo.png';
@@ -37,7 +38,11 @@ const Invoice =()=> {
     const [number, setNumber] = useState('')
     const [val, setVal] = useState('')
     const [product, setProduct] = useState([])
-  
+    const [payment_method, setPayment] = useState('')
+    const [outline, setOutline] = useState('');
+    const [outline1, setOutline1] = useState('')
+    const [outline2 , setOutline2] = useState('')
+
     const navigate = useNavigate()
     console.log(item)
     let tok= JSON.parse(localStorage.getItem("user-info"));
@@ -78,10 +83,6 @@ const handleFormSubmit = (event) => {
     setInputVa('');
     setType([...type, inputV])
     setInputV('');
-    setCustomer(newCustomer)
-    setInpu('')
-    setNumber(newNumber)
-    setVal('')
     setPacksize([...pack_size1, inputp])
     setInputp(0)
     onClose()
@@ -132,6 +133,19 @@ const handleFormSubmit = (event) => {
   const handleInputCha = (inputV) => {
     setInputV(inputV)
   }
+  const openModal = () => {
+    setPayment('CASH')
+    setOutline(!outline)
+    
+    };
+    const openModal1 = () => {
+      setPayment('POS');
+      setOutline1(!outline1)
+    };
+    const openModal2 = () => {
+      setPayment('TRANSFER');
+      setOutline2(!outline2)
+    };
   function toSentenceCase(inputString) {
     if (!inputString) return inputString; // Handle empty or null input
     return inputString.charAt(0).toUpperCase() + inputString.slice(1);
@@ -142,6 +156,10 @@ const handleAddProduct = (newValue) => {
       setInputVa(newProduct);
     }
   };
+  const next = () => {
+    sprod()
+    navigate('/components/product')
+  }
 
 let refresh = terms(tok)
 
@@ -237,7 +255,8 @@ const fetchDa = async () => {
           product_type: product_type,
           amount: amount
         }));
-        let ite = separatedData
+        let products = separatedData
+        let ite = {products, payment_method}
       try {
         let result = await fetch('https://sandbox.prestigedelta.com/sellproducts/', {
           method: 'POST',
@@ -286,10 +305,17 @@ const fetchDa = async () => {
     return(
         <div>
         <Link to='/components/inventory'><i class="fa-solid fa-chevron-left bac"></i></Link>
+        <ChakraProvider>
+        <div><p>Choose Method of Payment?</p>
+    <Stack direction='row' mt={2} gap='20px' spacing={3} align='center' justify='center'>        
+                 <Button colorScheme='blue' variant={outline ?'solid' : 'outline'} onClick={openModal}>CASH</Button> 
+                 <Button colorScheme='blue' variant={outline1 ?'solid' : 'outline'} onClick={openModal1}>POS</Button> 
+                 <Button colorScheme='blue' variant={outline2 ?'solid' : 'outline'} onClick={openModal2}>TRANSFER</Button>
+                 </Stack></div></ChakraProvider>
             <main id="main-element">
             <div className='rax'><h4 className='shi'>{toSentenceCase(list[0].business_name)}</h4></div> 
             <h5 className='invo'>INVOICE</h5> 
-            <h6 className='saed'>Bill To: {customer} -<span> {number}</span></h6>
+            
             <p className='ld'>{(new Date()).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
                
             <hr className='hr'></hr>
@@ -339,11 +365,10 @@ const fetchDa = async () => {
                 <img src={Logo} alt="logo" className="frame3"/>
              
                </main>
-               <ChakraProvider>
-               
+               <ChakraProvider>            
                 <Stack direction='row' spacing={2} align='center' justify='center'>        
                  <Button colorScheme='blue' variant='solid' onClick={onOpen}>Add Item</Button> 
-                 <Button colorScheme='blue' variant='solid' onClick={handleCaptureClick}>Download</Button> 
+                 <Button colorScheme='blue' variant='solid' onClick={next}>Save</Button> 
                  </Stack>
 
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -355,8 +380,6 @@ const fetchDa = async () => {
           <ModalBody>
            <h3 className='h4'></h3>
             <form >
-            {customer === ''? (<div><Input  size='md' placeholder='Customer Name' onChange={handleCust} width={273} ml={9}/><br/><br/></div>): null}
-            {number === ''? (<div><Input  size='md' placeholder='Customer Number' onChange={handlePhone} width={273} ml={9}/><br/><br/></div>): null}
            
   <CreatableSelect
         className="pne"
