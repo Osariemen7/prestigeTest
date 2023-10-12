@@ -20,6 +20,7 @@ const Inventory = () => {
     const [info, setInfo] = useState('');
     const [loading, setLoading] = useState(true)
     const [messages, setMessages] = useState('')
+    const [expense_budget, setExpense] = useState('');
     const [list, setList] = useState([])
     const [buttonVisible, setButtonVisible] = useState(true);
     const { isOpen, onOpen,  onClose } = useDisclosure()
@@ -30,6 +31,8 @@ const Inventory = () => {
     const [fin, setFin] = useState('')
     const navigate = useNavigate()
     const [message, setMessage] = useState('')
+    const modal1 = useDisclosure()
+    const modal2 = useDisclosure()
   const showSidebar = () => setSidebar(!sidebar)
   const nav =()=>{
     navigate('/components/product')
@@ -55,6 +58,10 @@ const Inventory = () => {
     fetchData()
     setFun('')
   };
+  const handleInputChange = (event) => {
+    setExpense(event.target.value);
+  };
+  
   const handleClick = () => {
     // When the button is clicked, setButtonVisible to false
     setButtonVisible(false);
@@ -90,7 +97,6 @@ async function fproj() {
     let bab = rep.access_token 
     let account_type = 'EXPENSE'
     let sub_account = info[0].sub_account.name
-    let expense_budget = '2000000'
     console.warn(sub_account, expense_budget, account_type)
     let item = {sub_account, expense_budget, account_type};
   
@@ -259,7 +265,7 @@ const options = [
             setMessage(JSON.stringify(errorResult.message));
           } else {
              result =await result.json();
-             fproj()
+        
              setFun(JSON.stringify(result))    
           } 
         } catch (error) {
@@ -277,8 +283,8 @@ const options = [
            navigate('/components/overdraft', {state:{data}})
       }
       const transfer= ()=>{
-        
-           navigate('/components/before')
+        const mata = info[0].sub_account
+        navigate('/components/getgroup', {state:{mata}})
       }
       if(loading) {
         return(
@@ -328,14 +334,14 @@ const options = [
               {typeof info[0].sub_account === 'undefined'? (<Heading size='xl' color='#fff'>₦0</Heading>):
               <Heading size='xl' color='#fff'>₦{(info[0].sub_account.balance.available_balance).toLocaleString('en-US')}</Heading>}
               <div className='act'>
-               <button onClick={onOpen} className='abut'>Fund</button>
+               <button onClick={modal1.onOpen} className='abut'>Fund</button>
               <button onClick={transfer} className='abut'>Transfers</button>
               <button onClick={overdraft} className='abut'>Overdraft</button>
             </div>
             </div>
             <Heading size='sm' ml={6} textAlign='left'>Products</Heading>
             { info.length > 0 && typeof info[0].products[0] === 'object' ? (
-            <Card m={5} onClick={nav}  >
+            <Card m={5}>
             <Card m={2} >
 
   <CardBody>
@@ -366,9 +372,13 @@ const options = [
       <Text>₦{(info[0].input_value).toLocaleString('en-US')}</Text>
   </Card> 
 </SimpleGrid>
-<Button colorScheme='blue' variant='solid'>
+<Stack direction='row' mt={2} spacing={2} align='center' justify='center'>
+<Button colorScheme='blue' variant='solid' onClick={nav}>
     Product List
   </Button>
+  <Button colorScheme='blue' variant='outline' onClick={modal2.onOpen}>Set Budget</Button>
+</Stack>
+
 </Card>): (<Card m={5} onClick={nav}  >
             <Card m={2} >
 
@@ -415,7 +425,7 @@ const options = [
                        <p className='tm' key={index}>{obj.narration}</p>
                   </div>
                        )}
-                       <Modal isOpen={isOpen} onClose={onClose}>
+                       <Modal isOpen={modal1.isOpen} onClose={modal1.onClose}>
         <ModalOverlay />
         <ModalContent>
         {fun === '' ? ( 
@@ -432,8 +442,6 @@ const options = [
       value={selectedOption}
     /><br/><br/>
     <Input placeholder='Amount' size='md' onChange={handleAmount} width={273} ml={9}/><br/><br/>
-                
-               
                 
                 <div className="message">{message ? <p>{message}</p> : null}</div>
           </ModalBody>
@@ -454,6 +462,36 @@ const options = [
       </div>}
         </ModalContent>
       </Modal>
+      <Modal isOpen={modal2.isOpen} onClose={modal2.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+        {fin === '' ? ( 
+          <div>
+          <ModalHeader>Set Monthly Inventory Budget</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>     
+    <Input placeholder='Set Budget Amount' size='md' onChange={handleInputChange} width={273} ml={9}/><br/><br/>
+      <div className="message">{message ? <p>{message}</p> : null}</div>
+          </ModalBody>
+          {messages ? <p>{messages}</p> : null}
+          <ModalFooter>
+          {buttonVisible && (  <Button colorScheme='blue' mr={3} onClick={fproj}>
+              Update 
+            </Button> 
+                )}
+      {!buttonVisible && <p><Spinner/></p>}
+            
+          </ModalFooter>
+          </div>) :
+            <div>
+          <i class="fa-solid fa-x tx" onClick={modal2.onClose}></i>
+          <img src={good} alt="" className='nig' />
+          <Heading size='xs' textAlign='center' m='10px'>Sub-Account Successfully Updated!</Heading>  
+      </div>}
+        </ModalContent>
+      </Modal>
+
+      
         </div>
         </ChakraProvider>
     )

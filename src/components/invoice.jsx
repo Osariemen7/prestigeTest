@@ -1,9 +1,7 @@
 
  import { useState, useEffect } from 'react';
-import {  useLocation, Link, useNavigate } from "react-router-dom";
-import html2canvas from 'html2canvas';
+import {  Link, useNavigate } from "react-router-dom";
 import Logo from './images/Logo.png';
-import jsPDF from 'jspdf';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -16,7 +14,7 @@ import {
     ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
-  import { useDisclosure, Input,  Button, Stack  } from "@chakra-ui/react"
+  import { useDisclosure, Input,  Button, Stack, Spinner  } from "@chakra-ui/react"
 
 
 const Invoice =()=> {
@@ -40,8 +38,8 @@ const Invoice =()=> {
     const [product, setProduct] = useState([])
     const [payment_method, setPayment] = useState('')
     const [outline, setOutline] = useState('');
-    const [outline1, setOutline1] = useState('')
-    const [outline2 , setOutline2] = useState('')
+    const [message, setMessage] = useState('')
+    const [buttonVisible, setButtonVisible] = useState(true);
 
     const navigate = useNavigate()
     console.log(item)
@@ -96,7 +94,8 @@ const handleFormSubmit = (event) => {
 //     }))
 //   ];
   const options = product.map((item) => ({
-    label: item.name,
+    label: `${item.name} 
+    (Pack:${item.pack_no}, Item:${item.item_no})`,
       value: item.name,
       team:  item.pack_size,
       mony: item.pack_cost,
@@ -114,12 +113,7 @@ const handleFormSubmit = (event) => {
   const handlePack =(e)=>{
     setInputp(e.target.value)
   }
-  const handleCust = (event) =>{
-    setInpu(event.target.value)
-  }
-   const handlePhone =(event) => {
-    setVal(event.target.value)
-   }
+ 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -133,18 +127,18 @@ const handleFormSubmit = (event) => {
   const handleInputCha = (inputV) => {
     setInputV(inputV)
   }
-  const openModal = () => {
+  const openModal = (button) => {
     setPayment('CASH')
-    setOutline(!outline)
+    setOutline(button)
     
     };
-    const openModal1 = () => {
+    const openModal1 = (button) => {
       setPayment('POS');
-      setOutline1(!outline1)
+      setOutline(button)
     };
-    const openModal2 = () => {
+    const openModal2 = (button) => {
       setPayment('TRANSFER');
-      setOutline2(!outline2)
+      setOutline(button)
     };
   function toSentenceCase(inputString) {
     if (!inputString) return inputString; // Handle empty or null input
@@ -156,10 +150,7 @@ const handleAddProduct = (newValue) => {
       setInputVa(newProduct);
     }
   };
-  const next = () => {
-    sprod()
-    navigate('/components/product')
-  }
+  
 
 let refresh = terms(tok)
 
@@ -223,9 +214,17 @@ const fetchDa = async () => {
         useEffect(() => {
           fetchData()
         }, [])
+        const handleClick = () => {
+          // When the button is clicked, setButtonVisible to false
+          setButtonVisible(false);
+          setTimeout(() => {
+            setButtonVisible(true);
+          }, 10000);
+        };
 
-    async function sprod() {
-
+    async function sprod(e) {
+      e.preventDefault()
+      handleClick()
        let items ={refresh}
         let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
             method: 'POST',
@@ -269,10 +268,10 @@ const fetchDa = async () => {
         });
               if (result.status !== 200) {
           const errorResult = await result.json();
-    
+          setMessage(JSON.stringify(errorResult));
         } else {
            result =await result.json();
-    
+          setMessage(JSON.stringify(result.message))
         } 
       } catch (error) {
         // Handle fetch error
@@ -281,23 +280,7 @@ const fetchDa = async () => {
     }
     
     
-
-        const handleCaptureClick = async () => {
-            const mainElement = document.getElementById('main-element');
-            const canvas = await html2canvas(mainElement);
-            const pdf = new jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for page size
-    
-        // Calculate the width and height to fit the whole canvas on the PDF
-        const imgWidth = 210; // A4 page width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-        // Add the captured image to the PDF
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
-    
-        // Save the PDF
-        pdf.save(`${(new Date()).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}.pdf`);
-        sprod()
-      }
+      console.log(payment_method)
     
         if(loading) {
           return(
@@ -305,16 +288,17 @@ const fetchDa = async () => {
     return(
         <div>
         <Link to='/components/inventory'><i class="fa-solid fa-chevron-left bac"></i></Link>
-        <ChakraProvider>
-        <div><p>Choose Method of Payment?</p>
-    <Stack direction='row' mt={2} gap='20px' spacing={3} align='center' justify='center'>        
-                 <Button colorScheme='blue' variant={outline ?'solid' : 'outline'} onClick={openModal}>CASH</Button> 
-                 <Button colorScheme='blue' variant={outline1 ?'solid' : 'outline'} onClick={openModal1}>POS</Button> 
-                 <Button colorScheme='blue' variant={outline2 ?'solid' : 'outline'} onClick={openModal2}>TRANSFER</Button>
-                 </Stack></div></ChakraProvider>
+        
             <main id="main-element">
             <div className='rax'><h4 className='shi'>{toSentenceCase(list[0].business_name)}</h4></div> 
-            <h5 className='invo'>INVOICE</h5> 
+            <ChakraProvider>
+        <div><p>Choose Method of Payment?</p>
+    <Stack direction='row' m={2} gap='20px' spacing={3} align='center' justify='center'>        
+                 <Button colorScheme='blue' variant={outline  === 'CASH'?'solid' : 'outline'} onClick={() =>openModal('CASH')}>CASH</Button> 
+                 <Button colorScheme='blue' variant={outline ==='POS' ? 'solid' : 'outline'} onClick={() =>openModal1('POS')}>POS</Button> 
+                 <Button colorScheme='blue' variant={outline ==='TRANSFER' ?'solid' : 'outline'} onClick={() =>openModal2('TRANSFER')}>TRANSFER</Button>
+                 </Stack></div></ChakraProvider>
+      
             
             <p className='ld'>{(new Date()).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
                
@@ -358,19 +342,17 @@ const fetchDa = async () => {
                 <hr className='hr1'></hr>
 
                 </div> 
-                <p className='font'>Thank you for your Patronage!!!</p>
-                <p className='font'>Phone No: {list[0].owner_phone}</p>
-                <p className='font'>{list[0].owner_email}</p>
-                <p className='font'>{list[0].address}</p>
+                
                 <img src={Logo} alt="logo" className="frame3"/>
              
                </main>
                <ChakraProvider>            
                 <Stack direction='row' spacing={2} align='center' justify='center'>        
                  <Button colorScheme='blue' variant='solid' onClick={onOpen}>Add Item</Button> 
-                 <Button colorScheme='blue' variant='solid' onClick={next}>Save</Button> 
-                 </Stack>
-
+                 {buttonVisible && ( <Button colorScheme='blue' variant='solid' onClick={sprod}>Save</Button> 
+                 )}
+      {!buttonVisible && <Spinner />} </Stack>
+      <div className="message">{message ? <p>{message}</p> : null}</div>
             <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -401,7 +383,7 @@ const fetchDa = async () => {
       placeholder="Quantity Type"
       options={opt}
       value={inputV} /><br/>
-      {inputV.label !== 'item' ? (
+      {inputV.label !== 'item' || inputVa.label === options ? (
         <div>
         <Input placeholder='No of items in pack/carton'  size='md' onChange={handlePack} width={273} ml={9} /><br/>
         <br/></div>): null}   

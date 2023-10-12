@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { Button, Stack, Input, Heading, useDisclosure,Card, CardBody  } from "@chakra-ui/react"
+import { Button, Stack, Input, Heading, useDisclosure,Card, Spinner, CardBody  } from "@chakra-ui/react"
 import CreatableSelect from 'react-select/creatable';
 import {
   Modal,
@@ -28,11 +28,10 @@ const BuyP =()=>{
   const [inputVa, setInputVa] = useState('')
   const [inputV, setInputV] = useState('')
   const [outline, setOutline] = useState('');
-  const [outline1, setOutline1] = useState('')
-  const [outline2 , setOutline2] = useState('')
+  const [buttonVisible, setButtonVisible] = useState(true);
   const [pack_size1, setPacksize] = useState([])
   const [product, setProduct] = useState([])
-  const [payment_method, setPayment] = useState('')
+  const [payment_method, setPayment] = useState('TRANSFER')
   const [info, setInfo] = useState([])
 
   const navigate = useNavigate()
@@ -130,6 +129,13 @@ const handleFormSubmit = (event) => {
   setInputp(0)
   onClose()
 }
+const handleClick = () => {
+  // When the button is clicked, setButtonVisible to false
+  setButtonVisible(false);
+  setTimeout(() => {
+    setButtonVisible(true);
+  }, 10000);
+};
 const options = product.map((item) => ({
   label: item.name,
     value: item.name,
@@ -199,7 +205,8 @@ const options = product.map((item) => ({
         fetchDa()
       }, [])
       async function aprod() {
-      
+        
+         handleClick()
          let items ={refresh}
           let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
               method: 'POST',
@@ -227,10 +234,11 @@ const options = product.map((item) => ({
           quantity_type:itemd.quantity_type[index],
           pack_size:itemd.pack_size[index],
           product_type: product_type,
-          amount:amount
+          amount:amount,
+          payment_method: payment_method
         }));
         let products = separatedData
-        let ite = {products, payment_method}
+        let ite = products
         try {
           let result = await fetch('https://sandbox.prestigedelta.com/products/', {
             method: 'POST',
@@ -243,33 +251,30 @@ const options = product.map((item) => ({
           });
                 if (result.status !== 200) {
             const errorResult = await result.json();
-            setMessag('All fields must be filled');
+            setMessag(JSON.stringify(errorResult));
           } else {
              result =await result.json();
-            
+            setMessag(JSON.stringify(result.message))
           } 
         } catch (error) {
           // Handle fetch error
           console.error(error);
         };
       }
-      const openModal = () => {
-      setPayment('CASH')
-      setOutline(!outline)
+      const openModal = (button) => {
+        setPayment('CASH')
+        setOutline(button)
+        
+        };
+        const openModal1 = (button) => {
+          setPayment('POS');
+          setOutline(button)
+        };
+        const openModal2 = (button) => {
+          setPayment('TRANSFER');
+          setOutline(button)
+        };
       
-      };
-      const openModal1 = () => {
-        setPayment('POS');
-        setOutline1(!outline1)
-      };
-      const openModal2 = () => {
-        setPayment('TRANSFER');
-        setOutline2(!outline2)
-      };
-      const next = () => {
-        aprod()
-        navigate('/components/product')
-      }
       const conti = () => {
         aprod()
         const mata = info[0].sub_account
@@ -287,11 +292,11 @@ const options = product.map((item) => ({
              </Link>
     <ChakraProvider>
     <Heading size='md' mb={2}>Buy Product</Heading>
-    <div><p>Choose Method of Payment?</p>
+<div><p>Choose Method of Payment?</p>
     <Stack direction='row' mt={2} gap='20px' spacing={3} align='center' justify='center'>        
-                 <Button colorScheme='blue' variant={outline ?'solid' : 'outline'} onClick={openModal}>CASH</Button> 
-                 <Button colorScheme='blue' variant={outline1 ?'solid' : 'outline'} onClick={openModal1}>POS</Button> 
-                 <Button colorScheme='blue' variant={outline2 ?'solid' : 'outline'} onClick={openModal2}>TRANSFER</Button>
+                 <Button colorScheme='blue' variant={outline  === 'CASH'?'solid' : 'outline'} onClick={() =>openModal('CASH')}>CASH</Button> 
+                 <Button colorScheme='blue' variant={outline ==='POS' ? 'solid' : 'outline'} onClick={() =>openModal1('POS')}>POS</Button> 
+                 <Button colorScheme='blue' variant={outline ==='TRANSFER' ?'solid' : 'outline'} onClick={() =>openModal2('TRANSFER')}>TRANSFER</Button>
                  </Stack></div>
                  
       <Card m={2} backgroundColor='gainsboro'>
@@ -331,7 +336,8 @@ const options = product.map((item) => ({
                  <br></br>
                  <Stack direction='row' mt={2} spacing={2} align='center' justify='center'>
                  {total !== '0'  ? (<Button colorScheme='blue' variant='solid' m={2} onClick={onOpen}>Add More Items</Button>) : <Button m={2} colorScheme='blue' variant='solid' onClick={onOpen}>Add Item</Button> }
-                 {payment_method !== 'TRANSFER' ? (<Button colorScheme='blue' variant='solid' onClick={next}>Save</Button>) : <Button colorScheme='blue' variant='solid' onClick={conti}>Continue</Button>}
+                 {payment_method !== 'TRANSFER' ? ( <div>{buttonVisible && (<Button colorScheme='blue' variant='solid' onClick={aprod}>Save</Button> )}
+      {!buttonVisible && <Spinner />}</div>) : <Button colorScheme='blue' variant='solid' onClick={conti}>Continue</Button>}
                  </Stack>
                  <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

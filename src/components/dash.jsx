@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import bank from './images/bank.svg';
 import Line from './images/Line 1.svg';
-import stack from './images/stack.svg';
-import sidearrow from './images/sidearrow.svg';
-import money from './images/money.svg';
-import club from './images/club.svg';
 import { Link, useNavigate} from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Card, CardHeader, CardBody, Box, Button, Heading, Stack, SimpleGrid,  StackDivider, Text } from '@chakra-ui/react'
+import { Bar } from 'react-chartjs-2';
+import { BarElement,  CategoryScale,Chart as ChartJS,Legend, LinearScale,Title, Tooltip } from "chart.js";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+
+ChartJS.register(CategoryScale, LinearScale, BarElement,Title,Tooltip,Legend, ChartDataLabels);
+
 
 
 const Dashboard =()=>{
@@ -16,6 +20,138 @@ const Dashboard =()=>{
   const [info, setInfo] = useState('')
 
   const showSidebar = () => setSidebar(!sidebar)
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: { position: "right" },
+      title: {
+        display: true,
+        text: "",
+      },
+    },
+    scales: {
+      y: {
+        display: false, // Remove y-axis labels
+      },
+    },
+  };
+  
+  const data = {
+labels: ["Day", "Week", "Month"],
+    datasets: [
+      {
+        label: "Current",
+        data: [ users.today_expense, users.wk_expense, users.mn_expense],
+        backgroundColor: "#6179cc",
+        barThickness: 20
+      },
+      {
+        label:'Previous',
+        data:[users.yesterday_expense,users.last_wk_expense, users.last_mn_expense],
+        backgroundColor:'#111a37',
+        barThickness: 20
+      },
+  
+    ],
+  
+  };
+  options.plugins.datalabels = {
+    display: true,
+    color: "black",
+    formatter: Math.round,
+    anchor: "end",
+    offset: -20,
+    align: "start",
+  };
+  const option = {
+    responsive: true,
+    plugins: {
+      legend: { position: "chartArea" },
+      title: {
+        display: true,
+        text: "Performance Chart",
+      },
+    },
+    scales: {
+      y: {
+        display: false, // Remove y-axis labels
+      },
+    },
+  };
+  
+  const dat = {
+labels: ["Day", "Week", "Month"],
+    datasets: [
+      {
+        label: "Current",
+        data: [ users.daily_revenue, users.wk_revenue, users.mn_revenue],
+        backgroundColor: "#6179cc",
+        barThickness: 20
+      },
+      {
+        label:'Previous',
+        data:[users.yesterday_revenue,users.last_wk_revenue,users.last_mn_revenue],
+        backgroundColor:'#111a37',
+        barThickness: 20
+      },
+  
+    ],
+  
+  };
+  option.plugins.datalabels = {
+    display: true,
+    color: "black",
+    formatter: Math.round,
+    anchor: "end",
+    offset: -20,
+    align: "start",
+  };
+
+  const optio = {
+    responsive: true,
+    plugins: {
+      legend: { position: "chartArea" },
+      title: {
+        display: true,
+        text: "Performance Chart",
+      },
+    },
+    scales: {
+      y: {
+        display: false, // Remove y-axis labels
+      },
+    },
+  };
+  
+  const da = {
+labels: ["Day", "Week", "Month"],
+    datasets: [
+      {
+        label: "Current",
+        data: [ users.today_sales, users.wk_sales, users.mn_sales],
+        backgroundColor: "#6179cc",
+        barThickness: 20
+      },
+      {
+        label:'Previous',
+        data:[users.yesterday_sales,users.last_wk_sales,users.last_mn_sales],
+        backgroundColor:'#111a37',
+        barThickness: 20
+      },
+  
+    ],
+  
+  };
+  optio.plugins.datalabels = {
+    display: true,
+    color: "black",
+    formatter: Math.round,
+    anchor: "end",
+    offset: -20,
+    align: "start",
+  };
+
+  
 
   let tok= JSON.parse(localStorage.getItem("user-info"));
   let refresh = tok.refresh_token
@@ -47,22 +183,17 @@ const Dashboard =()=>{
         });
         rep = await rep.json();
         let bab = rep.access_token
-      let response = await fetch("https://sandbox.prestigedelta.com/accounts/",{
+      let response = await fetch("https://sandbox.prestigedelta.com/analytics/",{
       method: "GET",
       headers:{'Authorization': `Bearer ${bab}`},
       })
-      let respet = await fetch("https://sandbox.prestigedelta.com/tasks/",{
-    method: "GET",
-    headers:{'Authorization': `Bearer ${bab}`},
-    })
-      respet = await respet.json();
       response = await response.json()
       localStorage.setItem('user-info', JSON.stringify(tok))
       if (response.status === 401){
         navigate('/components/login')
       } else {
      setUsers(response)
-     setInfo(respet)
+     
       }
     }
   
@@ -85,23 +216,11 @@ let wark =users[0]
 console.log(users) 
 console.log(info)
 
-const toggleHidden =()=>{
-  
- // let gat = wark.available_balance
-  
-        if(hidden==="******")
-        {let gal =(wark.main_balances.available_balance).toLocaleString('en-US')
-          
-         setHidden(`₦${gal}`)
-         return;
-        }
-        setHidden("******")
-      }
       
         
     return(
         <div>
-        <div>
+        <ChakraProvider>
             <i onClick={showSidebar} class="fa-solid fa-bars ac"></i>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-item'>
@@ -139,82 +258,70 @@ const toggleHidden =()=>{
                     </li>  
                 </ul>
             </nav>
-            </div>
+           
+            <div>
             <h3 className='h4'>Hi, {name.first_name} </h3>
-            <div className='dash'>
-                <p className='dp'>Total Balance</p>
-                
-                { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
-                <h1 className='h1'>{hidden}</h1>
-                <img src={Line} alt=''/><br/>
-                <Link to='/components/fund'>
-                   <button className='dbut'>Add Money</button>
-                </Link>
+            <Heading size='md' >Analytics</Heading>
             </div>
-            <div className="dflex">
-                <img src={bank} alt=''/>
-                <div>
-                  <h3 className='dh3'>Access to Finance</h3>
-                  <p className='dfp'>Get access to loan when you save 30% of your estimated project amount</p>
-                </div>   
-            </div>
-       {info.label === '' ? (
-            <div>
-            <p className='l'>QUICK ACTION</p>
-            <Link to='/components/project' className='link'> <div className='dflex1'>
-                <img src={stack} alt='' />
-                <div >
-                    <h4 className='dh3'>Create project plan</h4>
-                    <p className='dfp'>Start your project plan now</p>
-                </div>
-                <img src={sidearrow} alt='' />
-            </div></Link>
-            <div className='dflex1'>
-                <img src={money} alt='' />
-                <div >
-                    <h4 className='dh3'>Get quick credit</h4>
-                    <p className='dfp'>Start your project plan now</p>
-                </div>
-                <img src={sidearrow} alt='' />
-            </div>
-            <div className='dflex1'>
-                <img src={club} alt='' />
-                <div >
-                    <h4 className='dh3'>Create lending club</h4>
-                    <p className='dfp'>Start your project plan now</p>
-                </div>
-                <img src={sidearrow} alt='' />
-            </div>
-            </div> ) :
-            <div>
-            <p className='l'>Quick Action</p>
-            <Link to='/components/project' className='link'> <div className='dflex1'>
-                <img src={stack} alt='' />
-                
-                <div>
-                    <h4 className='dh3'>Create Your Project Plan</h4>
-                    <p className='dfp'>Start your project plan</p>
-                </div>
-                <img src={sidearrow} alt='' />
-            </div></Link>
-            <div className='dflex1'>
-                <img src={money} alt='' />
-                <div >
-                    <h4 className='dh3'>Get quick credit</h4>
-                    <p className='dfp'>Start your project plan now</p>
-                </div>
-                <img src={sidearrow} alt='' />
-            </div>
-            <div className='dflex1'>
-                <img src={club} alt='' />
-                <div >
-                    <h4 className='dh3'>Create lending club</h4>
-                    <p className='dfp'>Start your project plan now</p>
-                </div>
-                <img src={sidearrow} alt='' />
-            </div>
-            </div> }
-            
+            <Card  backgroundColor='#eff1fa' m={3} p={5} >
+              <Heading size='sm'>Target</Heading>
+              <Stack direction='row' mt={2} gap='90px' spacing={2} align='center' justify='center'>
+              <Text fontSize='13px' textAlign='left'>Daily Target</Text>
+              <Heading size='xs'>₦{(parseFloat(users.daily_rev_target)).toLocaleString('en-US')}</Heading>
+              </Stack>
+              <Stack direction='row' gap='100px' spacing={2} align='center' justify='center'>
+              <Text fontSize='13px'>Weekly Targt</Text>
+              <Heading size='xs'>₦{(parseFloat(users.wk_rev_target)).toLocaleString('en-US')}</Heading>
+              </Stack>
+              <Stack direction='row' gap='100px' spacing={2} align='center' justify='center'>
+              <Text fontSize='13px'>Monthly Targt</Text>
+              <Heading size='xs'>₦{(parseFloat(users.mn_rev_target)).toLocaleString('en-US')}</Heading>
+              </Stack>
+              
+            </Card>
+            <Card backgroundColor='#eff1fa' m={3} >
+                <Heading size='sm'>Revenue</Heading>
+               
+               <Bar data={dat} options={option} />
+            </Card>
+      
+            <Card backgroundColor='#eff1fa' m={3} >
+                <Heading size='sm'>Expense</Heading>
+               
+               <Bar data={data} options={options} />
+            </Card>
+            <Card backgroundColor='#eff1fa' m={3} >;12ox
+                <Heading size='sm'>Sales</Heading>
+               <Bar data={da} options={optio} />
+               <Text fontSize='12px'>Today's Revenue Per Sales - ₦{parseFloat(users.today_rps).toLocaleString('en-US')}</Text>
+               <Text fontSize='12px'>This Week's Revenue Per Sales - ₦{parseFloat(users.wk_rps).toLocaleString('en-US')}</Text>
+               <Text fontSize='12px'>This Month's Revenue Per Sales - ₦{parseFloat(users.mn_rpc).toLocaleString('en-US')}</Text>
+            </Card>
+            <Card backgroundColor='#eff1fa' m={3} p={2}>
+              <SimpleGrid m={2} spacing={4} templateColumns='repeat(auto-fill, minmax(150px, 1fr))'>
+                <Card backgroundColor=' #c9d4f5' p={2}>
+                  <Heading fontSize='12px'>No of Customers Today</Heading>
+                  <Text fontSize='14px'>{users.today_customer_count}</Text>
+                <Text fontSize='12px'>No of new Customers today - {users.today_new_customer}</Text>
+                </Card>
+                <Card backgroundColor=' #c9d4f5' p={2}>
+                  <Heading fontSize='12px'>No of Customers for the Week</Heading>
+                  <Text fontSize='14px'>{users.wk_customer_count}</Text>
+                <Text fontSize='12px'>No of new Customers for the Week - {users.wk_new_customer}</Text>
+                </Card>
+                <Card backgroundColor=' #c9d4f5' p={2}>
+                <Heading fontSize='12px'>No of Customers for the Month</Heading>
+                  <Text fontSize='14px'>{users.mn_customer_count}</Text>
+                <Text fontSize='12px'>No of new Customers for the Month - {users.mn_new_customer}</Text>
+                </Card>
+                <Card backgroundColor=' #c9d4f5' p={2} >
+                  <Heading fontSize='12px'>Today's Revenue Per Customer- ₦{parseFloat(users.today_rpc).toLocaleString('en-US')}</Heading>
+                  <Text fontSize='12px'>Weekly Revenue Per Customer - ₦{parseFloat(users.wk_rpc).toLocaleString('en-US')}</Text>
+                  <Text fontSize='12px'>Monthly Revenue Per Customer -₦{parseFloat(users.mn_rpc).toLocaleString('en-US')}</Text>
+                </Card>
+              </SimpleGrid>
+            </Card>
+            </ChakraProvider>   
         </div>
     )
 }

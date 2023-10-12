@@ -186,7 +186,7 @@ let refresh = terms(tok)
           <p className='clun' key={index}>
             {Math.round(((parseInt(obj.spent) / parseInt(obj.budget)) * 100 + Number.EPSILON) * 100) / 100}%
           </p>
-          <p className='clun'>₦{obj.spent.toLocaleString('en-US')} / ₦{obj.budget.toLocaleString('en-US')}</p>
+          <p className='clun'>₦{obj.balance.available_balance.toLocaleString('en-US')}</p>
         </div>
         <div className="progress-b" style={{ width: '100%' }}>
           <div className="progress-bi" style={{ width: `${(parseInt(obj.spent) / parseInt(obj.budget)) * 100}%` }}>

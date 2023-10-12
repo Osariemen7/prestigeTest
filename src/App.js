@@ -47,6 +47,8 @@ import Product from './components/product';
 import ProDe from './components/prodet';
 import Invoice from './components/invoice';
 import BuyP from './components/before';
+import BarChart from './components/test';
+
 function App() {
   const [loading, setLoading] = useState(true)
 
@@ -104,7 +106,8 @@ function App() {
         <Route path='/components/product' element={<Product />} />
         <Route path='/components/prodet' element={<ProDe />} /> 
         <Route path='/components/invoice' element={<Invoice />} /> 
-        <Route path='/components/before' element={<BuyP />} />      
+        <Route path='/components/before' element={<BuyP />} /> 
+        <Route path='/components/test' element={<BarChart />} />     
      
      </Routes>
       
