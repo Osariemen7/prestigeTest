@@ -46,21 +46,21 @@ const GetGroup =()=>{
   const handleSubmit=(e)=>{
     e.preventDefault()
     let data ={amount, selectedOption, selectedOptions, nuban, users, narration, pin_id}
-    if (typeof users !=='object' || narration.length < 1 || nuban.length < 1 || selectedOption.length < 1){
+    if ( users.account_name === undefined || nuban.length < 1 ||  narration.length < 1 || selectedOption.length < 1 || amount.length < 1){
       setMessage('All Fields must be Filled')
     }
     else {
     
     navigate('/components/getgrp2', {state:{data}})
   }}
-
+ console.log(users.account_name)
   const handleAcct =(event)=> {
     setNuban(event.target.value)
 }
 const handleAmount=(event)=> {
   setAmount(event.target.value)
 }
-
+console.log(narration.length)
 const fetchDap = async () => {
   let item ={refresh}
   let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
@@ -97,7 +97,7 @@ setBen(respet)
   useEffect(() => {
     fetchDap()
   }, [])
-
+console.log(users)
   let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
        let refreshval;

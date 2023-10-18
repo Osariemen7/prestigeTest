@@ -299,20 +299,20 @@ const options = [
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
-                    <p className='dfp'>Home</p></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <p className='dfp'>Account</p></Link>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                      <p className='dfp'>Home</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
                       <p className='dfp'>Sub-Account</p></Link>
-                    </li>
+                    </li>  
                     <li className='nav-list'>
                     <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
                       <p className='dfp'>Customers</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-chart-line"></i>
+                    <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
@@ -323,6 +323,7 @@ const options = [
                   <p className='dfp'>Project</p></Link>
                     </li>
                     <li className='nav-list'>
+                    
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
                     </li>  
@@ -379,7 +380,7 @@ const options = [
   <Button colorScheme='blue' variant='outline' onClick={modal2.onOpen}>Set Budget</Button>
 </Stack>
 
-</Card>): (<Card m={5} onClick={nav}  >
+</Card>): (<Card m={5}  >
             <Card m={2} >
 
   <CardBody>
@@ -410,6 +411,13 @@ const options = [
     
   </Card> 
 </SimpleGrid>
+<Stack direction='row' mt={2} spacing={2} align='center' justify='center'>
+<Button colorScheme='blue' variant='solid' onClick={nav}>
+    Product List
+  </Button>
+  <Button colorScheme='blue' variant='outline' onClick={modal2.onOpen}>Set Budget</Button>
+</Stack>
+
 </Card>)}
 <h4 className="saed">Activity</h4>
              {list.map((obj, index) => 

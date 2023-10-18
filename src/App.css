@@ -756,6 +756,10 @@ hr{
 .listp{
   color: grey;
 }
+.ma{
+  margin-left: 35px;
+  margin-top: 30px;
+}
 .nav-menu{
   background-color: #060b26;
   width: 50%;

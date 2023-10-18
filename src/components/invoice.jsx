@@ -14,10 +14,28 @@ import {
     ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
-  import { useDisclosure, Input,  Button, Stack, Spinner  } from "@chakra-ui/react"
+  import { useDisclosure, Input,  Button, Heading, Stack, Spinner  } from "@chakra-ui/react"
+  import { Wheel } from 'react-custom-roulette';
 
-
+  const data = [
+    { option: '0', likelihood: 0.3, style:{ backgroundColor: 'red', textColor: 'white' } },
+  { option: `0.2`, likelihood: 0.3, style:{ backgroundColor: 'black', textColor: 'white' } },
+  { option: `10`, likelihood: 0.01, style:{ backgroundColor: 'green', textColor: 'white' } },
+  { option: `0.5`, likelihood: 0.4, style:{ backgroundColor: 'black', textColor: 'white' } },
+  { option: `0`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0.1`, likelihood: 0.7, style:{ backgroundColor: 'black', textColor: 'white' }},
+  { option: `0.4`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0.1`, likelihood: 0.7, style:{ backgroundColor: 'black', textColor: 'white' }},
+  { option: `0.2`, likelihood: 0.3, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0`, likelihood: 0.6, style:{ backgroundColor: 'black', textColor: 'white' }},
+  { option: `0.6`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0`, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }},
+  { option: `0.3`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }}
+  ];
+  
 const Invoice =()=> {
+  const [mustSpin, setMustSpin] = useState(false);
+  const [selectedPrize, setSelectedPrize] = useState('');
     const { isOpen, onOpen,  onClose } = useDisclosure()
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(true);
@@ -29,20 +47,47 @@ const Invoice =()=> {
     const [inputVal, setInputVal] = useState("");
     const [inputValue, setInputValue] = useState("");
     const [inputVa, setInputVa] = useState('')
-    const [inputV, setInputV] = useState('')
-    const [customer, setCustomer] = useState('');
-    const [inpu, setInpu] = useState('');
-    const [pack_size1, setPacksize] = useState([])
-    const [number, setNumber] = useState('')
-    const [val, setVal] = useState('')
+    const [inputV, setInputV] = useState('');
+    const [pack_size1, setPacksize] = useState([]);
     const [product, setProduct] = useState([])
     const [payment_method, setPayment] = useState('')
     const [outline, setOutline] = useState('');
     const [message, setMessage] = useState('')
+    const [valid, setValid] = useState('')
     const [buttonVisible, setButtonVisible] = useState(true);
-
+    const modal1 = useDisclosure()
+    const modal2 = useDisclosure()
     const navigate = useNavigate()
     console.log(item)
+
+    const handleSpinClick = () => {
+      if (!mustSpin) {
+        spinWheel();
+      }
+    };
+  
+    const spinWheel = () => {
+      // Calculate the total likelihood
+      const totalLikelihood = data.reduce((total, prize) => total + prize.likelihood, 0);
+  
+      // Generate a random value between 0 and the total likelihood
+      const randomValue = Math.random() * totalLikelihood;
+  
+      // Determine which segment the randomValue falls into
+      let currentLikelihood = 0;
+      for (const prize of data) {
+        currentLikelihood += prize.likelihood;
+        if (randomValue < currentLikelihood) {
+          setSelectedPrize(prize.option);
+          setMustSpin(true);
+  
+          // Update win count
+          
+          break;
+        }
+      }
+    };
+  
     let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
        let refreshval;
@@ -71,8 +116,6 @@ const optio = ['item', 'pack'];
     }));
 const handleFormSubmit = (event) => {
     event.preventDefault();
-    const newCustomer = customer || inpu;
-    const newNumber = number || val
     setQuatity([...quantity, inputValue]);
     setInputValue("");
     setPrice([...price, inputVal]);
@@ -83,7 +126,7 @@ const handleFormSubmit = (event) => {
     setInputV('');
     setPacksize([...pack_size1, inputp])
     setInputp(0)
-    onClose()
+    modal1.onClose()
   }
 //   const options = [
 //     ...product.map((item) => ({
@@ -109,7 +152,7 @@ const handleFormSubmit = (event) => {
   return total + itemAmount;
 }, 0);
   let total = (tota).toLocaleString('en-US')
-
+let won = (parseFloat(selectedPrize)/100) * tota 
   const handlePack =(e)=>{
     setInputp(e.target.value)
   }
@@ -219,7 +262,7 @@ const fetchDa = async () => {
           setButtonVisible(false);
           setTimeout(() => {
             setButtonVisible(true);
-          }, 10000);
+          }, 5000);
         };
 
     async function sprod(e) {
@@ -239,6 +282,7 @@ const fetchDa = async () => {
         let product_type = 'PRODUCT'
         let pack_size= pack_size1
         let amount = tota
+        let reward = selectedPrize
       
         let quantity_type = type.map(tod => tod.value)
         let name = item.map(todo => todo.value)
@@ -255,7 +299,7 @@ const fetchDa = async () => {
           amount: amount
         }));
         let products = separatedData
-        let ite = {products, payment_method}
+        let ite = {products, payment_method, reward}
       try {
         let result = await fetch('https://sandbox.prestigedelta.com/sellproducts/', {
           method: 'POST',
@@ -272,6 +316,7 @@ const fetchDa = async () => {
         } else {
            result =await result.json();
           setMessage(JSON.stringify(result.message))
+          setValid('Valid')
         } 
       } catch (error) {
         // Handle fetch error
@@ -279,7 +324,9 @@ const fetchDa = async () => {
       };
     }
     
-    
+    const done =()=> {
+      navigate('/components/inventory')
+    }
       console.log(payment_method)
     
         if(loading) {
@@ -287,17 +334,17 @@ const fetchDa = async () => {
           <p>Loading...</p>)}
     return(
         <div>
-        <Link to='/components/inventory'><i class="fa-solid fa-chevron-left bac"></i></Link>
-        
+        <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
+        <ChakraProvider>
             <main id="main-element">
             <div className='rax'><h4 className='shi'>{toSentenceCase(list[0].business_name)}</h4></div> 
-            <ChakraProvider>
+          
         <div><p>Choose Method of Payment?</p>
     <Stack direction='row' m={2} gap='20px' spacing={3} align='center' justify='center'>        
                  <Button colorScheme='blue' variant={outline  === 'CASH'?'solid' : 'outline'} onClick={() =>openModal('CASH')}>CASH</Button> 
                  <Button colorScheme='blue' variant={outline ==='POS' ? 'solid' : 'outline'} onClick={() =>openModal1('POS')}>POS</Button> 
                  <Button colorScheme='blue' variant={outline ==='TRANSFER' ?'solid' : 'outline'} onClick={() =>openModal2('TRANSFER')}>TRANSFER</Button>
-                 </Stack></div></ChakraProvider>
+                 </Stack></div>
       
             
             <p className='ld'>{(new Date()).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
@@ -305,14 +352,14 @@ const fetchDa = async () => {
             <hr className='hr'></hr>
                         
           <div className='grn'>
-            <div className='cules'>
-                <h4>Item</h4>
-                <h4>Quantity</h4>
-                <h4>Amount</h4>
-                <h4>Quantity Type</h4>
-            </div>
+          <Stack direction='row'mb={2} gap='30px' mt={3} spacing={4} align='center' justify='center'>
+                <Heading size='xs'>Item</Heading>
+                <Heading size='xs'>Quantity</Heading>
+                <Heading size='xs'>Amount</Heading>
+                <Heading size='xs'>Quantity Type</Heading>
+      </Stack>
     
-            <div className='culs'>
+            <div className='culb'>
                  <ul className="au">
                     {(item).map((todo, index) => (
                      <p key={index}>{todo.value}</p>))}
@@ -332,7 +379,7 @@ const fetchDa = async () => {
                     <p key={index1}>{tod.value}</p>
                   ))}
                  </ul></div>
-                    <p className='cveh'>Total: ₦{total}</p>
+                    <p>Total: ₦{total}</p>
                        
                 <div className='cules'>
                 <p>Expected Payment:</p>
@@ -345,15 +392,17 @@ const fetchDa = async () => {
                 
                 <img src={Logo} alt="logo" className="frame3"/>
              
-               </main>
-               <ChakraProvider>            
+               </main></ChakraProvider>
+               <ChakraProvider>     
+               {valid === 'Valid' ? (<Button colorScheme='blue' variant='solid' onClick={done}>Back</Button>):      
                 <Stack direction='row' spacing={2} align='center' justify='center'>        
-                 <Button colorScheme='blue' variant='solid' onClick={onOpen}>Add Item</Button> 
-                 {buttonVisible && ( <Button colorScheme='blue' variant='solid' onClick={sprod}>Save</Button> 
+                 <Button colorScheme='blue' variant='solid' onClick={modal1.onOpen}>Add Item</Button> 
+                {selectedPrize === ''? (<Button colorScheme='blue' variant='solid' onClick={modal2.onOpen}>Save</Button>): <div>{buttonVisible && (<Button colorScheme='blue' variant='solid' onClick={sprod}>Claim Prize</Button> 
                  )}
-      {!buttonVisible && <Spinner />} </Stack>
+      {!buttonVisible && <Spinner />}</div>}
+                  </Stack>} 
       <div className="message">{message ? <p>{message}</p> : null}</div>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={modal1.isOpen} onClose={modal1.onClose}>
         <ModalOverlay />
         <ModalContent>
         
@@ -390,6 +439,38 @@ const fetchDa = async () => {
                                    
                 <Button colorScheme='blue' onClick={handleFormSubmit}>Add</Button>
             </form>
+            </ModalBody>
+            </ModalContent>
+      </Modal>
+      <Modal isOpen={modal2.isOpen} onClose={modal2.onClose}>
+        <ModalOverlay />
+        <ModalContent>
+        
+          <ModalHeader>Get Prize !</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          <div className='ma'>
+      <Wheel 
+        mustStartSpinning={mustSpin}
+        prizeNumber={data.findIndex((prize) => prize.option === selectedPrize)} // Make sure to provide the number of segments
+        data={data}
+        radiusLineColor='yellow'
+        radiusLineWidth={6}
+        outerBorderWidth= {3}
+        innerRadius ={10}
+        onStopSpinning={() => {
+          // The onStopSpinning event is automatically triggered when spinning is complete
+          // You can use it to handle post-spin actions if needed
+          setMustSpin(false);
+          
+        }}
+      />
+    {!mustSpin ? (<div>
+      {selectedPrize && <p>{selectedPrize}% of ₦{total} </p>}
+      <p>You won: ₦{won}</p></div>): null}
+      {selectedPrize === '' ? (  <Button colorScheme='blue' variant='solid' onClick={handleSpinClick}>Spin</Button>
+                 ): null}
+    </div>
             </ModalBody>
             </ModalContent>
       </Modal>

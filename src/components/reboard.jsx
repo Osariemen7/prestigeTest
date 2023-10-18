@@ -5,7 +5,6 @@ const Bud=()=>{
     const [message, setMessage] = useState('');
     const [budget1, setBudget1] = useState(0);
     const [budget2, setBudget2] = useState(0);
-    const [budget3, setBudget3] = useState(0);
     const [budget4, setBudget4] = useState(0)
     const [total, setTotal] = useState(0)
     const navigate = useNavigate()
@@ -32,20 +31,16 @@ const Bud=()=>{
         setBudget2(event.target.value)
 
     }
-    const handleBuget3 =(event)=> {
-        setBudget3(event.target.value)
-    }
+    
     const handleBuget4 =(event)=> {
         setBudget4(event.target.value)
         
     }
-    const updateTotal = (e) => {
-        e.preventDefault();
-        const newTotal =parseFloat(budget1) + (parseFloat(budget2) +parseFloat(budget3) + parseFloat(budget4)) ;
+   
+        const newTotal =parseFloat(budget1) + (parseFloat(budget2)  + parseFloat(budget4)) ;
          
-        setTotal(newTotal);
-      };
-console.log(parseFloat(budget2) + parseFloat(budget3) + parseFloat(budget4))
+      
+console.log(parseFloat(budget2)  + parseFloat(budget4))
     async function bus(e) {
         e.preventDefault();
         let ite ={refresh}
@@ -72,11 +67,6 @@ console.log(parseFloat(budget2) + parseFloat(budget3) + parseFloat(budget4))
                   account_type: "EXPENSE",
                   budget: budget2, // Replace with the actual state variable for buget2
                 },
-                {
-                    name: "TAXES",
-                    account_type: "EXPENSE",
-                    budget: budget3, // Replace with the actual state variable for buget3
-                  },
                   {
                     name: "PROFIT",
                     account_type: "EXPENSE",
@@ -109,19 +99,15 @@ console.log(parseFloat(budget2) + parseFloat(budget3) + parseFloat(budget4))
         <form>
             <p className="sp">What is your profit target for the Month?</p>
             <input className="line" type='number' onChange={handleBuget1} /><br/><br/>
-            <p className="sp">How much are you spending on salaries monthly?</p>
-            <input className="line" type='number' onChange={handleBuget2} /><br/><br/>
-            <p className="sp">How much do you pay for taxes and levies per month?</p>
-            <input className="line" type='number' onChange={handleBuget3} /><br/><br/>
+           { budget1 !== 0 ? (<div>
+            <p className="sp">How much are you spending on salaries <br/>monthly?</p>
+            <input className="line" type='number' onChange={handleBuget2} /><br/><br/> 
             <p className="sp">How much do spend on other expenses per month?</p>
             <input className="line" type='number' onChange={handleBuget4} /><br/><br/>
-            <div className="message">{message ? <p>{message}</p> : null}</div>
-           {total === 0 ? null:<h4 >Your target Monthly revenue is:<br/>₦{(total).toLocaleString('en-Us')}</h4>} 
-            {total === 0 ?(
-             <button onClick={updateTotal} className="pog">Next</button>):(
-                <button className='pog' onClick={bus} type="submit">Next</button>
-             )}
+            </div>): null}<div className="message">{message ? <p>{message}</p> : null}</div>
+           <h4 >Your target Monthly revenue is:<br/>₦{(newTotal).toLocaleString('en-Us')}</h4> 
             
+        <button className='pog' onClick={bus} type="submit">Next</button>    
         </form>
 
         </div>

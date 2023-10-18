@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Line from './images/Line 1.svg';
 import { Link, useNavigate} from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { Card, CardHeader, CardBody, Box, Button, Heading, Stack, SimpleGrid,  StackDivider, Text } from '@chakra-ui/react'
+import { Card, Heading, Stack, SimpleGrid, Text } from '@chakra-ui/react'
 import { Bar } from 'react-chartjs-2';
 import { BarElement,  CategoryScale,Chart as ChartJS,Legend, LinearScale,Title, Tooltip } from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -14,7 +13,6 @@ ChartJS.register(CategoryScale, LinearScale, BarElement,Title,Tooltip,Legend, Ch
 
 const Dashboard =()=>{
   const [users, setUsers] = useState('');
-  const [hidden, setHidden] = useState("******");
   const navigate = useNavigate()
   const [sidebar, setSidebar] = useState('')
   const [info, setInfo] = useState('')
@@ -66,7 +64,7 @@ labels: ["Day", "Week", "Month"],
   const option = {
     responsive: true,
     plugins: {
-      legend: { position: "chartArea" },
+      legend: { position: "left" },
       title: {
         display: true,
         text: "Performance Chart",
@@ -94,6 +92,13 @@ labels: ["Day", "Week", "Month"],
         backgroundColor:'#111a37',
         barThickness: 20
       },
+      {
+        label: 'Target',
+        data: [users.daily_rev_target,users.wk_rev_target, users.mn_rev_target],
+        backgroundColor:'#8870B9',
+        barThickness: 20        
+      }
+  
   
     ],
   
@@ -110,7 +115,8 @@ labels: ["Day", "Week", "Month"],
   const optio = {
     responsive: true,
     plugins: {
-      legend: { position: "chartArea" },
+      legend: { position: 'chartArea'
+  },
       title: {
         display: true,
         text: "Performance Chart",
@@ -138,7 +144,7 @@ labels: ["Day", "Week", "Month"],
         backgroundColor:'#111a37',
         barThickness: 20
       },
-  
+      
     ],
   
   };
@@ -214,7 +220,6 @@ labels: ["Day", "Week", "Month"],
 let wark =users[0]
 
 console.log(users) 
-console.log(info)
 
       
         
@@ -227,21 +232,22 @@ console.log(info)
                     <li className='nav-close'>
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
+                    
                     <li className='nav-list'>
-                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
-                    <p className='dfp'>Home</p></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
-                      <p className='dfp'>Account</p></Link>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                      <p className='dfp'>Home</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
                       <p className='dfp'>Sub-Account</p></Link>
-                    </li>
+                    </li>  
                     <li className='nav-list'>
                     <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
                       <p className='dfp'>Customers</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-chart-line"></i>
+                    <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
@@ -263,21 +269,12 @@ console.log(info)
             <h3 className='h4'>Hi, {name.first_name} </h3>
             <Heading size='md' >Analytics</Heading>
             </div>
-            <Card  backgroundColor='#eff1fa' m={3} p={5} >
-              <Heading size='sm'>Target</Heading>
-              <Stack direction='row' mt={2} gap='90px' spacing={2} align='center' justify='center'>
-              <Text fontSize='13px' textAlign='left'>Daily Target</Text>
-              <Heading size='xs'>₦{(parseFloat(users.daily_rev_target)).toLocaleString('en-US')}</Heading>
-              </Stack>
-              <Stack direction='row' gap='100px' spacing={2} align='center' justify='center'>
-              <Text fontSize='13px'>Weekly Targt</Text>
-              <Heading size='xs'>₦{(parseFloat(users.wk_rev_target)).toLocaleString('en-US')}</Heading>
-              </Stack>
-              <Stack direction='row' gap='100px' spacing={2} align='center' justify='center'>
-              <Text fontSize='13px'>Monthly Targt</Text>
-              <Heading size='xs'>₦{(parseFloat(users.mn_rev_target)).toLocaleString('en-US')}</Heading>
-              </Stack>
-              
+            <Card backgroundColor='#eff1fa' m={3} >
+                <Heading size='sm'>Sales</Heading>
+               <Bar data={da} options={optio} />
+               <Text fontSize='12px'>Today's Revenue Per Sales - ₦{parseFloat(users.today_rps).toLocaleString('en-US')}</Text>
+               <Text fontSize='12px'>This Week's Revenue Per Sales - ₦{parseFloat(users.wk_rps).toLocaleString('en-US')}</Text>
+               <Text fontSize='12px'>This Month's Revenue Per Sales - ₦{parseFloat(users.mn_rpc).toLocaleString('en-US')}</Text>
             </Card>
             <Card backgroundColor='#eff1fa' m={3} >
                 <Heading size='sm'>Revenue</Heading>
@@ -290,13 +287,7 @@ console.log(info)
                
                <Bar data={data} options={options} />
             </Card>
-            <Card backgroundColor='#eff1fa' m={3} >;12ox
-                <Heading size='sm'>Sales</Heading>
-               <Bar data={da} options={optio} />
-               <Text fontSize='12px'>Today's Revenue Per Sales - ₦{parseFloat(users.today_rps).toLocaleString('en-US')}</Text>
-               <Text fontSize='12px'>This Week's Revenue Per Sales - ₦{parseFloat(users.wk_rps).toLocaleString('en-US')}</Text>
-               <Text fontSize='12px'>This Month's Revenue Per Sales - ₦{parseFloat(users.mn_rpc).toLocaleString('en-US')}</Text>
-            </Card>
+            
             <Card backgroundColor='#eff1fa' m={3} p={2}>
               <SimpleGrid m={2} spacing={4} templateColumns='repeat(auto-fill, minmax(150px, 1fr))'>
                 <Card backgroundColor=' #c9d4f5' p={2}>
