@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {Link, useNavigate} from "react-router-dom";
 import { Helmet } from "react-helmet"
 import { ChakraProvider } from '@chakra-ui/react';
-import { Card, Stack, CardBody, Heading, Text } from '@chakra-ui/react'
+import { Card, Heading, Text } from '@chakra-ui/react'
 
 const Accounts =()=> {
   const [info, setInfo] = useState('')
@@ -10,6 +10,7 @@ const Accounts =()=> {
   const [hidden, setHidden] = useState("******");
   const [data, setData] = useState('')
   const navigate= useNavigate()
+  const [loading, setLoading] = useState('')
   const [sidebar, setSidebar] = useState('')
 
   const showSidebar = () => setSidebar(!sidebar)
@@ -149,8 +150,12 @@ return(
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-house"></i>
                       <p className='dfp'>Home</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <p className='dfp'>Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
@@ -165,10 +170,6 @@ return(
                     <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
-                      <p className='dfp'>Inventory</p></Link>
-                    </li>
-                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <p className='dfp'>Project</p></Link>
                     </li>
@@ -176,27 +177,21 @@ return(
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>
+                    </li>  
                 </ul>
             </nav>
+            <ChakraProvider>
            <div className="dash">
               <h3 className="h1">Account</h3>
               <p className='dp'>Total Balance</p>
               { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
               <h1 className="h1">{hidden}</h1>
               <div>
-               <Link to='/components/invoice'><button className='dbut'>Receive Payment</button></Link> 
-                              
+               <Link to='/components/fund'><button className='abut'>Add Funds</button></Link>            
               </div>
            </div>
-           <ChakraProvider>
-            <Card m={4}>
-                <Text mb={0}>Bank</Text>
-                <Heading size='xs' mb={2}>{data.bank}</Heading>
-                <Text>Account Number</Text>
-                <Heading size='xs'>{data.account_number}</Heading>
-
-            </Card>
+           
+            
            </ChakraProvider>
            
               <p className='l'>RECENT TRANSACTIONS</p>
@@ -215,8 +210,12 @@ return(
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-house"></i>
                       <p className='dfp'>Home</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <p className='dfp'>Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
@@ -231,10 +230,6 @@ return(
                     <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
-                      <p className='dfp'>Inventory</p></Link>
-                    </li>
-                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <p className='dfp'>Project</p></Link>
                     </li>
@@ -242,7 +237,7 @@ return(
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>
+                    </li>  
                 </ul>
             </nav>
             </div>
@@ -252,20 +247,10 @@ return(
                 { hidden ? <i onClick={toggleHidden} class="fa-regular fa-eye-slash see"></i> : <i class="fa-regular fa-eye see" onClick={toggleHidden}></i>}
                 <h1 className="h1">{hidden}</h1>
                 <div >
-                 <Link to='/components/invoice'><button className='dbut'>Receive Payment</button></Link> 
-                
+               <Link to='/components/fund'><button className='abut'>Add Funds</button></Link> 
                 </div>
              </div>
-             <ChakraProvider>
-            <Card m={4}  >
             
-                <Text mb={0} >Bank</Text>
-                <Heading size='xs' mb={2}>{data.bank}</Heading>
-                <Text>Account Number</Text>
-                <Heading size='xs' >{data.account_number}</Heading>
-              
-            </Card>
-           </ChakraProvider>
            
               
           <p className='l'>RECENT TRANSACTIONS</p>

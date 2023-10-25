@@ -213,7 +213,7 @@ const options = [
       });
       rep = await rep.json();
       let bab = rep.access_token
-    let response = await fetch(`https://sandbox.prestigedelta.com/subtransactions/?start_date=01/31/2022&end_date=${(new Date()).toLocaleDateString('en-US')}&name=${info[0].sub_account.name}`,{
+    let response = await fetch(`https://sandbox.prestigedelta.com/salestransactions/?start_date=01/31/2022&end_date=${(new Date()).toLocaleDateString('en-US')}&name=${info[0].sub_account.name}`,{
     method: "GET",
     headers:{'Authorization': `Bearer ${bab}`},
     })
@@ -273,19 +273,20 @@ const options = [
           console.error(error);
         };
       }
-
+       console.log(list)
       const receipt =(index)=>{
-        const ite = list[index]
-        navigate('/components/Receipt', {state:{ite}} )
+        const data = list[index]
+        navigate('/components/pinvoice', {state:{data}} )
       }
       const overdraft= ()=>{
         const data = info[0].sub_account
            navigate('/components/overdraft', {state:{data}})
       }
       const transfer= ()=>{
-        const mata = info[0].sub_account
-        navigate('/components/getgroup', {state:{mata}})
-      }
+    
+        navigate('/components/before')
+   }
+      
       if(loading) {
         return(
         <p>Loading...</p>)} 
@@ -299,8 +300,12 @@ const options = [
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-house"></i>
                       <p className='dfp'>Home</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <p className='dfp'>Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
@@ -313,10 +318,6 @@ const options = [
                     <li className='nav-list'>
                     <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-chart-line"></i>
                     <p className='dfp'>Analytics</p></Link>
-                    </li>
-                    <li className='nav-list'>
-                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
-                      <p className='dfp'>Inventory</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
@@ -334,11 +335,7 @@ const options = [
               <p className='dp'>Total Balance</p>
               {typeof info[0].sub_account === 'undefined'? (<Heading size='xl' color='#fff'>₦0</Heading>):
               <Heading size='xl' color='#fff'>₦{(info[0].sub_account.balance.available_balance).toLocaleString('en-US')}</Heading>}
-              <div className='act'>
-               <button onClick={modal1.onOpen} className='abut'>Fund</button>
-              <button onClick={transfer} className='abut'>Transfers</button>
-              <button onClick={overdraft} className='abut'>Overdraft</button>
-            </div>
+              <Link to='/components/invoice'><button className='dbut'>Record a Sale</button></Link>
             </div>
             <Heading size='sm' ml={6} textAlign='left'>Products</Heading>
             { info.length > 0 && typeof info[0].products[0] === 'object' ? (
@@ -377,7 +374,7 @@ const options = [
 <Button colorScheme='blue' variant='solid' onClick={nav}>
     Product List
   </Button>
-  <Button colorScheme='blue' variant='outline' onClick={modal2.onOpen}>Set Budget</Button>
+  <Button colorScheme='blue' variant='outline' onClick={transfer}>Add Product</Button>
 </Stack>
 
 </Card>): (<Card m={5}  >
@@ -415,24 +412,34 @@ const options = [
 <Button colorScheme='blue' variant='solid' onClick={nav}>
     Product List
   </Button>
-  <Button colorScheme='blue' variant='outline' onClick={modal2.onOpen}>Set Budget</Button>
+  <Button colorScheme='blue' variant='outline' onClick={transfer}>Add Product</Button>
 </Stack>
 
 </Card>)}
 <h4 className="saed">Activity</h4>
-             {list.map((obj, index) => 
-                  <div className='td' onClick={() => receipt(index)}>
-                  <div className='drz'>
-                        <p className="ove" key={index}>{obj.status}</p>
-                       <h4 className="ove" key={index}>₦{obj.amount}</h4>
-                  </div>
-                  <div className='tg'>
-                  <p className="tm" key={index}>{(new Date(obj.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</p>
-                       <div><span>Receipt </span><i class="fa-solid fa-file-export"></i></div>
-                  </div>
-                       <p className='tm' key={index}>{obj.narration}</p>
-                  </div>
-                       )}
+{list.map((obj, index) => (
+  <div className="td2" key={index} onClick={() => receipt(index)}>
+    <div className="tg">
+    <p >{(new Date(obj.time)).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</p>
+    <div className='loos'><span>invoice </span><i className="fa-solid fa-file-export"></i></div>
+    </div>
+    
+    {obj.sold_products.map((product, inde) => (
+      <div key={inde}>
+      <Stack  direction='row'mt={0} mb={0} gap='55px' spacing={2} align='center' justify='center'>
+      <p className="ove">{product.product_name}</p>
+          <h4 className="ove">Amount Sold: ₦{product.sold_amount}</h4>
+      </Stack>
+        <div className='tg'>
+          <p className="tm">Quantity Sold: {product.sold_quantity}</p>
+          <p className='tm'>Quantity Type: {product.quantity_type}</p>
+        </div>
+       
+      </div>
+))}
+  </div>
+))}
+
                        <Modal isOpen={modal1.isOpen} onClose={modal1.onClose}>
         <ModalOverlay />
         <ModalContent>

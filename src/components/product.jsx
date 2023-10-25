@@ -284,7 +284,7 @@ console.log(selectedOption)
              </Link>
 <Stack direction='row' spacing={1} align='center' justify='center'>
   <Button colorScheme='blue' variant='outline' onClick={transfer}>
-    Buy Product
+    Add/Buy Product
   </Button>
 </Stack>
 <Heading size='md' m={5} mb={0}>Product List</Heading>

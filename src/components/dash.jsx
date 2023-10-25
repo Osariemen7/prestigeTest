@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { Card, Heading, Stack, SimpleGrid, Text } from '@chakra-ui/react'
+import { Card, Heading, Button, Stack, SimpleGrid, Text } from '@chakra-ui/react'
 import { Bar } from 'react-chartjs-2';
 import { BarElement,  CategoryScale,Chart as ChartJS,Legend, LinearScale,Title, Tooltip } from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -16,6 +16,7 @@ const Dashboard =()=>{
   const navigate = useNavigate()
   const [sidebar, setSidebar] = useState('')
   const [info, setInfo] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const showSidebar = () => setSidebar(!sidebar)
   const options = {
@@ -193,13 +194,19 @@ labels: ["Day", "Week", "Month"],
       method: "GET",
       headers:{'Authorization': `Bearer ${bab}`},
       })
+      let respon = await fetch("https://sandbox.prestigedelta.com/businessprofile/",{
+      method: "GET",
+      headers:{'Authorization': `Bearer ${bab}`},
+      })
+      respon = await respon.json()
       response = await response.json()
       localStorage.setItem('user-info', JSON.stringify(tok))
       if (response.status === 401){
         navigate('/components/login')
       } else {
+        setLoading(false)
      setUsers(response)
-     
+     setInfo(respon)
       }
     }
   
@@ -207,7 +214,7 @@ labels: ["Day", "Week", "Month"],
       fetchData()
     }, [])
     
-    console.log(tok)
+    console.log(info)
     
     
 //   useEffect(() => {
@@ -221,7 +228,9 @@ let wark =users[0]
 
 console.log(users) 
 
-      
+if(loading) {
+  return(
+  <p>Loading...</p>)}   
         
     return(
         <div>
@@ -234,8 +243,12 @@ console.log(users)
                     </li>
                     
                     <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-house"></i>
                       <p className='dfp'>Home</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <p className='dfp'>Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
@@ -250,10 +263,6 @@ console.log(users)
                     <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
-                      <p className='dfp'>Inventory</p></Link>
-                    </li>
-                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <p className='dfp'>Project</p></Link>
                     </li>
@@ -261,12 +270,12 @@ console.log(users)
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>  
+                    </li>    
                 </ul>
             </nav>
            
             <div>
-            <h3 className='h4'>Hi, {name.first_name} </h3>
+            <Button colorScheme='black' variant='outline'>{info[0].business_name}</Button>
             <Heading size='md' >Analytics</Heading>
             </div>
             <Card backgroundColor='#eff1fa' m={3} >

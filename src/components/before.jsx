@@ -274,6 +274,10 @@ const options = product.map((item) => ({
           setPayment('TRANSFER');
           setOutline(button)
         };
+        const openModal3 = (button) => {
+          setPayment('CREDIT');
+          setOutline(button)
+        };
       
       const conti = () => {
         aprod()
@@ -293,10 +297,11 @@ const options = product.map((item) => ({
     <ChakraProvider>
     <Heading size='md' mb={2}>Buy Product</Heading>
 <div><p>Choose Method of Payment?</p>
-    <Stack direction='row' mt={2} gap='20px' spacing={3} align='center' justify='center'>        
+    <Stack direction='row' mt={2} gap='5px' spacing={4} align='center' justify='center'>        
                  <Button colorScheme='blue' variant={outline  === 'CASH'?'solid' : 'outline'} onClick={() =>openModal('CASH')}>CASH</Button> 
                  <Button colorScheme='blue' variant={outline ==='POS' ? 'solid' : 'outline'} onClick={() =>openModal1('POS')}>POS</Button> 
                  <Button colorScheme='blue' variant={outline ==='TRANSFER' ?'solid' : 'outline'} onClick={() =>openModal2('TRANSFER')}>TRANSFER</Button>
+                 <Button colorScheme='blue' variant={outline ==='CREDIT' ?'solid' : 'outline'} onClick={() =>openModal3('CREDIT')}>CREDIT</Button>
                  </Stack></div>
                  
       <Card m={2} backgroundColor='gainsboro'>

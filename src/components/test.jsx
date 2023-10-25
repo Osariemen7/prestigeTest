@@ -1,79 +1,39 @@
-import React, { useState } from 'react';
-import { Wheel } from 'react-custom-roulette';
-
-const data = [
-  { option: '0%', likelihood: 0.3, style:{ backgroundColor: 'red', textColor: 'white' } },
-  { option: `0.2%`, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' } },
-  { option: `10%`, likelihood: 0.1, style:{ backgroundColor: 'green', textColor: 'white' } },
-  { option: `0.5%`, likelihood: 0.4, style:{ backgroundColor: 'black', textColor: 'white' } },
-  
-  { option: `0.3%`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
-  { option: `0.1% `, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.4% `, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
-  { option: `0.1% `, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.2%`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
-  { option: `0% `, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.1%`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
-  { option: `0.1%`, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.3%`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }}
-];
+import React from "react";
+import { Bar } from "react-chartjs-2";
 
 const BarChart = () => {
-  const [mustSpin, setMustSpin] = useState(false);
-  const [selectedPrize, setSelectedPrize] = useState('');
-  const [winCount, setWinCount] = useState({});
-
-  const handleSpinClick = () => {
-    if (!mustSpin) {
-      spinWheel();
-    }
+  const data = {
+    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+    datasets: [
+      {
+        label: "Sales",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+        data: [50, 30, 45, 60, 75, 90, 80], // Replace with your sales data for the last 7 days
+      },
+      {
+        label: "Revenue",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 1,
+        data: [500, 300, 450, 600, 750, 900, 800], // Replace with your revenue data for the last 7 days
+      },
+    ],
   };
 
-  const spinWheel = () => {
-    // Calculate the total likelihood
-    const totalLikelihood = data.reduce((total, prize) => total + prize.likelihood, 0);
-
-    // Generate a random value between 0 and the total likelihood
-    const randomValue = Math.random() * totalLikelihood;
-
-    // Determine which segment the randomValue falls into
-    let currentLikelihood = 0;
-    for (const prize of data) {
-      currentLikelihood += prize.likelihood;
-      if (randomValue < currentLikelihood) {
-        setSelectedPrize(prize.option);
-        setMustSpin(true);
-
-        // Update win count
-        setWinCount((prevWinCount) => ({
-          ...prevWinCount,
-          [prize.option]: (prevWinCount[prize.option] || 0) + 1,
-        }));
-        break;
-      }
-    }
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
   };
 
   return (
-    <div className='ma'>
-      <Wheel 
-        mustStartSpinning={mustSpin}
-        prizeNumber={data.findIndex((prize) => prize.option === selectedPrize)} // Make sure to provide the number of segments
-        data={data}
-        radiusLineColor='yellow'
-        radiusLineWidth={6}
-        outerBorderWidth= {3}
-        innerRadius ={10}
-        onStopSpinning={() => {
-          // The onStopSpinning event is automatically triggered when spinning is complete
-          // You can use it to handle post-spin actions if needed
-          setMustSpin(false);
-          
-        }}
-      />
-      <button onClick={handleSpinClick} className='logb'>SPIN</button>
-      {selectedPrize && <p>You won: {selectedPrize} of  </p>}
-      
+    <div>
+      <h2>Sales and Revenue for the Last Seven Days</h2>
+      <Bar data={data} options={options} />
     </div>
   );
 };

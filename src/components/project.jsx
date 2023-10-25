@@ -97,8 +97,12 @@ let refresh = terms(tok)
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-house"></i>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-house"></i>
                       <p className='dfp'>Home</p></Link>
+                    </li>
+                    <li className='nav-list'>
+                    <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
+                      <p className='dfp'>Account</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
@@ -113,10 +117,6 @@ let refresh = terms(tok)
                     <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
-                      <p className='dfp'>Inventory</p></Link>
-                    </li>
-                    <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
                   <p className='dfp'>Project</p></Link>
                     </li>
@@ -124,7 +124,7 @@ let refresh = terms(tok)
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>
+                    </li>  
                 </ul>
             </nav>
         <h2 className='head'>Project</h2>
@@ -152,8 +152,8 @@ let refresh = terms(tok)
                     <i onClick={showSidebar} class="fa-solid fa-x"></i>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-house"></i>
-                    <p className='dfp'>Home</p></Link>
+                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-house"></i>
+                      <p className='dfp'>Home</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/accounts' className='nav-text'><i class="fa-solid fa-wallet home"></i>
@@ -162,14 +162,14 @@ let refresh = terms(tok)
                     <li className='nav-list'>
                     <Link to='/components/savings' className='nav-text'><i class="fa-solid fa-money-bill"></i>
                       <p className='dfp'>Sub-Account</p></Link>
-                    </li>
+                    </li>  
                     <li className='nav-list'>
                     <Link to='/components/customer' className='nav-text'><i class="fa-solid fa-people-roof"></i>
                       <p className='dfp'>Customers</p></Link>
                     </li>
                     <li className='nav-list'>
-                    <Link to='/components/inventory' className='nav-text'><i class="fa-solid fa-cart-flatbed"></i>
-                      <p className='dfp'>Inventory</p></Link>
+                    <Link to='/components/dash' className='nav-text'><i class="fa-solid fa-chart-line"></i>
+                    <p className='dfp'>Analytics</p></Link>
                     </li>
                     <li className='nav-list'>
                     <Link to='/components/project' className='nav-text'><i class="fa-solid fa-layer-group home"></i>
@@ -179,7 +179,7 @@ let refresh = terms(tok)
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>  
+                    </li>    
                 </ul>
             </nav>
             <div className="dash">

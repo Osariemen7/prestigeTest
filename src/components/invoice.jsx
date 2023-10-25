@@ -18,19 +18,19 @@ import {
   import { Wheel } from 'react-custom-roulette';
 
   const data = [
-    { option: '0', likelihood: 0.3, style:{ backgroundColor: 'red', textColor: 'white' } },
-  { option: `0.2`, likelihood: 0.3, style:{ backgroundColor: 'black', textColor: 'white' } },
-  { option: `10`, likelihood: 0.01, style:{ backgroundColor: 'green', textColor: 'white' } },
-  { option: `0.5`, likelihood: 0.4, style:{ backgroundColor: 'black', textColor: 'white' } },
-  { option: `0`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+    { option: '0.6', likelihood: 0.3, style:{ backgroundColor: 'red', textColor: 'white' } },
+  { option: `0.2`, likelihood: 0.4, style:{ backgroundColor: 'black', textColor: 'white' } },
+  { option: `10`, likelihood: 0.1, style:{ backgroundColor: 'green', textColor: 'white' } },
+  { option: `0`, likelihood: 0.5, style:{ backgroundColor: 'red', textColor: 'white' }},
   { option: `0.1`, likelihood: 0.7, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.4`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0.4`, likelihood: 0.4, style:{ backgroundColor: 'red', textColor: 'white' }},
   { option: `0.1`, likelihood: 0.7, style:{ backgroundColor: 'black', textColor: 'white' }},
   { option: `0.2`, likelihood: 0.3, style:{ backgroundColor: 'red', textColor: 'white' }},
   { option: `0`, likelihood: 0.6, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.6`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
-  { option: `0`, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }},
-  { option: `0.3`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }}
+  { option: `0`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0.5`, likelihood: 0.4, style:{ backgroundColor: 'black', textColor: 'white' } },
+  { option: `0.3`, likelihood: 0.1, style:{ backgroundColor: 'red', textColor: 'white' }},
+  { option: `0`, likelihood: 0.1, style:{ backgroundColor: 'black', textColor: 'white' }}
   ];
   
 const Invoice =()=> {
@@ -116,6 +116,13 @@ const optio = ['item', 'pack'];
     }));
 const handleFormSubmit = (event) => {
     event.preventDefault();
+    const selectedProduct = inputVa.value // Replace with the actual selected product name
+const rin = product.find(option => option.name === selectedProduct);
+
+    if (rin && (rin.item_no === 0 && rin.pack_no === 0)) {
+      setMessage('Out of Stock please Restock');
+      modal1.onClose()
+    } else{
     setQuatity([...quantity, inputValue]);
     setInputValue("");
     setPrice([...price, inputVal]);
@@ -126,7 +133,7 @@ const handleFormSubmit = (event) => {
     setInputV('');
     setPacksize([...pack_size1, inputp])
     setInputp(0)
-    modal1.onClose()
+    modal1.onClose()}
   }
 //   const options = [
 //     ...product.map((item) => ({
@@ -153,6 +160,7 @@ const handleFormSubmit = (event) => {
 }, 0);
   let total = (tota).toLocaleString('en-US')
 let won = (parseFloat(selectedPrize)/100) * tota 
+let tots = won + tota
   const handlePack =(e)=>{
     setInputp(e.target.value)
   }
@@ -264,7 +272,7 @@ const fetchDa = async () => {
             setButtonVisible(true);
           }, 5000);
         };
-
+console.log(item.todo)
     async function sprod(e) {
       e.preventDefault()
       handleClick()
@@ -310,9 +318,9 @@ const fetchDa = async () => {
           },
           body: JSON.stringify(ite)
         });
-              if (result.status !== 200) {
+              if (result.status !== 200 || product.item_no === 0) {
           const errorResult = await result.json();
-          setMessage(JSON.stringify(errorResult));
+          setMessage(JSON.stringify(errorResult))  
         } else {
            result =await result.json();
           setMessage(JSON.stringify(result.message))
@@ -323,7 +331,9 @@ const fetchDa = async () => {
         console.error(error);
       };
     }
-    
+    const beef =() =>{
+      navigate('/components/before')
+    }
     const done =()=> {
       navigate('/components/inventory')
     }
@@ -335,10 +345,14 @@ const fetchDa = async () => {
     return(
         <div>
         <Link to='/components/accounts'><i class="fa-solid fa-chevron-left bac"></i></Link>
+       {message !== 'Out of Stock please Restock'? (
+        <div>
         <ChakraProvider>
+        
             <main id="main-element">
-            <div className='rax'><h4 className='shi'>{toSentenceCase(list[0].business_name)}</h4></div> 
-          
+            <Button colorScheme='black' variant='outline'>{toSentenceCase(list[0].business_name)}</Button>
+            <div></div>
+            
         <div><p>Choose Method of Payment?</p>
     <Stack direction='row' m={2} gap='20px' spacing={3} align='center' justify='center'>        
                  <Button colorScheme='blue' variant={outline  === 'CASH'?'solid' : 'outline'} onClick={() =>openModal('CASH')}>CASH</Button> 
@@ -346,7 +360,7 @@ const fetchDa = async () => {
                  <Button colorScheme='blue' variant={outline ==='TRANSFER' ?'solid' : 'outline'} onClick={() =>openModal2('TRANSFER')}>TRANSFER</Button>
                  </Stack></div>
       
-            
+          
             <p className='ld'>{(new Date()).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true})}</p>
                
             <hr className='hr'></hr>
@@ -384,7 +398,7 @@ const fetchDa = async () => {
                 <div className='cules'>
                 <p>Expected Payment:</p>
                 <p></p>
-                <p>₦{(tota).toLocaleString()}</p>
+                <p>₦{(tots).toLocaleString()}</p>
                 </div>
                 <hr className='hr1'></hr>
 
@@ -396,10 +410,10 @@ const fetchDa = async () => {
                <ChakraProvider>     
                {valid === 'Valid' ? (<Button colorScheme='blue' variant='solid' onClick={done}>Back</Button>):      
                 <Stack direction='row' spacing={2} align='center' justify='center'>        
-                 <Button colorScheme='blue' variant='solid' onClick={modal1.onOpen}>Add Item</Button> 
-                {selectedPrize === ''? (<Button colorScheme='blue' variant='solid' onClick={modal2.onOpen}>Save</Button>): <div>{buttonVisible && (<Button colorScheme='blue' variant='solid' onClick={sprod}>Claim Prize</Button> 
+                 <Button colorScheme='blue' variant='solid' onClick={modal1.onOpen}>Add Product</Button> 
+            { item.length !== 0 ? (  <div> {selectedPrize === ''? (<Button colorScheme='blue' variant='solid' onClick={modal2.onOpen}>Save</Button>): <div>{buttonVisible && (<Button colorScheme='blue' variant='solid' onClick={sprod}>Save Payment</Button> 
                  )}
-      {!buttonVisible && <Spinner />}</div>}
+      {!buttonVisible && <Spinner />}</div>}</div>): null }
                   </Stack>} 
       <div className="message">{message ? <p>{message}</p> : null}</div>
             <Modal isOpen={modal1.isOpen} onClose={modal1.onClose}>
@@ -449,7 +463,7 @@ const fetchDa = async () => {
           <ModalHeader>Get Prize !</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-          <div className='ma'>
+          <div className=''>
       <Wheel 
         mustStartSpinning={mustSpin}
         prizeNumber={data.findIndex((prize) => prize.option === selectedPrize)} // Make sure to provide the number of segments
@@ -475,7 +489,7 @@ const fetchDa = async () => {
             </ModalContent>
       </Modal>
 
-      </ChakraProvider>
+      </ChakraProvider></div>):<ChakraProvider> <div><Button colorScheme='black' variant='outline'>{toSentenceCase(list[0].business_name)}</Button><br/> <Button colorScheme='blue' variant='solid' mt='10px' onClick={beef}>Restock</Button></div></ChakraProvider>}
         </div>
     )
 }
