@@ -49,6 +49,7 @@ import Invoice from './components/invoice';
 import BuyP from './components/before';
 import BarChart from './components/test';
 import Sales from './components/pinvoice';
+import Review from './components/review';
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -109,7 +110,8 @@ function App() {
         <Route path='/components/invoice' element={<Invoice />} /> 
         <Route path='/components/before' element={<BuyP />} /> 
         <Route path='/components/test' element={<BarChart />} />
-        <Route path='/components/pinvoice' element={<Sales />} />     
+        <Route path='/components/pinvoice' element={<Sales />} /> 
+        <Route path='/components/review' element={<Review />} />    
      
      </Routes>
       

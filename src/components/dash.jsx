@@ -5,6 +5,7 @@ import { Card, Heading, Button, Stack, SimpleGrid, Text } from '@chakra-ui/react
 import { Bar } from 'react-chartjs-2';
 import { BarElement,  CategoryScale,Chart as ChartJS,Legend, LinearScale,Title, Tooltip } from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import Select from "react-select";
 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,Title,Tooltip,Legend, ChartDataLabels);
@@ -12,154 +13,238 @@ ChartJS.register(CategoryScale, LinearScale, BarElement,Title,Tooltip,Legend, Ch
 
 
 const Dashboard =()=>{
-  const [users, setUsers] = useState('');
+  const [users, setUsers] = useState([])
+  const [infos, setInfos] = useState([])
+  const [selectedValue, setSelectedValue] = useState('');
+  const [mon, setMon] = useState([])
   const navigate = useNavigate()
   const [sidebar, setSidebar] = useState('')
   const [info, setInfo] = useState('')
   const [loading, setLoading] = useState(true)
 
   const showSidebar = () => setSidebar(!sidebar)
+  const mont = ['Daily', 'Weekly', 'Monthly'];
+ const opt = mont.map((p) => ({
+   label: p,
+   value: p,
+ }))
+
+ const term = (selectedValue, users, infos, mon) => {
+  let val;
+
+  if (selectedValue.label === 'Weekly') {
+    val = infos ;
+  }else if(selectedValue.label === 'Monthly'){
+    val = mon
+  }
+   else {
+    val = users;
+  }
+
+  return val;
+};
+let sure = term(selectedValue, users, infos, mon)
+const lastSeven = sure.slice(-7);
+const lastSeve = sure.slice(-7);
+let data = {
+  labels: lastSeven.map((user) => user.start_day),
+  datasets: [],
+};
+
+if (sure.length >= 7) {
+  const lastSevenUsers = sure.slice(-7);
+
+  data.datasets.push({
+    label: "Revenue",
+    backgroundColor: "#00d2ff",
+    borderColor: "#6179cc",
+    borderWidth: 1,
+    data: lastSevenUsers.map((user) => user.revenue),
+  });
+  data.datasets.push({
+    label: "Revenue Target",
+    backgroundColor: "#ADD8E6",
+    borderColor: "rgba(75, 192, 192, 1)",
+    borderWidth: 1,
+    data: lastSevenUsers.map((user) => user.rev_target),
+  });
+} else {
+  // Use default data if there are not enough data points in the users array
+  data.datasets.push({
+    label: "Revenue",
+    backgroundColor: "#00d2ff",
+    borderColor: "rgba(75, 192, 192, 1)",
+    borderWidth: 1,
+    data: sure.map((user) => user.revenue),
+  });
+  data.datasets.push({
+    label: "Revenue Target",
+    backgroundColor: "#ADD8E6",
+    borderColor: "#6179cc",
+    borderWidth: 1,
+    data: sure.map((user) => user.rev_target),
+  });
+}
+// Use the 'data' variable in the chart component
+
+console.log(sure)
+// Use the 'data' variable in the chart component
+
   const options = {
-    responsive: true,
-    plugins: {
-      legend: { position: "right" },
-      title: {
-        display: true,
-        text: "",
-      },
-    },
     scales: {
       y: {
-        display: false, // Remove y-axis labels
+        display: false,
+        beginAtZero: true,
       },
     },
-  };
-  
-  const data = {
-labels: ["Day", "Week", "Month"],
-    datasets: [
-      {
-        label: "Current",
-        data: [ users.today_expense, users.wk_expense, users.mn_expense],
-        backgroundColor: "#6179cc",
-        barThickness: 20
-      },
-      {
-        label:'Previous',
-        data:[users.yesterday_expense,users.last_wk_expense, users.last_mn_expense],
-        backgroundColor:'#111a37',
-        barThickness: 20
-      },
-  
-    ],
-  
-  };
-  options.plugins.datalabels = {
-    display: true,
-    color: "black",
-    formatter: Math.round,
-    anchor: "end",
-    offset: -20,
-    align: "start",
-  };
-  const option = {
-    responsive: true,
-    plugins: {
-      legend: { position: "left" },
-      title: {
-        display: true,
-        text: "Performance Chart",
-      },
-    },
-    scales: {
-      y: {
-        display: false, // Remove y-axis labels
-      },
-    },
-  };
-  
-  const dat = {
-labels: ["Day", "Week", "Month"],
-    datasets: [
-      {
-        label: "Current",
-        data: [ users.daily_revenue, users.wk_revenue, users.mn_revenue],
-        backgroundColor: "#6179cc",
-        barThickness: 20
-      },
-      {
-        label:'Previous',
-        data:[users.yesterday_revenue,users.last_wk_revenue,users.last_mn_revenue],
-        backgroundColor:'#111a37',
-        barThickness: 20
-      },
-      {
-        label: 'Target',
-        data: [users.daily_rev_target,users.wk_rev_target, users.mn_rev_target],
-        backgroundColor:'#8870B9',
-        barThickness: 20        
-      }
-  
-  
-    ],
-  
-  };
-  option.plugins.datalabels = {
-    display: true,
-    color: "black",
-    formatter: Math.round,
-    anchor: "end",
-    offset: -20,
-    align: "start",
   };
 
-  const optio = {
-    responsive: true,
-    plugins: {
-      legend: { position: 'chartArea'
-  },
-      title: {
-        display: true,
-        text: "Performance Chart",
-      },
-    },
-    scales: {
-      y: {
-        display: false, // Remove y-axis labels
-      },
-    },
-  };
+ 
+  let sata = {
+
+    labels: lastSeven.map((user) => user.start_day),
+  datasets: [],
+};
+if (users.length >= 7) {
+  const lastSevenUsers = sure.slice(-7);
+
+  sata.datasets.push({
+    label: "Revenue",
+    backgroundColor: "rgba(75, 192, 192, 0.2)",
+    borderColor: "rgba(75, 192, 192, 1)",
+    borderWidth: 1,
+    data: lastSevenUsers.map((user) => user.expense),
+  });
+  sata.datasets.push({
+    label: "Revenue Target",
+    backgroundColor: "rgba(255, 99, 132, 0.2)",
+    borderColor: "rgba(255, 99, 132, 1)",
+    borderWidth: 1,
+    data: lastSevenUsers.map((user) => user.expense_target),
+  });
+} else {
+  // Use default data if there are not enough data points in the users array
+  sata.datasets.push({
+    label: "Expense",
+    backgroundColor: "rgba(75, 192, 192, 0.2)",
+    borderColor: "rgba(75, 192, 192, 1)",
+    borderWidth: 1,
+    data: sure.map((user) => user.expense),
+  });
+  sata.datasets.push({
+    label: "Expense Target",
+    backgroundColor: "rgba(255, 99, 132, 0.2)",
+    borderColor: "rgba(255, 99, 132, 1)",
+    borderWidth: 1,
+    data: sure.map((user) => user.expense_target),
+  });
+}
   
-  const da = {
-labels: ["Day", "Week", "Month"],
-    datasets: [
-      {
-        label: "Current",
-        data: [ users.today_sales, users.wk_sales, users.mn_sales],
-        backgroundColor: "#6179cc",
-        barThickness: 20
+  // Use the 'data' variable in the chart component
+  
+  console.log(sure)
+  // Use the 'data' variable in the chart component
+  
+    const option = {
+      scales: {
+        y: {
+          display: false,
+          beginAtZero: true,
+        },
       },
-      {
-        label:'Previous',
-        data:[users.yesterday_sales,users.last_wk_sales,users.last_mn_sales],
-        backgroundColor:'#111a37',
-        barThickness: 20
-      },
+    };
+    let cata = {
+      labels: lastSeven.map((user) => user.start_day),
+    datasets: [],
+  };
+  if (sure.length >= 7) {
+    const lastSevenUsers = sure.slice(-7);
+  
+    cata.datasets.push({
+      label: "New Customers",
+      backgroundColor: "rgba(75, 192, 192, 0.2)",
+      borderColor: "rgba(75, 192, 192, 1)",
+      borderWidth: 1,
+      data: lastSevenUsers.map((user) => user.new_customers),
+    });
+    cata.datasets.push({
+      label: "No of Customers",
+      backgroundColor: "rgba(255, 99, 132, 0.2)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      borderWidth: 1,
+      data: lastSevenUsers.map((user) => user.customer_count),
+    });
+  } else {
+    // Use default data if there are not enough data points in the users array
+    cata.datasets.push({
+      label: "New Customers",
+      backgroundColor: "rgba(75, 192, 192, 0.2)",
+      borderColor: "rgba(75, 192, 192, 1)",
+      borderWidth: 1,
+      data: sure.map((user) => user.new_customers),
+    });
+    cata.datasets.push({
+      label: "No of customers",
+      backgroundColor: "rgba(255, 99, 132, 0.2)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      borderWidth: 1,
+      data: sure.map((user) => user.customer_count),
+    });
+  }
+      const optio = {
+        plugins: {
+          title: {
+            display: true,
+            text: "Performance Chart",
+          },
+        },
+        scales: {
+          y: {
+            display: false,
+            beginAtZero: true,
+          },
+        },
+      };
+  
+ let ata = {
+        labels: lastSeven.map((user) => user.start_day),
+      datasets: [],
+    };
+    if (sure.length >= 7) {
+      const lastSevenUsers = sure.slice(-7);
+    
+      ata.datasets.push({
+        label: "Sales",
+        backgroundColor: "#50e0ff",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+        data: lastSevenUsers.map((user) => user.sales),
+      });
       
-    ],
-  
-  };
-  optio.plugins.datalabels = {
-    display: true,
-    color: "black",
-    formatter: Math.round,
-    anchor: "end",
-    offset: -20,
-    align: "start",
-  };
-
-  
-
+    } else {
+      // Use default data if there are not enough data points in the users array
+      ata.datasets.push({
+        label: "Sales",
+        backgroundColor: "#50e0ff",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+        data: sure.map((user) => user.sales)
+      });
+      
+    }
+        const opti = {
+          scales: {
+            y: {
+              display: false,
+              beginAtZero: true,
+            },
+          },
+        };
+      
+      const handleType = (selectedValue) => {
+        setSelectedValue(selectedValue);
+      };
+ 
   let tok= JSON.parse(localStorage.getItem("user-info"));
   let refresh = tok.refresh_token
   let name = tok.user
@@ -178,45 +263,56 @@ labels: ["Day", "Week", "Month"],
       window.removeEventListener('popstate', handlePopstate);
     };
   }, [navigate]);
-    const fetchData = async () => {
-        let item ={refresh}
-        let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
-            method: 'POST',
-            headers:{
-              'Content-Type': 'application/json',
-              'accept' : 'application/json'
-         },
-         body:JSON.stringify(item)
-        });
-        rep = await rep.json();
-        let bab = rep.access_token
-      let response = await fetch("https://sandbox.prestigedelta.com/analytics/",{
+
+    
+  const fetchData = async () => {
+    let item ={refresh}
+    let rep = await fetch ('https://sandbox.prestigedelta.com/refreshtoken/',{
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+          'accept' : 'application/json'
+     },
+     body:JSON.stringify(item)
+    });
+    rep = await rep.json();
+    let bab = rep.access_token
+  let response = await fetch("https://sandbox.prestigedelta.com/analytics/?duration=DAILY",{
+  method: "GET",
+  headers:{'Authorization': `Bearer ${bab}`},
+  })
+  let respons = await fetch("https://sandbox.prestigedelta.com/analytics/?duration=WEEKLY",{
+    method: "GET",
+    headers:{'Authorization': `Bearer ${bab}`},
+    })
+    let respon = await fetch("https://sandbox.prestigedelta.com/analytics/?duration=MONTHLY",{
+    method: "GET",
+    headers:{'Authorization': `Bearer ${bab}`},
+    })
+    let respo = await fetch("https://sandbox.prestigedelta.com/businessprofile/",{
       method: "GET",
       headers:{'Authorization': `Bearer ${bab}`},
       })
-      let respon = await fetch("https://sandbox.prestigedelta.com/businessprofile/",{
-      method: "GET",
-      headers:{'Authorization': `Bearer ${bab}`},
-      })
-      respon = await respon.json()
-      response = await response.json()
-      localStorage.setItem('user-info', JSON.stringify(tok))
-      if (response.status === 401){
-        navigate('/components/login')
-      } else {
-        setLoading(false)
-     setUsers(response)
-     setInfo(respon)
-      }
-    }
-  
-    useEffect(() => {
-      fetchData()
-    }, [])
-    
-    console.log(info)
-    
-    
+      respo = await respo.json()
+   respon = await respon.json()
+   respons = await respons.json()
+  response = await response.json()
+  localStorage.setItem('user-info', JSON.stringify(tok))
+  if (response.status === 401){
+    navigate('/components/login')
+  } else {
+    setLoading(false)
+ setUsers(response)
+ setInfo(respo)
+  setInfos(respons)
+  setMon(respon)
+
+  }
+}
+
+useEffect(() => {
+  fetchData()
+}, [])
 //   useEffect(() => {
 //     fetch('https://sandbox.prestigedelta.com/accounts/')
 //       .then(response => response.json())
@@ -226,7 +322,8 @@ labels: ["Day", "Week", "Month"],
 //     let wark = JSON.stringify(data)
 let wark =users[0]
 
-console.log(users) 
+console.log(mon) 
+console.log(users)
 
 if(loading) {
   return(
@@ -278,48 +375,39 @@ if(loading) {
             <Button colorScheme='black' variant='outline'>{info[0].business_name}</Button>
             <Heading size='md' >Analytics</Heading>
             </div>
-            <Card backgroundColor='#eff1fa' m={3} >
+            <Card mt={2}>
+            <Select 
+      onChange={handleType}
+      className="pnes"
+      placeholder="Select Duration"
+      options={opt}
+      isSearchable={true}
+      value={selectedValue} />
+            <Card backgroundColor='#eff1fa' m={2} >
                 <Heading size='sm'>Sales</Heading>
-               <Bar data={da} options={optio} />
-               <Text fontSize='12px'>Today's Revenue Per Sales - ₦{parseFloat(users.today_rps).toLocaleString('en-US')}</Text>
-               <Text fontSize='12px'>This Week's Revenue Per Sales - ₦{parseFloat(users.wk_rps).toLocaleString('en-US')}</Text>
-               <Text fontSize='12px'>This Month's Revenue Per Sales - ₦{parseFloat(users.mn_rpc).toLocaleString('en-US')}</Text>
+                <Bar data={ata}  options={opti} />
+               
+              
             </Card>
             <Card backgroundColor='#eff1fa' m={3} >
                 <Heading size='sm'>Revenue</Heading>
-               
-               <Bar data={dat} options={option} />
+                <Bar data={data} options={options} />
+                <Text fontSize='12px'> Revenue Per Sales - ₦{parseFloat(sure[0].rps).toLocaleString('en-US')}</Text>
+               <Text fontSize='12px'>Revenue Per Customer - ₦{parseFloat(sure[0].rpc).toLocaleString('en-US')}</Text>
             </Card>
       
             <Card backgroundColor='#eff1fa' m={3} >
                 <Heading size='sm'>Expense</Heading>
+                <Bar data={sata}  options={option} />
                
-               <Bar data={data} options={options} />
+            </Card>
+            <Card backgroundColor='#eff1fa' m={3} >
+                <Heading size='sm'>Customers</Heading>
+                <Bar data={cata}  options={optio} />
+  
+               
             </Card>
             
-            <Card backgroundColor='#eff1fa' m={3} p={2}>
-              <SimpleGrid m={2} spacing={4} templateColumns='repeat(auto-fill, minmax(150px, 1fr))'>
-                <Card backgroundColor=' #c9d4f5' p={2}>
-                  <Heading fontSize='12px'>No of Customers Today</Heading>
-                  <Text fontSize='14px'>{users.today_customer_count}</Text>
-                <Text fontSize='12px'>No of new Customers today - {users.today_new_customer}</Text>
-                </Card>
-                <Card backgroundColor=' #c9d4f5' p={2}>
-                  <Heading fontSize='12px'>No of Customers for the Week</Heading>
-                  <Text fontSize='14px'>{users.wk_customer_count}</Text>
-                <Text fontSize='12px'>No of new Customers for the Week - {users.wk_new_customer}</Text>
-                </Card>
-                <Card backgroundColor=' #c9d4f5' p={2}>
-                <Heading fontSize='12px'>No of Customers for the Month</Heading>
-                  <Text fontSize='14px'>{users.mn_customer_count}</Text>
-                <Text fontSize='12px'>No of new Customers for the Month - {users.mn_new_customer}</Text>
-                </Card>
-                <Card backgroundColor=' #c9d4f5' p={2} >
-                  <Heading fontSize='12px'>Today's Revenue Per Customer- ₦{parseFloat(users.today_rpc).toLocaleString('en-US')}</Heading>
-                  <Text fontSize='12px'>Weekly Revenue Per Customer - ₦{parseFloat(users.wk_rpc).toLocaleString('en-US')}</Text>
-                  <Text fontSize='12px'>Monthly Revenue Per Customer -₦{parseFloat(users.mn_rpc).toLocaleString('en-US')}</Text>
-                </Card>
-              </SimpleGrid>
             </Card>
             </ChakraProvider>   
         </div>

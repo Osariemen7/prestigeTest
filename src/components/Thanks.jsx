@@ -16,7 +16,8 @@ const ThankPage=()=>{
         <div className='tha'>
            <div className=''>
               <img src={tick} alt=''/>
-              <h2 className='tp'>Successful</h2>
+              <h2 className='tp'>Congratulations</h2>
+              <p className='tp'>Your Journey Begins!</p>
               <p className='tp'>Click next to continue</p>
               <button className='tbut' onClick={create}>Next</button>
            </div>

@@ -6,9 +6,9 @@ import jsPDF from 'jspdf';
 const Recdet = () =>{
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(true);
-    const location = useLocation()
     const navigate = useNavigate()
-    let meal = location.state.ite
+    const location = useLocation()
+    const meal = location.state.ite
 
     let tok= JSON.parse(localStorage.getItem("user-info"));
     const terms = (tok) => {
@@ -53,9 +53,11 @@ let refresh = terms(tok)
       response = await response.json();
       setLoading(false)
       setList(response)
+      
         }}
         useEffect(() => {
           fetchData()
+          
         }, [])
     
         const handleCaptureClick = async () => {
@@ -71,7 +73,7 @@ let refresh = terms(tok)
         pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
     
         // Save the PDF
-        pdf.save('Receipt.pdf');
+        pdf.save(`receipt${new Date().toLocaleDateString}`);
     }
     // const handleShare = ()=> {
     //     if (navigator.share) {

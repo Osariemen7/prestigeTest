@@ -765,6 +765,14 @@ hr{
     padding:0 5%;
     border-bottom: 1px solid gainsboro;
 }
+.pnes{
+  padding:0 2%;
+  width: 200px;
+  height: 40px;
+  margin-right:83px ;
+  border-color: rgb(214, 209, 209);
+}
+
 .nav-menu{
   background-color: #060b26;
   width: 50%;
