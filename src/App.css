@@ -772,6 +772,11 @@ hr{
   margin-right:83px ;
   border-color: rgb(214, 209, 209);
 }
+.message-content {
+  font-size: 14px;
+  text-overflow: ellipsis; /* Add ellipsis for text overflow */
+  
+}
 
 .nav-menu{
   background-color: #060b26;

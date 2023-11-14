@@ -23,7 +23,7 @@ const Dashboard =()=>{
   const [loading, setLoading] = useState(true)
 
   const showSidebar = () => setSidebar(!sidebar)
-  const mont = ['Daily', 'Weekly', 'Monthly'];
+  const mont = ['DAILY', 'WEEKLY', 'MONTHLY'];
  const opt = mont.map((p) => ({
    label: p,
    value: p,
@@ -44,8 +44,7 @@ const Dashboard =()=>{
   return val;
 };
 let sure = term(selectedValue, users, infos, mon)
-const lastSeven = sure.slice(-7);
-const lastSeve = sure.slice(-7);
+const lastSeven = sure.slice(-7)
 let data = {
   labels: lastSeven.map((user) => user.start_day),
   datasets: [],
@@ -309,7 +308,62 @@ if (users.length >= 7) {
 
   }
 }
-
+const daily=()=>{
+  let rata
+  if (selectedValue.value ==='WEEKLY'){
+     rata = infos
+  } else if(selectedValue.value === 'MONTHLY'){
+    rata = mon
+  } else{
+    rata = users
+  }
+   data = {rata, selectedValue}
+  
+  
+   navigate('/components/dashboard', {state:{data}})
+}
+const revenue=()=>{
+  let rata
+  if (selectedValue.value ==='WEEKLY'){
+     rata = infos
+  } else if(selectedValue.value === 'MONTHLY'){
+    rata = mon
+  } else{
+    rata = users
+  }
+   data = {rata, selectedValue}
+  
+  
+   navigate('/components/revenue', {state:{data}})
+}
+const expense=()=>{
+  let rata
+  if (selectedValue.value ==='WEEKLY'){
+     rata = infos
+  } else if(selectedValue.value === 'MONTHLY'){
+    rata = mon
+  } else{
+    rata = users
+  }
+   data = {rata, selectedValue}
+  
+  
+   navigate('/components/expense', {state:{data}})
+}
+const people=()=>{
+  let rata
+  if (selectedValue.value ==='WEEKLY'){
+     rata = infos
+  } else if(selectedValue.value === 'MONTHLY'){
+    rata = mon
+  } else{
+    rata = users
+  }
+   data = {rata, selectedValue}
+  
+  
+   navigate('/components/people', {state:{data}})
+}
 useEffect(() => {
   fetchData()
 }, [])
@@ -364,6 +418,11 @@ if(loading) {
                   <p className='dfp'>Project</p></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/chat' className='nav-text'><i class="fa-solid fa-user-tie"></i>
+                  <p className='dfp'>Assistant</p></Link>
+                    </li>
+
+                    <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
@@ -386,29 +445,32 @@ if(loading) {
             <Card backgroundColor='#eff1fa' m={2} >
                 <Heading size='sm'>Sales</Heading>
                 <Bar data={ata}  options={opti} />
-               
-              
+                <div>
+                <Button mb={2} mt={1} colorScheme='blue' onClick={daily} variant='solid'>Report on Analytics</Button>
+                </div>
             </Card>
             <Card backgroundColor='#eff1fa' m={3} >
                 <Heading size='sm'>Revenue</Heading>
                 <Bar data={data} options={options} />
                 <Text fontSize='12px'> Revenue Per Sales - ₦{parseFloat(sure[0].rps).toLocaleString('en-US')}</Text>
                <Text fontSize='12px'>Revenue Per Customer - ₦{parseFloat(sure[0].rpc).toLocaleString('en-US')}</Text>
-            </Card>
+           <div><Button mb={2} mt={1} colorScheme='blue' onClick={revenue} variant='outline' >Report on Analytics</Button>
+           </div></Card>
       
             <Card backgroundColor='#eff1fa' m={3} >
                 <Heading size='sm'>Expense</Heading>
-                <Bar data={sata}  options={option} />
-               
-            </Card>
+                <Bar data={sata}  options={option} /><div>
+                <Button mb={2} mt={1} colorScheme='blue' onClick={expense} variant='solid'>Report on Analytics</Button>
+                </div></Card>
             <Card backgroundColor='#eff1fa' m={3} >
                 <Heading size='sm'>Customers</Heading>
                 <Bar data={cata}  options={optio} />
-  
-               
+               <div> <Button mb={2} mt={1} colorScheme='blue' onClick={people} variant='outline'>Report on Analytics</Button>
+               </div>
             </Card>
             
             </Card>
+           
             </ChakraProvider>   
         </div>
     )

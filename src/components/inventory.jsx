@@ -375,10 +375,15 @@ const options = [
                   <p className='dfp'>Project</p></Link>
                     </li>
                     <li className='nav-list'>
+                    <Link to='/components/chat' className='nav-text'><i class="fa-solid fa-user-tie"></i>
+                  <p className='dfp'>Assistant</p></Link>
+                    </li>
+
+                    <li className='nav-list'>
                     
                     <Link to='/components/login' className='nav-text'><i class="fa-solid fa-share"></i>
                       <p className='dfp'>Log Out</p></Link>
-                    </li>  
+                    </li>    
                 </ul>
             </nav>
             <div className='dash'>
@@ -469,9 +474,6 @@ const options = [
 </Card>)}
 
 <Heading fontSize='15px' textAlign='left' ml='15px'>Activity</Heading>
-
-        <Input placeholder='Product Name' size='md' onChange={range} width={173} ml={3}/><br/><br/> 
-    
         <Stack direction='row' spacing={1} >
 <div>
          <Heading fontSize='12px'>Start Date</Heading>
