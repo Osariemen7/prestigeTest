@@ -431,7 +431,7 @@ console.log(item.todo)
         placeholder="Enter product/service"
         options={options}
         isSearchable={true}
-        onChange={handleInputchan}
+        onKeyDown={handleInputchan}
         value={inputVa}
         onCreateOption={handleAddProduct} // Handle adding a new option
         isClearable={true} 
